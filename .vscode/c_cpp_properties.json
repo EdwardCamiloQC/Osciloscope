@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/src/main",
+                "/usr/include/assimp",
+                "${workspaceFolder}/src/include",
+                "${workspaceFolder}/src/shaders",
+                "/usr/include/libserial"
+            ],
+            "defines": [],
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "compilerPath": "/usr/bin/g++"
+        }
+    ],
+    "version": 4
+}
