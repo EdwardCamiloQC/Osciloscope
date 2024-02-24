@@ -13,6 +13,7 @@
             ~ComSerial();
         public:
             float dataVoltage[2000];
+            float prueba[6];
         private:
             LibSerial::SerialStream mySerial;
             unsigned int valueADC;

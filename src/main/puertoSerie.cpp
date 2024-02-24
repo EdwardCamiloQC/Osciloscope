@@ -4,9 +4,13 @@
 ComSerial::ComSerial(const char* port){
     flagOpen = false;
     float auxAxeX = -1.0f;
+    prueba[0] = -0.5f;  prueba[1] = 0.0f;
+    prueba[2] = 0.0f;   prueba[3] = 0.5f;
+    prueba[4] = 0.5f;   prueba[5] = 0.0f;
+
     for(size_t  i = 1; i < sizeof(dataVoltage)/sizeof(float); i+=2){
         dataVoltage[i] = 0.0f;
-        dataVoltage[i-1] = auxAxeX + static_cast<float>(2)/sizeof(dataVoltage);
+        dataVoltage[i-1] = auxAxeX + static_cast<float>(2)/static_cast<float>(sizeof(dataVoltage));
     }
     try{
         mySerial.Open(port);

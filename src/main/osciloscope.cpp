@@ -66,16 +66,30 @@ WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char
 
     pthread_create(&hilo1, NULL, &task1, this);
 
-    glGenVertexArrays(1, VAOs);
-    glGenBuffers(1, VBOs);
+    glGenVertexArrays(2, VAOs);
+    glGenBuffers(2, VBOs);
 
-    glBindVertexArray(VAOs[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage), 0, GL_STATIC_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(grid.vertex), grid.vertex);
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.colorSignal), grid.colorSignal, GL_STATIC_DRAW);
+
+    glBindVertexArray(VAOs[0]);
     glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+
+    glBindVertexArray(VAOs[1]);
+    glEnableVertexAttribArray(0);
+    glColorPointer(3, GL_FLOAT, 0, grid.colorSignal);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)(sizeof(grid.vertex)));
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
 
     glBindVertexArray(0);
 }
@@ -109,13 +123,14 @@ void WindowOsciloscope::run(){
         glUseProgram(idP);
         
         glBindVertexArray(VAOs[0]);
-        glDrawArrays(GL_LINES, 0, (sizeof(grid.vertex) + sizeof(psoc.dataVoltage))/(sizeof(float)*2));
-        glBindVertexArray(0);
+        glDrawArrays(GL_LINES, 0, sizeof(grid.vertex)/(sizeof(float)*2));
         
-        //glBindVertexArray(VAOs[1]);
-        //glUniform4f(glGetUniformLocation(idP, "ourColor"), 1.0f, 0.0f, 0.0f, 1.0f);
-        //glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage)/sizeof(float));
-        //glBindVertexArray(0);
+        glPointSize(5);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
+        glBindVertexArray(VAOs[1]);
+        glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage)/sizeof(float));
+        glBindVertexArray(0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
