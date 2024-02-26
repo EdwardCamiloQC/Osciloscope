@@ -20,8 +20,8 @@
             -1.0f, +0.50f, +1.0f, +0.50f,
             -1.0f, +0.75f, +1.0f, +0.75f
         };
-        float colorSignal[3] = {
-            1.0f, 0.0f, 0.0f
+        float colorSignal[4] = {
+            1.0f, 1.0f, 0.0f, 1.0f
         };
     };
 #endif

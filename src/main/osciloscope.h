@@ -3,13 +3,10 @@
 
     #include <GLFW/glfw3.h>
     #include <stdint.h>
-    #include <pthread.h>
     #include <puertoSerie.h>
     #include <grid.h>
 
     #define VIEW_2D_ENABLE
-
-    void* task1(void* data);
 
     class WindowOsciloscope{
         public:
@@ -25,7 +22,6 @@
             ComSerial psoc;
         private:
             GLFWwindow* window;
-            pthread_t hilo1;
             GLuint VAOs[2], VBOs[2];
             float backgroundColor[4];
             unsigned int idP;

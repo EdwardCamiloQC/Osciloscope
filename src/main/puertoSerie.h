@@ -10,10 +10,10 @@
         public:
             ComSerial(const char* port);
             void run();
+            void scrollSignal();
             ~ComSerial();
         public:
-            float dataVoltage[2000];
-            float prueba[6];
+            float dataVoltage[400];
         private:
             LibSerial::SerialStream mySerial;
             unsigned int valueADC;

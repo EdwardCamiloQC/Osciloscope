@@ -27,13 +27,6 @@ void inputKeys(GLFWwindow* window){
     }
 }
 
-void* task1(void* data){
-    while(((WindowOsciloscope*)data)->getFlagRun()){
-        ((WindowOsciloscope*)data)->psoc.run();
-    }
-    pthread_exit(NULL);
-}
-
 WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char* port):ancho(width), alto(height), psoc(port), window(nullptr){
     flagRun = true;
     backgroundColor[0] = 0.3f;
@@ -63,8 +56,6 @@ WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char
     }
     ProgramShaders program("./src/shaders/nivel1.vs", "./src/shaders/nivel1.fs");
     idP = program.shaderProgramId;
-
-    pthread_create(&hilo1, NULL, &task1, this);
 
     glGenVertexArrays(2, VAOs);
     glGenBuffers(2, VBOs);
@@ -116,18 +107,20 @@ void WindowOsciloscope::run(){
         lastFrame = currentFrame;
 
         inputKeys(window);
+        psoc.run();
 
         glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
 
         glUseProgram(idP);
         
         glBindVertexArray(VAOs[0]);
         glDrawArrays(GL_LINES, 0, sizeof(grid.vertex)/(sizeof(float)*2));
         
-        glPointSize(5);
-        glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
+        glPointSize(3);
         glBindVertexArray(VAOs[1]);
         glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage)/sizeof(float));
         glBindVertexArray(0);
@@ -139,7 +132,6 @@ void WindowOsciloscope::run(){
 
 WindowOsciloscope::~WindowOsciloscope(){
     flagRun = false;
-    pthread_join(hilo1, NULL);
     glDeleteVertexArrays(2, VAOs);
     glDeleteBuffers(2, VBOs);
     glDeleteProgram(idP);

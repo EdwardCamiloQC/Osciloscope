@@ -3,14 +3,17 @@
 
 ComSerial::ComSerial(const char* port){
     flagOpen = false;
-    float auxAxeX = -1.0f;
-    prueba[0] = -0.5f;  prueba[1] = 0.0f;
-    prueba[2] = 0.0f;   prueba[3] = 0.5f;
-    prueba[4] = 0.5f;   prueba[5] = 0.0f;
 
-    for(size_t  i = 1; i < sizeof(dataVoltage)/sizeof(float); i+=2){
-        dataVoltage[i] = 0.0f;
-        dataVoltage[i-1] = auxAxeX + static_cast<float>(2)/static_cast<float>(sizeof(dataVoltage));
+    for(size_t  i = 0; i < sizeof(dataVoltage)/sizeof(float); i++){
+        if(i%2 == 0){
+            if(i == 0){
+                dataVoltage[i] = -1.0f;
+            }else{
+                dataVoltage[i] = dataVoltage[i-2] + static_cast<float>(4)*static_cast<float>(sizeof(float))/static_cast<float>(sizeof(dataVoltage));
+            }
+        }else{
+            dataVoltage[i] = 0.0f;
+        }
     }
     try{
         mySerial.Open(port);
@@ -35,17 +38,24 @@ ComSerial::ComSerial(const char* port){
 }
 
 void ComSerial::run(){
-    for(size_t i = 1; i < sizeof(dataVoltage)/sizeof(float); i+=2){
-        if(mySerial.IsOpen()){
-            std::string line;
-            std::getline(mySerial, line);
-            if(startWith(line, "#")){
-                sscanf(line.c_str(), "#%x@/r/n", &valueADC);
-                voltage = static_cast<float>(valueADC) / 65535;
-                dataVoltage[i] = voltage;
-                std::cout << valueADC << "..." << voltage << std::endl;
-            }
+    scrollSignal();
+    if(mySerial.IsOpen()){
+        std::string line;
+        std::getline(mySerial, line);
+        if(startWith(line, "#")){
+            sscanf(line.c_str(), "#%x@/r/n", &valueADC);
+            voltage = static_cast<float>(valueADC) / 65535;
+            dataVoltage[sizeof(dataVoltage)/sizeof(float)-1] = voltage;
+            std::cout << valueADC << "..." << voltage << std::endl;
         }
+    }else{
+        dataVoltage[sizeof(dataVoltage)/sizeof(float)-1] = 0.0f;
+    }
+}
+
+void ComSerial::scrollSignal(){
+    for(size_t i = 1; i < (sizeof(dataVoltage)/sizeof(float))-1; i+=2){
+        dataVoltage[i] = dataVoltage[i+2];
     }
 }
 
