@@ -4,15 +4,15 @@
 ComSerial::ComSerial(const char* port){
     flagOpen = false;
 
-    for(size_t  i = 0; i < sizeof(dataVoltage)/sizeof(float); i++){
+    for(size_t  i = 0; i < sizeof(dataVoltage1)/sizeof(float); i++){
         if(i%2 == 0){
             if(i == 0){
-                dataVoltage[i] = -1.0f;
+                dataVoltage1[i] = -1.0f;
             }else{
-                dataVoltage[i] = dataVoltage[i-2] + static_cast<float>(4)*static_cast<float>(sizeof(float))/static_cast<float>(sizeof(dataVoltage));
+                dataVoltage1[i] = dataVoltage1[i-2] + static_cast<float>(4)*static_cast<float>(sizeof(float))/static_cast<float>(sizeof(dataVoltage1));
             }
         }else{
-            dataVoltage[i] = 0.0f;
+            dataVoltage1[i] = 0.0f;
         }
     }
     try{
@@ -38,24 +38,26 @@ ComSerial::ComSerial(const char* port){
 }
 
 void ComSerial::run(){
-    scrollSignal();
-    if(mySerial.IsOpen()){
-        std::string line;
-        std::getline(mySerial, line);
-        if(startWith(line, "#")){
-            sscanf(line.c_str(), "#%x@/r/n", &valueADC);
-            voltage = static_cast<float>(valueADC) / 65535;
-            dataVoltage[sizeof(dataVoltage)/sizeof(float)-1] = voltage;
-            std::cout << valueADC << "..." << voltage << std::endl;
+    scrollSignal(1);
+    for(size_t i = 20; i > 0; i--){
+        if(mySerial.IsOpen()){
+            std::string line;
+            std::getline(mySerial, line);
+            if(startWith(line, "#")){
+                sscanf(line.c_str(), "#%x@%x/n", &signal1, &signal2);
+                voltage = static_cast<float>(signal1) / 65535;
+                dataVoltage1[sizeof(dataVoltage1)/sizeof(float)+1-2*i] = voltage;
+                std::cout << signal1 << "..." << voltage << std::endl;
+            }
+        }else{
+            dataVoltage1[sizeof(dataVoltage1)/sizeof(float)+1-2*i] = 0.0f;
         }
-    }else{
-        dataVoltage[sizeof(dataVoltage)/sizeof(float)-1] = 0.0f;
     }
 }
 
-void ComSerial::scrollSignal(){
-    for(size_t i = 1; i < (sizeof(dataVoltage)/sizeof(float))-1; i+=2){
-        dataVoltage[i] = dataVoltage[i+2];
+void ComSerial::scrollSignal(unsigned short landslide){
+    for(size_t i = 1; i < (sizeof(dataVoltage1)/sizeof(float))-1; i+=2){
+        dataVoltage1[i] = dataVoltage1[i+2*landslide];
     }
 }
 

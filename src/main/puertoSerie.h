@@ -7,16 +7,18 @@
     bool startWith(std::string line, const char* text);
 
     class ComSerial{
+        /*Methods*/
         public:
             ComSerial(const char* port);
             void run();
-            void scrollSignal();
             ~ComSerial();
+        private:
+            void scrollSignal(unsigned short landslide);
         public:
-            float dataVoltage[400];
+            float dataVoltage1[600];
         private:
             LibSerial::SerialStream mySerial;
-            unsigned int valueADC;
+            unsigned int signal1, signal2;
             float voltage;
             bool flagOpen;
     };

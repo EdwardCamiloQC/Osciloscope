@@ -61,9 +61,9 @@ WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char
     glGenBuffers(2, VBOs);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage), 0, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage1), 0, GL_STATIC_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(grid.vertex), grid.vertex);
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage1), psoc.dataVoltage1);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(grid.colorSignal), grid.colorSignal, GL_STATIC_DRAW);
@@ -113,7 +113,7 @@ void WindowOsciloscope::run(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage), psoc.dataVoltage);
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage1), psoc.dataVoltage1);
 
         glUseProgram(idP);
         
@@ -122,7 +122,7 @@ void WindowOsciloscope::run(){
         
         glPointSize(3);
         glBindVertexArray(VAOs[1]);
-        glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage)/sizeof(float));
+        glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage1)/sizeof(float));
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);
