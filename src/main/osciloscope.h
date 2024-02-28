@@ -22,7 +22,7 @@
             ComSerial psoc;
         private:
             GLFWwindow* window;
-            GLuint VAOs[2], VBOs[2];
+            GLuint VAOs[3], VBOs[3];
             float backgroundColor[4];
             unsigned int idP;
             struct Cuadricula grid;

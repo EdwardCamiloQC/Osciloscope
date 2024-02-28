@@ -57,16 +57,20 @@ WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char
     ProgramShaders program("./src/shaders/nivel1.vs", "./src/shaders/nivel1.fs");
     idP = program.shaderProgramId;
 
-    glGenVertexArrays(2, VAOs);
-    glGenBuffers(2, VBOs);
+    glGenVertexArrays(3, VAOs);
+    glGenBuffers(3, VBOs);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage1), 0, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage1) + sizeof(psoc.dataVoltage2), 0, GL_STATIC_DRAW);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(grid.vertex), grid.vertex);
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage1), psoc.dataVoltage1);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage1), sizeof(psoc.dataVoltage2), psoc.dataVoltage2);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(grid.colorSignal), grid.colorSignal, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(psoc.colorSignal1), psoc.colorSignal1, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(psoc.colorSignal2), psoc.colorSignal2, GL_STATIC_DRAW);
 
     glBindVertexArray(VAOs[0]);
     glEnableVertexAttribArray(0);
@@ -75,11 +79,18 @@ WindowOsciloscope::WindowOsciloscope(uint16_t width, uint16_t height, const char
 
     glBindVertexArray(VAOs[1]);
     glEnableVertexAttribArray(0);
-    glColorPointer(3, GL_FLOAT, 0, grid.colorSignal);
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)(sizeof(grid.vertex)));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, VBOs[1]);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+
+    glBindVertexArray(VAOs[2]);
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)(sizeof(grid.vertex)+sizeof(psoc.dataVoltage1)));
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
 
     glBindVertexArray(0);
@@ -120,9 +131,13 @@ void WindowOsciloscope::run(){
         glBindVertexArray(VAOs[0]);
         glDrawArrays(GL_LINES, 0, sizeof(grid.vertex)/(sizeof(float)*2));
         
-        glPointSize(3);
+        glPointSize(2);
         glBindVertexArray(VAOs[1]);
         glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage1)/sizeof(float));
+
+        glBindVertexArray(VAOs[2]);
+        glDrawArrays(GL_POINTS, 0, sizeof(psoc.dataVoltage2)/sizeof(float));
+
         glBindVertexArray(0);
 
         glfwSwapBuffers(window);

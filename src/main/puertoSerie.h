@@ -13,9 +13,15 @@
             void run();
             ~ComSerial();
         private:
-            void scrollSignal(unsigned short landslide);
+            void initSignalsToZero();
+            void assignColorToSignals();
+            void openPort(const char* port);
+            void scrollSignals(unsigned short landslide);
         public:
-            float dataVoltage1[600];
+            float dataVoltage1[800];
+            float colorSignal1[1200];
+            float dataVoltage2[800];
+            float colorSignal2[1200];
         private:
             LibSerial::SerialStream mySerial;
             unsigned int signal1, signal2;
