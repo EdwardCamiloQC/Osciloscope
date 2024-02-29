@@ -118,13 +118,14 @@ void WindowOsciloscope::run(){
         lastFrame = currentFrame;
 
         inputKeys(window);
-        psoc.run();
+        psoc.run(10);
 
         glClearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
         glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex), sizeof(psoc.dataVoltage1), psoc.dataVoltage1);
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(grid.vertex) + sizeof(psoc.dataVoltage1), sizeof(psoc.dataVoltage2), psoc.dataVoltage2);
 
         glUseProgram(idP);
         

@@ -10,7 +10,7 @@
         /*Methods*/
         public:
             ComSerial(const char* port);
-            void run();
+            void run(unsigned short scroll);
             ~ComSerial();
         private:
             void initSignalsToZero();

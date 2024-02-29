@@ -1,3 +1,5 @@
+https://youtu.be/gADwj1e69bg
+
 This project is my personal oscilloscope that I use to see the voltage in my
 electronic projects ant it is implemented with OpenGL in C++ lenguage.
 

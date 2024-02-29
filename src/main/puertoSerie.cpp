@@ -8,8 +8,8 @@ ComSerial::ComSerial(const char* port){
     openPort(port);
 }
 
-void ComSerial::run(){
-    scrollSignals(20);
+void ComSerial::run(unsigned short scroll){
+    scrollSignals(scroll);
     for(size_t i = 20; i > 0; i--){
         if(mySerial.IsOpen()){
             std::string line;
