@@ -1,58 +1,93 @@
+#---------------------------------------------------
+#---------------------------------------------------
+#					COLORS
+#---------------------------------------------------
+#---------------------------------------------------
+NORMAL = '\e[0m'
+BLACK = '\e[0,30m'
+RED = '\e[0;31m'
+GREEN = '\e[0;32m'
+ORANGE = '\e[0;33m'
+BLUE = '\e[0;34m'
+PURPLE = '\e[0;35m'
+CYAN = '\e[0;36m'
+LIGHT_GRAY = '\e[0;37m'
+DARK_GRAY = '\e[1;30m'
+LIGHT_RED = '\e[1;31m'
+LIGHT_GREEN = '\e[1;32m'
+YELLOW = '\e[1;33m'
+LIGHT_BLUE = '\e[1;34m'
+LIGHT_PURPLE = '\e[1;35m'
+LIGHT_CYAN = '\e[1;36m'
+WHITE = '\e[1;37m'
+
+#---------------------------------------------------
+#---------------------------------------------------
+#					DIRECTIONS
+#---------------------------------------------------
+#---------------------------------------------------
 MAIN_DIR = ./src/main
-MAPS_DIR = ./src/mapsCode
-OBJECTS_DIR = ./src/objectsCode
-GLAD_DIR = ./src/include
-SHADERS_DIR = ./src/shaders
-EXTRA_DIR = ./src/extraCode
 BUILD_DIR = build
-MISLIBS_DIR = /home/edward/Documentos/CodigosC++/MisLibrerias
-VPATH = $(MAIN_DIR):$(MAPS_DIR):$(OBJECTS_DIR):$(MISLIBS_DIR):$(GLAD_DIR):$(SHADERS_DIR)
+SHADERS_DIR = ./src/shaders
 
-INCLUDES = -I$(EXTRA_DIR) -I$(MAIN_DIR) -I$(MAPS_DIR) -I$(OBJECTS_DIR) -I$(MISLIBS_DIR) -I$(GLAD_DIR) -I$(SHADERS_DIR) -I/usr/include/assimp -I/usr/include/libserial
-LIBRARIES = -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -lserial
-#LIBRARIES += -L
-COMPILER = g++
-DEBUGER = gdb
-FLAGSCPP = -c -Wall -g
-FLAGSDEBUG = -g
+VPATH = $(MAIN_DIR):$(SHADERS_DIR)
 
+#---------------------------------------------------
+#---------------------------------------------------
+#					VARIABLES AND FLAGS
+#---------------------------------------------------
+#---------------------------------------------------
 PROJECT = $(notdir $(shell pwd))
 SOURCES = $(wildcard $(MAIN_DIR)/*.cpp)
-SOURCES += $(wildcard $(MAPS_DIR)/*.cpp)
-SOURCES += $(wildcard $(OBJECTS_DIR)/*.cpp)
-SOURCES += $(wildcard $(SHADERS_DIR)/shaders.cpp)
-SOURCES += $(wildcard $(MISLIBS_DIR)/figure.cpp)
+SOURCES += $(wildcard $(SHADERS_DIR)/*cpp)
 OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
 
-$(BUILD_DIR)/$(PROJECT) : $(BUILD_DIR)/glad.o $(OBJECTS)
-	$(info ---------------END COMPILATION---------------)
-	$(info /-                                         -/)
-	$(info ----------------START LINKING----------------)
-	$(COMPILER) -o $@ $^ $(LIBRARIES) $(INCLUDES)
+COMPILER = g++
+DEBUGER = gdb
+FLAGS_CPP = -c -Wall
+FLAGS_DEBUG = -g
+FLAG_GTK3_C = `pkg-config --cflags gtk+-3.0`
+FLAG_GTK3_L = `pkg-config --libs gtk+-3.0`
+FLAG_GTK4_C = `pkg-config --cflags gtk4`
+FLAG_GTK4_L = `pkg-config --libs gtk4`
 
-$(BUILD_DIR)/%.o : %.cpp | $(BUILD_DIR)
-	$(COMPILER) $(FLAGSCPP) $(INCLUDES) $< -o $@
+INCLUDES = -I$(MAIN_DIR) -I$(SHADERS_DIR) -I/usr/include/libserial
+LIBRARIES = -lepoxy -lX11 -lserial
 
-$(BUILD_DIR)/glad.o : $(GLAD_DIR)/glad.c
-	$(COMPILER) $(FLAGSCPP) $(INCLUDES) $< -o $@
+#---------------------------------------------------
+#---------------------------------------------------
+#					CONSTRUCTION
+#---------------------------------------------------
+#---------------------------------------------------
+$(BUILD_DIR)/$(PROJECT): $(OBJECTS)
+	@echo -e "$(LIGHT_CYAN)---------- START LINKING-----------\$(NORMAL)"
+	$(COMPILER) $(FLAG_GTK3_C) -o $@ $^ $(FLAG_GTK3_L) $(LIBRARIES) $(INCLUDES)
+	@echo -e "$(GREEN) CONSTRUCTION SUCCESS $(NORMAL)"
 
-$(BUILD_DIR) :
+$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
+	@echo -e "$(LIGHT_CYAN)----------COMPILATION $(notdir $<)----------$(NORMAL)"
+	$(COMPILER) $(FLAGS_CPP) $(FLAGS_DEBUG) $(FLAG_GTK3_C) $(FLAG_GTK3_L) $(INCLUDES) $< -o $@
+
+$(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
-rebuild :
+#---------------------------------------------------
+#---------------------------------------------------
+#					FUNCTIONS
+#---------------------------------------------------
+#---------------------------------------------------
+clean:
+	clear
+	rm ./$(BUILD_DIR)/*
+
+rebuild:
 	make clean
 	make
 
-runProject :
+runProject:
 	clear
 	./$(BUILD_DIR)/$(PROJECT)
 
-debugProject :
-	$(DEBUGER) ./$(BUILD_DIR)/$(PROJECT)
-
-info :
-	$(info $(OBJECTS))
-
-clean :
+debugProject:
 	clear
-	rm ./$(BUILD_DIR)/*
+	gdb ./$(BUILD_DIR)/$(PROJECT)

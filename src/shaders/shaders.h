@@ -4,15 +4,17 @@
     #include <string>
 
     class ProgramShaders{
+        //      Methods     //
         public:
             ProgramShaders(const char* pathVertex, const char* pathFragment);
-            ~ProgramShaders() = default;
+            ~ProgramShaders();
+        private:
+            unsigned int compileShaders(const std::string& shaderPath, unsigned int moduleType);
+            void linkShaders();
+        //      Attributes  //
         public:
             unsigned int shaderProgramId;
         private:
             unsigned int vertex, fragment;
-        private:
-            unsigned int compileShaders(const std::string& shaderPath, unsigned int moduleType);
-            void linkShaders();
     };
 #endif

@@ -17,11 +17,13 @@
             void assignColorToSignals();
             void openPort(const char* port);
             void scrollSignals(unsigned short landslide);
+            void assignElements();
         public:
             float dataVoltage1[800];
             float colorSignal1[1200];
             float dataVoltage2[800];
             float colorSignal2[1200];
+            unsigned int elementSignals[798];
         private:
             LibSerial::SerialStream mySerial;
             unsigned int signal1, signal2;

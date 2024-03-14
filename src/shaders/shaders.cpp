@@ -1,5 +1,5 @@
 #include <shaders.h>
-#include <glad/glad.h>
+#include <epoxy/gl.h>
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -50,4 +50,7 @@ void ProgramShaders :: linkShaders(){
         glGetProgramInfoLog(shaderProgramId, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
+}
+
+ProgramShaders::~ProgramShaders(){
 }

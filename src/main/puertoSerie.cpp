@@ -5,6 +5,7 @@ ComSerial::ComSerial(const char* port){
     flagOpen = false;
     initSignalsToZero();
     assignColorToSignals();
+    assignElements();
     openPort(port);
 }
 
@@ -84,6 +85,15 @@ void ComSerial::scrollSignals(unsigned short landslide){
         dataVoltage1[i] = dataVoltage1[i+2*landslide];
         dataVoltage2[i] = dataVoltage2[i+2*landslide];
     }
+}
+
+void ComSerial::assignElements(){
+    elementSignals[0] = 0;
+    for(size_t i = 1; i < sizeof(elementSignals)/sizeof(unsigned int)-2; i+=2){
+        elementSignals[i] = i;
+        elementSignals[i+1] = i;
+    }
+    elementSignals[sizeof(elementSignals)/sizeof(unsigned int)-1] = (sizeof(dataVoltage1)/sizeof(float))/2-1;
 }
 
 ComSerial::~ComSerial(){
