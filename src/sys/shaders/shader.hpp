@@ -3,13 +3,13 @@
 
     #include <string>
 
-    class ProgramShaders{
+    class ProgramShader{
         //      Methods     //
         public:
-            ProgramShaders(const char* pathVertex, const char* pathFragment);
-            ~ProgramShaders();
+            ProgramShader(const char* pathVertex, const char* pathFragment);
+            ~ProgramShader();
         private:
-            unsigned int compileShaders(const std::string& shaderPath, unsigned int moduleType);
+            unsigned int compileShader(const std::string& shaderPath, unsigned int moduleType);
             void linkShaders();
         //      Attributes  //
         public:
