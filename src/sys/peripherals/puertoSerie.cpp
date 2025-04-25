@@ -63,7 +63,7 @@ bool ComSerial::getFlagSerial(){
 void ComSerial::readValues(unsigned int nValues){
     scrollVoltages(nValues);
     if(mySerial.IsOpen()){
-        unsigned int signal1, signal2, signal3, signal4;
+        unsigned int signal1{0}, signal2{0}, signal3{0}, signal4{0};
         std::string line;
         std::getline(mySerial, line);
         for(unsigned int i = voltage1->length-nValues; i < voltage1->length; i++){
