@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['readvalues_0',['readvalues',['../classCapturer.html#a89d23fcd273b6c0377505394dc860568',1,'Capturer::readValues()'],['../classComSerial.html#aae23b2e2d04072ee57720d97cefd3589',1,'ComSerial::readValues()']]],
-  ['run_1',['run',['../classOscilloscope.html#ac1709701844c881655043ea34b449112',1,'Oscilloscope']]]
+  ['normalizesignal_0',['normalizeSignal',['../fft_8hpp.html#a10a8f66011de8fb5f515aa6da4029c9a',1,'fft.hpp']]]
 ];

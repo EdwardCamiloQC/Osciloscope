@@ -1,3 +1,8 @@
+/** \file fft.hpp
+    \author Edward Camilo
+    \version v1.0
+    \date enero 2026
+ */
 #ifndef _FFT_H_
     #define _FFT_H_
 
@@ -5,6 +10,11 @@
     #include <iostream>
     #include <stdio.h>
 
+    /** \brief Separates the odd data in a array.
+        \tparam values: Values to analyze.
+        \param len: Data T1 length. 
+        \tparam odd: Array where stores the odd data.
+     */
     template<typename T1, typename T2>
     void oddValues(const T1* values, unsigned int len, T2* odd){
         if(!(len%2)){
@@ -21,6 +31,11 @@
         }
     }
 
+    /** \brief Separates the even data in a array.
+        \tparam values: Values to analyze.
+        \param len: Data T1 length.
+        \tparam even: Array where stores the even data.
+     */
     template<typename T1, typename T2>
     void evenValues(const T1* values, unsigned int len, T2* even){
         if(!(len%2)){
@@ -38,6 +53,11 @@
         }
     }
 
+    /** \brief Calculates the fast fourier transform.
+        \tparam signal: Signal to evaluate.
+        \param length: Signal length.
+        \tparam transform: Signal where collect the result.
+     */
     template <typename T1, typename T2>
     void calculateFFT(const T1* signal, unsigned int length, std::complex<T2>* transform){
         if(length>1){
@@ -58,6 +78,11 @@
         }
     }
 
+    /** \brief Calculates the module of the transform.
+        \tparam transform: The fourier transform.
+        \param n: Data length.
+        \tparam module: Module calculated.
+     */
     template<typename T>
     void calculateModule(const std::complex<T>* transform, unsigned int n, T* module){
         for(size_t k=0; k<n; k++){
@@ -65,6 +90,11 @@
         }
     }
 
+    /** \brief Calculates the argument of the transform.
+        \tparam trasnform: The fourier trasnform.
+        \param n: Data length.
+        \tparam argument: The array where the result will be store.
+     */
     template<typename T>
     void calculateArgument(const std::complex<T>* transform, unsigned int n, T* argument){
         for(size_t k=0; k<n; k++){
@@ -72,6 +102,10 @@
         }
     }
 
+    /** \brief This function normalizes the signal.
+        \tparam tansform: Transform to normalize.
+        \param n: Data length.
+     */
     template<typename T>
     void normalizeSignal(T *transform, unsigned int n){
         for(unsigned int i = 0; i < n; i++){
@@ -81,6 +115,12 @@
         }
     }
 
+    /** \brief Algorithm fft
+        \tparam signal: Signal to transform.
+        \param n: Data length.
+        \tparam trasnform: Array to the transform.
+        \param normalize: 1 yes, 0 no.
+     */
     template<typename T1, typename T2>
     void fft(const T1* signal, unsigned int n, T2* transform, bool normalize){
         double log2n = log(n)/log(2);
@@ -95,6 +135,10 @@
         }
     }
 
+    /** \brief Shows the transform.
+        \tparam transform: The transform.
+        \param n: Data length.
+     */
     template<typename T>
     void seeTransform(const std::complex<T>* transform, unsigned int n){
         for(size_t k=0; k<n; k++){

@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['labelfreq_0',['labelFreq',['../classScreen.html#a6968c247ba52249f784e7c9ee7222eb6',1,'Screen']]],
-  ['labelport_1',['labelPort',['../classScreen.html#ae85aabf31c89cb36d1d570b17a7ee233',1,'Screen']]],
-  ['lavelvoltdiv_2',['lavelVoltDiv',['../classScreen.html#a502c679d278545bc3d224e0c63535286',1,'Screen']]]
+  ['getflagserial_0',['getFlagSerial',['../classComSerial.html#aa0f5c39f6398318a3594562e5c1de54e',1,'ComSerial']]],
+  ['getinstance_1',['getInstance',['../classOscilloscope.html#a821123ce5ce4507653fbead26b3ae5b1',1,'Oscilloscope']]],
+  ['glareaspectrum_2',['glAreaSpectrum',['../classScreen.html#a6c5cacd8e096d86131fcc7362c428c60',1,'Screen']]],
+  ['gridsignals_3',['gridSignals',['../classScreen.html#a202f39aa24c47cc3cc49f98231f8175f',1,'Screen']]],
+  ['gridspectrum_4',['gridspectrum',['../structGridSpectrum.html',1,'GridSpectrum'],['../classScreen.html#a56907379d8cd1fb1cda80db031df2f11',1,'Screen::gridSpectrum']]],
+  ['gridvoltage_5',['gridvoltage',['../structGridVoltage.html',1,'GridVoltage'],['../classScreen.html#ac13f9bc46eb94ed0ba15e7e4c08de218',1,'Screen::gridVoltage']]]
 ];
