@@ -6,7 +6,7 @@
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,33,196,73,193,69,256,28"/>
 <area shape="rect" id="Node000010" href="$signalCapturer_8hpp_source.html" title=" " alt="" coords="261,79,507,104"/>
 <area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="294,28,356,69,353,73,291,33"/>
-<area shape="rect" id="Node000012" href="$puertoSerie_8hpp.html" title="Declaración de la clase ComSerial que hace uso de la biblioteca SerialStream.h." alt="" coords="531,79,759,104"/>
+<area shape="rect" id="Node000012" href="$puertoSerie_8hpp.html" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="531,79,759,104"/>
 <area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="335,28,572,73,571,79,334,33"/>
 <area shape="rect" id="Node000004" title=" " alt="" coords="25,159,105,185"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,106,93,153,89,149,149,102"/>

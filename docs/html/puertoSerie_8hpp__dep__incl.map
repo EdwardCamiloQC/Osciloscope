@@ -1,5 +1,5 @@
 <map id="src/sys/peripherals/puertoSerie.hpp" name="src/sys/peripherals/puertoSerie.hpp">
-<area shape="rect" id="Node000001" title="Declaración de la clase ComSerial que hace uso de la biblioteca SerialStream.h." alt="" coords="23,5,167,45"/>
+<area shape="rect" id="Node000001" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="23,5,167,45"/>
 <area shape="rect" id="Node000002" href="$oscilloscope_8hpp.html" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="5,93,184,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,93,92,93,92,59"/>
 </map>

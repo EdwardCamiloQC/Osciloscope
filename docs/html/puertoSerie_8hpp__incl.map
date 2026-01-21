@@ -1,5 +1,5 @@
 <map id="src/sys/peripherals/puertoSerie.hpp" name="src/sys/peripherals/puertoSerie.hpp">
-<area shape="rect" id="Node000001" title="Declaración de la clase ComSerial que hace uso de la biblioteca SerialStream.h." alt="" coords="86,5,230,45"/>
+<area shape="rect" id="Node000001" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="86,5,230,45"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,93,124,119"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,48,91,86,88,82,134,44"/>
 <area shape="rect" id="Node000003" href="$capturer_8hpp.html" title="It collects the data it that receives." alt="" coords="148,93,355,119"/>
