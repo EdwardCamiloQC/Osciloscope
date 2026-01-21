@@ -112,9 +112,6 @@ _deps
 CMakeUserPresets.json
 
 ### Doxygen ###
-docs/html/search/*
-docs/html/*.png
-docs/html/*.map
 latex
 
 # End of https://www.toptal.com/developers/gitignore/api/c,c++,visualstudiocode
