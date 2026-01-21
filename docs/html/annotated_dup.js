@@ -1,6 +1,6 @@
 var annotated_dup =
 [
-    [ "Capturer", "classCapturer.html", null ],
+    [ "Capturer", "classCapturer.html", "classCapturer" ],
     [ "ComSerial", "classComSerial.html", "classComSerial" ],
     [ "GridSpectrum", "structGridSpectrum.html", "structGridSpectrum" ],
     [ "GridVoltage", "structGridVoltage.html", "structGridVoltage" ],

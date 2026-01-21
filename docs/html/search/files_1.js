@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['puertoserie_2ehpp_0',['puertoSerie.hpp',['../puertoSerie_8hpp.html',1,'']]]
+  ['oscilloscope_2ehpp_0',['oscilloscope.hpp',['../oscilloscope_8hpp.html',1,'']]]
 ];

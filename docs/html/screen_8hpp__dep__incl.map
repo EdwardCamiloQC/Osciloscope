@@ -1,0 +1,5 @@
+<map id="src/sys/gui/screen.hpp" name="src/sys/gui/screen.hpp">
+<area shape="rect" id="Node000001" title="The screen shows the signals and allows you to modify each one separately." alt="" coords="11,5,178,31"/>
+<area shape="rect" id="Node000002" href="$oscilloscope_8hpp.html" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="5,79,184,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,44,97,79,92,79,92,44"/>
+</map>
