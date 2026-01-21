@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['openport_0',['openPort',['../classComSerial.html#a75bc54386f422e767f0dba0aa6eec59d',1,'ComSerial']]],
-  ['operator_3d_1',['operator=',['../classOscilloscope.html#ad04a2cd3fe0cc0cea914c09877528786',1,'Oscilloscope::operator=()'],['../classComSerial.html#a5a255589c9910be548a068d55393e1c8',1,'ComSerial::operator=()']]],
-  ['oscilloscope_2',['oscilloscope',['../classOscilloscope.html',1,'Oscilloscope'],['../classOscilloscope.html#a92f3de5d6f2e47a695216532a914af89',1,'Oscilloscope::Oscilloscope()']]],
-  ['oscilloscope_2ehpp_3',['oscilloscope.hpp',['../oscilloscope_8hpp.html',1,'']]]
+  ['getflagserial_0',['getFlagSerial',['../classComSerial.html#aa0f5c39f6398318a3594562e5c1de54e',1,'ComSerial']]],
+  ['getinstance_1',['getInstance',['../classOscilloscope.html#a821123ce5ce4507653fbead26b3ae5b1',1,'Oscilloscope']]],
+  ['glareaspectrum_2',['glAreaSpectrum',['../classScreen.html#a6c5cacd8e096d86131fcc7362c428c60',1,'Screen']]],
+  ['gridsignals_3',['gridSignals',['../classScreen.html#a202f39aa24c47cc3cc49f98231f8175f',1,'Screen']]],
+  ['gridspectrum_4',['gridspectrum',['../structGridSpectrum.html',1,'GridSpectrum'],['../classScreen.html#a56907379d8cd1fb1cda80db031df2f11',1,'Screen::gridSpectrum']]],
+  ['gridvoltage_5',['gridvoltage',['../structGridVoltage.html',1,'GridVoltage'],['../classScreen.html#ac13f9bc46eb94ed0ba15e7e4c08de218',1,'Screen::gridVoltage']]]
 ];

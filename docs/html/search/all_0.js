@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['capturer_0',['Capturer',['../classCapturer.html',1,'']]],
-  ['closeport_1',['closePort',['../classComSerial.html#a85a86f2bcfea0f619dafc6009ce18665',1,'ComSerial']]],
-  ['comserial_2',['comserial',['../classComSerial.html',1,'ComSerial'],['../classComSerial.html#a46ad64b65be46ea2466d4994bc5457eb',1,'ComSerial::ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4)'],['../classComSerial.html#a4674f6d511939d76f9f5631e90c6303e',1,'ComSerial::ComSerial(const ComSerial &amp;)=delete']]]
+  ['boxcontrol_0',['boxControl',['../classScreen.html#a27362494f619eb5da95f7e7e13e60963',1,'Screen']]],
+  ['boxpanels_1',['boxPanels',['../classScreen.html#ad874ce1c3f9fc3ab3736c5d875e16bcb',1,'Screen']]],
+  ['buttonport_2',['buttonPort',['../classScreen.html#a564339e56427314983489945cb4f7f1b',1,'Screen']]],
+  ['buttonstartstop_3',['buttonStartStop',['../classScreen.html#a98ae50b5fac95594f64c642d2257213c',1,'Screen']]]
 ];
