@@ -1,5 +1,4 @@
 /** \file capturer.hpp
-    \brief It collects the data it that receives.
     \author Edward Camilo
     \version v1.0
     \date enero 2026
@@ -7,7 +6,7 @@
 #ifndef _CAPTURER_H_
     #define _CAPTURER_H_
 
-    /** \brief It collects the data it that receives. 
+    /** \brief It is a interface that allows change between some catchers. 
         \class
      */
     class Capturer{

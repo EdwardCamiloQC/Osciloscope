@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,33,83,79,82,74,236,28"/>
 <area shape="rect" id="Node000003" href="$screen_8hpp.html" title="The screen shows the signals and allows you to modify each one separately." alt="" coords="94,79,237,104"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,33,196,73,193,69,256,28"/>
-<area shape="rect" id="Node000010" href="$signalCapturer_8hpp_source.html" title=" " alt="" coords="261,79,507,104"/>
+<area shape="rect" id="Node000010" href="$signalCapturer_8hpp.html" title=" " alt="" coords="261,79,507,104"/>
 <area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="294,28,356,69,353,73,291,33"/>
 <area shape="rect" id="Node000012" href="$puertoSerie_8hpp.html" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="531,79,759,104"/>
 <area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="335,28,572,73,571,79,334,33"/>
@@ -25,6 +25,6 @@
 <area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="390,103,402,145,397,147,385,105"/>
 <area shape="rect" id="Node000013" title=" " alt="" coords="535,159,654,185"/>
 <area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="640,106,612,149,607,146,636,103"/>
-<area shape="rect" id="Node000014" href="$capturer_8hpp.html" title="It collects the data it that receives." alt="" coords="678,159,885,185"/>
+<area shape="rect" id="Node000014" href="$capturer_8hpp.html" title=" " alt="" coords="678,159,885,185"/>
 <area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="667,102,751,150,748,155,664,106"/>
 </map>

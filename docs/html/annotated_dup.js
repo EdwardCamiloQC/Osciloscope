@@ -6,7 +6,7 @@ var annotated_dup =
     [ "GridVoltage", "structGridVoltage.html", "structGridVoltage" ],
     [ "Oscilloscope", "classOscilloscope.html", "classOscilloscope" ],
     [ "Screen", "classScreen.html", "classScreen" ],
-    [ "SignalCapturer", "classSignalCapturer.html", null ],
+    [ "SignalCapturer", "classSignalCapturer.html", "classSignalCapturer" ],
     [ "SignalObject", "classSignalObject.html", null ],
     [ "SpectrumSignal", "classSpectrumSignal.html", null ],
     [ "VoltageSignal", "classVoltageSignal.html", null ]
