@@ -17,17 +17,18 @@
         \class Oscilloscope
      */
     class Oscilloscope{
-    // Attributes
+        // Attributes
         private:
             static Oscilloscope* instance_;
             static std::mutex mutex_;
+        public:
+            bool stateOnOff_; ///< State that indicates whether the application is running.
+        private:
             Screen screen;
             SignalCapturer signalCapturer;
             ComSerial comSerial;
-        public:
-            bool stateOnOff_; ///< State that indicates whether the application is running.
-
-    // Methods
+        
+        // Methods
         private:
             /** \brief Creates the instance.
              */
