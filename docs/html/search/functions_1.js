@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['deletegrid_0',['deletegrid',['../structGridVoltage.html#aa88763b56c2275fbaaefc08fa1ffc6a0',1,'GridVoltage::deleteGrid()'],['../structGridSpectrum.html#acab61c6809e57c41c98aa88e1be8019f',1,'GridSpectrum::deleteGrid()']]],
-  ['deletevao_1',['deleteVAO',['../classScreen.html#a8c2e84a5caf2ad71918e4722aac9f5f5',1,'Screen']]],
-  ['destroyinstance_2',['destroyInstance',['../classOscilloscope.html#a0256a2115f11a8511e515719748fc82e',1,'Oscilloscope']]],
-  ['draw_3',['draw',['../structGridVoltage.html#a023dd504c06152ec141bbc2e623a8678',1,'GridVoltage::draw()'],['../structGridSpectrum.html#ada060b863a8ee2941983d978b5b25a55',1,'GridSpectrum::draw()']]],
-  ['drawvao_4',['drawVAO',['../classScreen.html#aaa172b986078126dcb2e8e6e5d968727',1,'Screen']]]
+  ['calculateargument_0',['calculateArgument',['../fft_8hpp.html#add4a91385ea10838b66342413c6e0244',1,'fft.hpp']]],
+  ['calculatefft_1',['calculateFFT',['../fft_8hpp.html#a7cbb98f65334d755762a34b09e1d417f',1,'fft.hpp']]],
+  ['calculatemodule_2',['calculateModule',['../fft_8hpp.html#a2cf5357288abd4a347e18ba925883a20',1,'fft.hpp']]],
+  ['calculatespectrum_3',['calculateSpectrum',['../classVoltageSignal.html#a7207e04c87a40035d7ceead5d52c1cc2',1,'VoltageSignal']]],
+  ['closeport_4',['closePort',['../classComSerial.html#a85a86f2bcfea0f619dafc6009ce18665',1,'ComSerial']]],
+  ['comserial_5',['comserial',['../classComSerial.html#a46ad64b65be46ea2466d4994bc5457eb',1,'ComSerial::ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4)'],['../classComSerial.html#a4674f6d511939d76f9f5631e90c6303e',1,'ComSerial::ComSerial(const ComSerial &amp;)=delete']]],
+  ['creategrid_6',['creategrid',['../structGridVoltage.html#ab0e2dc836e7611cfb01fcac65d51122b',1,'GridVoltage::createGrid()'],['../structGridSpectrum.html#abc2883d7f98209246c4804a7ae785e7e',1,'GridSpectrum::createGrid()']]],
+  ['createvao_7',['createVAO',['../classScreen.html#ae07f13603ad28cec596fd418f3a78b92',1,'Screen']]]
 ];

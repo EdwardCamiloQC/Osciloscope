@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['readvalues_0',['readvalues',['../classCapturer.html#a89d23fcd273b6c0377505394dc860568',1,'Capturer::readValues()'],['../classComSerial.html#aae23b2e2d04072ee57720d97cefd3589',1,'ComSerial::readValues()']]],
-  ['run_1',['run',['../classOscilloscope.html#ac1709701844c881655043ea34b449112',1,'Oscilloscope']]]
+  ['oddvalues_0',['oddValues',['../fft_8hpp.html#a7d6c2e7478421459c81b4b6ff8ed2477',1,'fft.hpp']]],
+  ['openport_1',['openPort',['../classComSerial.html#a75bc54386f422e767f0dba0aa6eec59d',1,'ComSerial']]],
+  ['operator_3d_2',['operator=',['../classVoltageSignal.html#a2738658319ed93a2bac5d906095b7681',1,'VoltageSignal::operator=()'],['../classScreen.html#afcdae092b2be9937782b10f7cd25b84d',1,'Screen::operator=()'],['../classOscilloscope.html#ad04a2cd3fe0cc0cea914c09877528786',1,'Oscilloscope::operator=()'],['../classComSerial.html#a5a255589c9910be548a068d55393e1c8',1,'ComSerial::operator=()'],['../classSignalGenerator.html#af87b27242e5c555cd12b2c282d566f14',1,'SignalGenerator::operator=()']]],
+  ['oscilloscope_3',['Oscilloscope',['../classOscilloscope.html#a92f3de5d6f2e47a695216532a914af89',1,'Oscilloscope']]]
 ];

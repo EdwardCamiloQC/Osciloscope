@@ -1,7 +1,8 @@
 var hierarchy =
 [
     [ "Capturer", "classCapturer.html", [
-      [ "ComSerial", "classComSerial.html", null ]
+      [ "ComSerial", "classComSerial.html", null ],
+      [ "SignalGenerator", "classSignalGenerator.html", null ]
     ] ],
     [ "GridSpectrum", "structGridSpectrum.html", null ],
     [ "GridVoltage", "structGridVoltage.html", null ],

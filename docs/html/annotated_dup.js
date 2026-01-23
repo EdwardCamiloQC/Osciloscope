@@ -7,7 +7,8 @@ var annotated_dup =
     [ "Oscilloscope", "classOscilloscope.html", "classOscilloscope" ],
     [ "Screen", "classScreen.html", "classScreen" ],
     [ "SignalCapturer", "classSignalCapturer.html", "classSignalCapturer" ],
+    [ "SignalGenerator", "classSignalGenerator.html", "classSignalGenerator" ],
     [ "SignalObject", "classSignalObject.html", null ],
     [ "SpectrumSignal", "classSpectrumSignal.html", null ],
-    [ "VoltageSignal", "classVoltageSignal.html", null ]
+    [ "VoltageSignal", "classVoltageSignal.html", "classVoltageSignal" ]
 ];

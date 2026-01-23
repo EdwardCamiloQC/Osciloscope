@@ -1,7 +1,9 @@
 <map id="src/sys/peripherals/capturer.hpp" name="src/sys/peripherals/capturer.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="23,5,167,45"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="109,5,253,45"/>
 <area shape="rect" id="Node000002" href="$puertoSerie_8hpp.html" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="23,93,167,133"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,93,92,93,92,59"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,57,116,95,112,91,151,53"/>
+<area shape="rect" id="Node000004" href="$signalGenerator_8hpp.html" title=" " alt="" coords="191,93,348,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="213,53,252,91,248,95,209,57"/>
 <area shape="rect" id="Node000003" href="$oscilloscope_8hpp.html" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="5,181,184,207"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,147,97,181,92,181,92,147"/>
 </map>
