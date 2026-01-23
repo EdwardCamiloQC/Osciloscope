@@ -71,11 +71,6 @@
              */
             void setSampleFrequency(unsigned int freq) override;
         private:
-            /** \brief Shifts the signals associates with the voltages for its subsequent capture.
-                \param n: Amount of values to shift.
-             */
-            void scrollVoltages(unsigned int n);
-
             /** \brief Checks if the line captured into the stream, start by certain characters.
                 \param line: String that obtains the line of the capture data by the stream.
                 \param text: Starting characters.
@@ -89,10 +84,6 @@
             VoltageSignal *voltage2 {nullptr}; /**< Voltage2 */
             VoltageSignal *voltage3 {nullptr}; /**< Voltage3 */
             VoltageSignal *voltage4 {nullptr}; /**< Voltage4 */
-            float *valuesCatched1 {nullptr}; /**< Array associate with voltage1 signal*/
-            float *valuesCatched2 {nullptr}; /**< Array associate with voltage2 signal */
-            float *valuesCatched3 {nullptr}; /**< Array associate with voltage3 signal */
-            float *valuesCatched4 {nullptr}; /**< Array associate with voltage4 signal */
     };
 
 #endif

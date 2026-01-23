@@ -11,10 +11,6 @@ ComSerial::ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *
     voltage2 = volt2;
     voltage3 = volt3;
     voltage4 = volt4;
-    valuesCatched1 = voltage1->getVoltage();
-    valuesCatched2 = voltage2->getVoltage();
-    valuesCatched3 = voltage3->getVoltage();
-    valuesCatched4 = voltage4->getVoltage();
 }
 
 ComSerial::~ComSerial(){
@@ -61,7 +57,10 @@ bool ComSerial::getFlagSerial(){
 }
 
 void ComSerial::readValues(unsigned int nValues){
-    scrollVoltages(nValues);
+    voltage1->shiftVoltage(nValues);
+    voltage2->shiftVoltage(nValues);
+    voltage3->shiftVoltage(nValues);
+    voltage4->shiftVoltage(nValues);
     if(mySerial.IsOpen()){
         unsigned int signal1{0}, signal2{0}, signal3{0}, signal4{0};
         std::string line;
@@ -70,10 +69,10 @@ void ComSerial::readValues(unsigned int nValues){
             try{
                 if(startWith(line, "#")){
                     sscanf(line.c_str(), "#@%x@%x@%x@%x/n", &signal1, &signal2, &signal3, &signal4);
-                    valuesCatched1[i] = static_cast<float>(signal1)*3.3f/65535.0f;
-                    valuesCatched2[i] = static_cast<float>(signal2)*3.3f/65535.0f;
-                    valuesCatched3[i] = static_cast<float>(signal3)*3.3f/65535.0f;
-                    valuesCatched4[i] = static_cast<float>(signal4)*3.3f/65535.0f;
+                    voltage1->voltage[i] = static_cast<float>(signal1)*3.3f/65535.0f;
+                    voltage2->voltage[i] = static_cast<float>(signal2)*3.3f/65535.0f;
+                    voltage3->voltage[i] = static_cast<float>(signal3)*3.3f/65535.0f;
+                    voltage4->voltage[i] = static_cast<float>(signal4)*3.3f/65535.0f;
                 }
             }
             catch(std::exception &e){
@@ -82,8 +81,10 @@ void ComSerial::readValues(unsigned int nValues){
         }
     }else{
         for(unsigned int i = voltage1->length-nValues; i < voltage1->length; i++){
-            valuesCatched1[i] = 0.0f;
-            valuesCatched2[i] = 0.0f;
+            voltage1->voltage[i] = 0.0f;
+            voltage2->voltage[i] = 0.0f;
+            voltage3->voltage[i] = 0.0f;
+            voltage4->voltage[i] = 0.0f;
         }
     }
 }
@@ -99,15 +100,6 @@ void ComSerial::setSampleFrequency(unsigned int freq){
 //----------
 //      PRIVATE METHODS
 //----------
-void ComSerial::scrollVoltages(unsigned int n){
-    for(unsigned int i = 0; i < voltage1->length-n; i++){
-        valuesCatched1[i] = valuesCatched1[i+n];
-        valuesCatched2[i] = valuesCatched2[i+n];
-        valuesCatched3[i] = valuesCatched3[i+n];
-        valuesCatched4[i] = valuesCatched4[i+n];
-    }
-}
-
 bool ComSerial::startWith(std::string line, const char* text){
     std::string aux = text;
     size_t textLen = aux.length();
