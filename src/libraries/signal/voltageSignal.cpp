@@ -23,8 +23,10 @@ void VoltageSignal::calculateSpectrum(){
     spectrumSignal.calculateSpectrum(voltage);
 }
 
-float* VoltageSignal::getVoltage(){
-    return voltage;
+void VoltageSignal::shiftVoltage(unsigned int n){
+    for(unsigned int i = 0; i < length-n; i++){
+        voltage[i] = voltage[i+n];
+    }
 }
 
 //----------
