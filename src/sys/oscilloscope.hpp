@@ -8,9 +8,9 @@
     #define _OSCILLOSCOPE_H_
 
     #include <mutex>
+
     #include <sys/gui/screen.hpp>
     #include <sys/peripherals/signalCapturer.hpp>
-    #include <sys/peripherals/puertoSerie.hpp>
 
     /** \brief Contain the principal components of the project.
             So there, are only one instance of this class.
@@ -26,7 +26,6 @@
         private:
             Screen screen;
             SignalCapturer signalCapturer;
-            ComSerial comSerial;
         
         // Methods
         private:

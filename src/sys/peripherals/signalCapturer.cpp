@@ -1,7 +1,9 @@
-#include <sys/peripherals/signalCapturer.hpp>
-#include <sys/oscilloscope.hpp>
 #include <iostream>
 #include <chrono>
+
+#include <sys/peripherals/signalCapturer.hpp>
+#include <sys/oscilloscope.hpp>
+#include <sys/peripherals/capturer.hpp>
 
 //~~~~~~~~~~
 //      PUBLIC METHODS
@@ -18,6 +20,10 @@ SignalCapturer::~SignalCapturer(){
 
 void SignalCapturer::start(){
     catcher = std::thread(&SignalCapturer::loop, this);
+}
+
+void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
+    capturer = std::move(theCapturer);
 }
 
 //~~~~~~~~~~

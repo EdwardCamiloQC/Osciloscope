@@ -37,6 +37,11 @@
             /** \brief Sends the sample rate.
              */
             void setSampleFrequency();
+
+            /** \brief Selects between the capturers.
+                \param theCapturer: The capturer to use.
+             */
+            void selectCapturer(std::unique_ptr<Capturer> &&capturer);
         private:
             /** \brief Capture loop.
              */
@@ -51,7 +56,7 @@
         //  Attributes
         private:
             std::thread catcher; ///<
-            Capturer *capturer; ///<
+            std::unique_ptr<Capturer> capturer; ///<
             Screen *screen; ///<
             //sd_device *devide;
     };

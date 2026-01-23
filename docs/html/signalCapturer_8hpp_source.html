@@ -120,25 +120,28 @@ $(document).ready(function(){initNavTree('signalCapturer_8hpp_source.html',''); 
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classSignalCapturer.html#a2b70cc831c1b245eb9acf3d273c8d588">   35</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classSignalCapturer.html#a2b70cc831c1b245eb9acf3d273c8d588">start</a>();</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classSignalCapturer.html#ac1255eed0e1e0c6c8ecedd2a5b3374ae">   39</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classSignalCapturer.html#ac1255eed0e1e0c6c8ecedd2a5b3374ae">setSampleFrequency</a>();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="keywordtype">void</span> loop();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordtype">void</span> catchVoltages();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="comment">//void inspection();</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">//  Attributes</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            std::thread catcher; </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <a class="code hl_class" href="classCapturer.html">Capturer</a> *capturer; </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_class" href="classScreen.html">Screen</a> *screen; </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="comment">//sd_device *devide;</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    };</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classSignalCapturer.html#a07b00533fefa94266a8dc778f31fd1db">   44</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classSignalCapturer.html#a07b00533fefa94266a8dc778f31fd1db">selectCapturer</a>(std::unique_ptr&lt;Capturer&gt; &amp;&amp;capturer);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keywordtype">void</span> loop();</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordtype">void</span> catchVoltages();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="comment">//void inspection();</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="comment">//  Attributes</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            std::thread catcher; </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            std::unique_ptr&lt;Capturer&gt; capturer; </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <a class="code hl_class" href="classScreen.html">Screen</a> *screen; </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="comment">//sd_device *devide;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    };</div>
 </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassCapturer_html"><div class="ttname"><a href="classCapturer.html">Capturer</a></div><div class="ttdef"><b>Definition</b> capturer.hpp:12</div></div>
 <div class="ttc" id="aclassScreen_html"><div class="ttname"><a href="classScreen.html">Screen</a></div><div class="ttdef"><b>Definition</b> screen.hpp:114</div></div>
 <div class="ttc" id="aclassSignalCapturer_html"><div class="ttname"><a href="classSignalCapturer.html">SignalCapturer</a></div><div class="ttdef"><b>Definition</b> signalCapturer.hpp:20</div></div>
+<div class="ttc" id="aclassSignalCapturer_html_a07b00533fefa94266a8dc778f31fd1db"><div class="ttname"><a href="classSignalCapturer.html#a07b00533fefa94266a8dc778f31fd1db">SignalCapturer::selectCapturer</a></div><div class="ttdeci">void selectCapturer(std::unique_ptr&lt; Capturer &gt; &amp;&amp;capturer)</div><div class="ttdoc">Selects between the capturers.</div></div>
 <div class="ttc" id="aclassSignalCapturer_html_a2b70cc831c1b245eb9acf3d273c8d588"><div class="ttname"><a href="classSignalCapturer.html#a2b70cc831c1b245eb9acf3d273c8d588">SignalCapturer::start</a></div><div class="ttdeci">void start()</div><div class="ttdoc">Data capture begins.</div></div>
 <div class="ttc" id="aclassSignalCapturer_html_aa16833117850ccefdafc353b867738a8"><div class="ttname"><a href="classSignalCapturer.html#aa16833117850ccefdafc353b867738a8">SignalCapturer::~SignalCapturer</a></div><div class="ttdeci">~SignalCapturer()</div><div class="ttdoc">Destructor.</div></div>
 <div class="ttc" id="aclassSignalCapturer_html_abf91d268b7dd76e6026cf33e138a6826"><div class="ttname"><a href="classSignalCapturer.html#abf91d268b7dd76e6026cf33e138a6826">SignalCapturer::SignalCapturer</a></div><div class="ttdeci">SignalCapturer(Screen *theScreen, Capturer *theCapturer)</div><div class="ttdoc">Relates the capturer and the screen.</div></div>

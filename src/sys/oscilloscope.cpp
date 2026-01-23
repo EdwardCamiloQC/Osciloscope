@@ -26,8 +26,7 @@ std::mutex Oscilloscope::mutex_;
 Oscilloscope::Oscilloscope()
     : stateOnOff_(true),
     screen(),
-    signalCapturer(&screen, nullptr),
-    comSerial(&(screen.voltage1), &(screen.voltage2), &(screen.voltage3), &(screen.voltage4)){
+    signalCapturer(&screen, nullptr){
 }
 
 Oscilloscope::~Oscilloscope(){

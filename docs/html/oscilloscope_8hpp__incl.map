@@ -1,30 +1,24 @@
 <map id="src/sys/oscilloscope.hpp" name="src/sys/oscilloscope.hpp">
-<area shape="rect" id="Node000001" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="185,5,364,31"/>
+<area shape="rect" id="Node000001" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="76,5,255,31"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="5,79,69,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="237,33,83,79,82,74,236,28"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,33,72,74,69,69,143,28"/>
 <area shape="rect" id="Node000003" href="$screen_8hpp.html" title="The screen shows the signals and allows you to modify each one separately." alt="" coords="94,79,237,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,33,196,73,193,69,256,28"/>
-<area shape="rect" id="Node000010" href="$signalCapturer_8hpp.html" title=" " alt="" coords="261,79,507,104"/>
-<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="294,28,356,69,353,73,291,33"/>
-<area shape="rect" id="Node000012" href="$puertoSerie_8hpp.html" title="Declaration of the ComSerial class that uses the SerialStream library." alt="" coords="531,79,759,104"/>
-<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="335,28,572,73,571,79,334,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="25,159,105,185"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,106,93,153,89,149,149,102"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="173,401,264,427"/>
-<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="165,105,158,146,152,209,154,281,160,318,170,352,182,373,197,390,193,394,177,376,166,354,155,319,149,282,147,209,153,146,160,104"/>
-<area shape="rect" id="Node000006" href="$voltageSignal_8hpp.html" title=" " alt="" coords="180,152,351,192"/>
-<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="182,102,232,141,229,145,178,106"/>
-<area shape="rect" id="Node000007" href="$spectrumSignal_8hpp_source.html" title=" " alt="" coords="205,240,387,280"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="275,191,287,226,282,228,270,193"/>
-<area shape="rect" id="Node000008" href="$signalObject_8hpp_source.html" title=" " alt="" coords="181,328,411,353"/>
-<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="299,280,299,314,293,314,293,280"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="435,328,514,353"/>
-<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="340,278,437,320,435,325,338,282"/>
-<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="285,355,243,394,240,390,282,351"/>
-<area shape="rect" id="Node000011" title=" " alt="" coords="375,159,439,185"/>
-<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="390,103,402,145,397,147,385,105"/>
-<area shape="rect" id="Node000013" title=" " alt="" coords="535,159,654,185"/>
-<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="640,106,612,149,607,146,636,103"/>
-<area shape="rect" id="Node000014" href="$capturer_8hpp.html" title=" " alt="" coords="678,159,885,185"/>
-<area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="667,102,751,150,748,155,664,106"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="168,31,168,65,163,65,163,31"/>
+<area shape="rect" id="Node000010" href="$signalCapturer_8hpp.html" title=" " alt="" coords="283,79,530,104"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="205,28,355,72,353,77,203,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="36,159,116,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="154,106,101,152,98,148,150,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="184,401,275,427"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="166,104,161,146,158,209,163,281,170,318,181,352,193,373,208,390,204,394,188,376,176,354,165,319,158,282,153,209,156,146,161,104"/>
+<area shape="rect" id="Node000006" href="$voltageSignal_8hpp.html" title=" " alt="" coords="191,152,361,192"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="183,102,240,142,237,146,180,106"/>
+<area shape="rect" id="Node000007" href="$spectrumSignal_8hpp_source.html" title=" " alt="" coords="215,240,398,280"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="285,191,298,226,293,228,280,193"/>
+<area shape="rect" id="Node000008" href="$signalObject_8hpp_source.html" title=" " alt="" coords="191,328,422,353"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="309,280,309,314,304,314,304,280"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="446,328,525,353"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="351,278,448,320,446,325,348,282"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="296,355,254,394,250,390,292,351"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="385,159,449,185"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="411,104,417,145,411,146,406,105"/>
 </map>
