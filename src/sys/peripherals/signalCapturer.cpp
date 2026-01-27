@@ -8,8 +8,8 @@
 //~~~~~~~~~~
 //      PUBLIC METHODS
 //~~~~~~~~~~
-SignalCapturer::SignalCapturer(Screen* theScreen, Capturer *theCapturer)
-    :capturer(theCapturer), screen(theScreen){
+SignalCapturer::SignalCapturer(Capturer *theCapturer)
+    :capturer(theCapturer){
 }
 
 SignalCapturer::~SignalCapturer(){
@@ -19,7 +19,7 @@ SignalCapturer::~SignalCapturer(){
 }
 
 void SignalCapturer::start(){
-    catcher = std::thread(&SignalCapturer::loop, this);
+    catcher = std::thread(&SignalCapturer::loopCatchVoltages, this);
 }
 
 void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
@@ -29,17 +29,28 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
 //~~~~~~~~~~
 //      PRIVATE METHODS
 //~~~~~~~~~~
-void SignalCapturer::loop(){
+void SignalCapturer::loopCatchVoltages(){
     Oscilloscope *osc = Oscilloscope::getInstance();
     while(osc->stateOnOff_){
-        catchVoltages();
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-    }
-}
-
-void SignalCapturer::catchVoltages(){
-    if(capturer){
-        capturer->readValues(1);
+        if(capturer){
+            //shift the voltages
+            osc->voltage1.shiftVoltage(4);
+            osc->voltage2.shiftVoltage(4);
+            osc->voltage3.shiftVoltage(4);
+            osc->voltage4.shiftVoltage(4);
+            capturer->readValues(&(osc->voltage1),
+                                &(osc->voltage2),
+                                &(osc->voltage3),
+                                &(osc->voltage4),
+                                4);
+            osc->voltage1.calculateSpectrum();
+            osc->voltage2.calculateSpectrum();
+            osc->voltage3.calculateSpectrum();
+            osc->voltage4.calculateSpectrum();
+        }else{
+            std::err << "without concrete capturer" << std::endl;
+        }
+        //std::this_thread::sleep_for(std::chrono::seconds(2));
     }
 }
 

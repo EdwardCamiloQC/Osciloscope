@@ -12,7 +12,6 @@
     }*/
 
     class Capturer;
-    class Screen;
 
     /** \brief It collects the data it that receives.
         \class
@@ -20,11 +19,10 @@
     class SignalCapturer{
         //  Methods
         public:
-            /** \brief Relates the capturer and the screen.
-                \param theScreen: Association with the screen.
+            /** \brief Relates the capturer.
                 \param theCapturer: Agregation with the capturer.
              */
-            SignalCapturer(Screen* theScreen, Capturer *theCapturer);
+            SignalCapturer(Capturer *theCapturer);
 
             /** \brief Destructor.
              */
@@ -45,19 +43,14 @@
         private:
             /** \brief Capture loop.
              */
-            void loop();
-
-            /** \brief Catch data.
-             */
-            void catchVoltages();
+            void loopCatchVoltages();
 
             //void inspection();
 
         //  Attributes
         private:
-            std::thread catcher; ///<
-            std::unique_ptr<Capturer> capturer; ///<
-            Screen *screen; ///<
+            std::thread catcher; ///< Thread that catchs the data.
+            std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
             //sd_device *devide;
     };
 #endif
