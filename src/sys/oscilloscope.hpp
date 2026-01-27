@@ -9,23 +9,27 @@
 
     #include <mutex>
 
+    #include <libraries/signal/voltageSignal.hpp>
     #include <sys/gui/screen.hpp>
     #include <sys/peripherals/signalCapturer.hpp>
 
-    /** \brief Contain the principal components of the project.
+    /** \brief The Oscilloscope class displays four signals that arrive from the serial port.
             So there, are only one instance of this class.
-        \class Oscilloscope
+        \class Oscilloscope.
      */
     class Oscilloscope{
         // Attributes
         private:
-            static Oscilloscope* instance_;
+            static Oscilloscope* instance_; ///< Unique instance of the project.
             static std::mutex mutex_;
         public:
             bool stateOnOff_; ///< State that indicates whether the application is running.
-        private:
-            Screen screen;
-            SignalCapturer signalCapturer;
+            VoltageSignal voltage1; ///< Voltage one.
+            VoltageSignal voltage2; ///< Voltage two.
+            VoltageSignal voltage3; ///< Voltage three.
+            VoltageSignal voltage4; ///< Voltage four.
+            Screen screen; ///< Screen where shows the signals and configures some parameters.
+            SignalCapturer signalCapturer; ///< This is the capturer that stores the data signals.
         
         // Methods
         private:

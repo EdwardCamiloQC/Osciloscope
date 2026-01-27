@@ -1,6 +1,6 @@
-#include <sys/oscilloscope.hpp>
 #include <iostream>
-//#include <atomic>
+
+#include <sys/oscilloscope.hpp>
 
 //----------
 //      THREADS
@@ -23,10 +23,13 @@ std::mutex Oscilloscope::mutex_;
 //      METHODS
 //----------
 //----------
-Oscilloscope::Oscilloscope()
-    : stateOnOff_(true),
-    screen(),
-    signalCapturer(&screen, nullptr){
+Oscilloscope::Oscilloscope(): stateOnOff_(true),
+    voltage1(8, SIGNAL_COLOR::RED), voltage2(8, SIGNAL_COLOR::ORANGE), voltage3(8, SIGNAL_COLOR::BLUE), voltage4(8, SIGNAL_COLOR::GREEN),
+    screen(), signalCapturer(nullptr){
+        voltage1.calculateSpectrum();
+        voltage2.calculateSpectrum();
+        voltage3.calculateSpectrum();
+        voltage4.calculateSpectrum();
 }
 
 Oscilloscope::~Oscilloscope(){
