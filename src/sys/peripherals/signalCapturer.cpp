@@ -48,7 +48,7 @@ void SignalCapturer::loopCatchVoltages(){
             osc->voltage3.calculateSpectrum();
             osc->voltage4.calculateSpectrum();
         }else{
-            std::err << "without concrete capturer" << std::endl;
+            std::cerr << "without concrete capturer" << std::endl;
         }
         //std::this_thread::sleep_for(std::chrono::seconds(2));
     }
