@@ -1,16 +1,13 @@
-#include <sys/peripherals/puertoSerie.hpp>
-#include <libraries/signal/voltageSignal.hpp>
 #include <iostream>
 #include <stdlib.h>
+
+#include <sys/peripherals/puertoSerie.hpp>
+#include <libraries/signal/voltageSignal.hpp>
 
 //----------
 //      PUBLIC METHODS
 //----------
-ComSerial::ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4){
-    voltage1 = volt1;
-    voltage2 = volt2;
-    voltage3 = volt3;
-    voltage4 = volt4;
+ComSerial::ComSerial(){
 }
 
 ComSerial::~ComSerial(){
@@ -56,23 +53,19 @@ bool ComSerial::getFlagSerial(){
     return mySerial.IsOpen();
 }
 
-void ComSerial::readValues(unsigned int nValues){
-    voltage1->shiftVoltage(nValues);
-    voltage2->shiftVoltage(nValues);
-    voltage3->shiftVoltage(nValues);
-    voltage4->shiftVoltage(nValues);
+void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
     if(mySerial.IsOpen()){
         unsigned int signal1{0}, signal2{0}, signal3{0}, signal4{0};
         std::string line;
         std::getline(mySerial, line);
-        for(unsigned int i = voltage1->length-nValues; i < voltage1->length; i++){
+        for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
             try{
                 if(startWith(line, "#")){
                     sscanf(line.c_str(), "#@%x@%x@%x@%x/n", &signal1, &signal2, &signal3, &signal4);
-                    voltage1->voltage[i] = static_cast<float>(signal1)*3.3f/65535.0f;
-                    voltage2->voltage[i] = static_cast<float>(signal2)*3.3f/65535.0f;
-                    voltage3->voltage[i] = static_cast<float>(signal3)*3.3f/65535.0f;
-                    voltage4->voltage[i] = static_cast<float>(signal4)*3.3f/65535.0f;
+                    volt1->voltage[i] = static_cast<float>(signal1)*3.3f/65535.0f;
+                    volt2->voltage[i] = static_cast<float>(signal2)*3.3f/65535.0f;
+                    volt3->voltage[i] = static_cast<float>(signal3)*3.3f/65535.0f;
+                    volt4->voltage[i] = static_cast<float>(signal4)*3.3f/65535.0f;
                 }
             }
             catch(std::exception &e){
@@ -80,11 +73,11 @@ void ComSerial::readValues(unsigned int nValues){
             }
         }
     }else{
-        for(unsigned int i = voltage1->length-nValues; i < voltage1->length; i++){
-            voltage1->voltage[i] = 0.0f;
-            voltage2->voltage[i] = 0.0f;
-            voltage3->voltage[i] = 0.0f;
-            voltage4->voltage[i] = 0.0f;
+        for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
+            volt1->voltage[i] = 0.0f;
+            volt2->voltage[i] = 0.0f;
+            volt3->voltage[i] = 0.0f;
+            volt4->voltage[i] = 0.0f;
         }
     }
 }

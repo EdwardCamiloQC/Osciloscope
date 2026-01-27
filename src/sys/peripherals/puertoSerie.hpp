@@ -23,12 +23,8 @@
         /*Methods*/
         public:
             /** \brief Constructor that receive the voltage references that it will update.
-                \param volt1 Pointer associate with the voltage1.
-                \param volt2 Pointer associate with the voltage2.
-                \param volt3 Pointer associate with the voltage3.
-                \param volt4 Pointer associate with the voltage4.
              */
-            ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4);
+            ComSerial();
 
             /** \note Copy constructor desabled.
              */
@@ -60,10 +56,16 @@
 
             /** \brief Reads 'n' values from the serial port to each one of the four voltages associates.
                 Check the values arrive correctly from the external device.
+                \param volt1: Reference to the voltage one.
+                \param volt2: Reference to the voltage two.
+                \param volt3: Reference to the voltage three.
+                \param volt4: Reference to the voltage four.
                 \param nValues : Amount of values to read by voltage signal.
                 \override
              */
-            void readValues(unsigned int nValues) override;
+            void readValues(VoltageSignal *volt1, VoltageSignal *volt2,
+                            VoltageSignal *volt3, VoltageSignal *volt4,
+                            unsigned int nValues) override;
 
             /** \brief Sends the sample rate to the required frequency.
                 \param freq : Requied frequency.
@@ -80,10 +82,6 @@
         /*Attributes*/
         private:
             LibSerial::SerialStream mySerial;  ///< SerialStream associte with a port
-            VoltageSignal *voltage1 {nullptr}; /**< Voltage1 */
-            VoltageSignal *voltage2 {nullptr}; /**< Voltage2 */
-            VoltageSignal *voltage3 {nullptr}; /**< Voltage3 */
-            VoltageSignal *voltage4 {nullptr}; /**< Voltage4 */
     };
 
 #endif
