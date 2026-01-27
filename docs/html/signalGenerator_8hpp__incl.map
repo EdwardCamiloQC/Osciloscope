@@ -1,15 +1,5 @@
 <map id="src/sys/peripherals/signalGenerator.hpp" name="src/sys/peripherals/signalGenerator.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="137,5,294,45"/>
-<area shape="rect" id="Node000002" href="$capturer_8hpp.html" title=" " alt="" coords="5,101,212,126"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,48,136,94,132,90,190,44"/>
-<area shape="rect" id="Node000003" href="$voltageSignal_8hpp.html" title=" " alt="" coords="237,93,407,133"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,44,290,83,286,87,237,48"/>
-<area shape="rect" id="Node000004" href="$spectrumSignal_8hpp_source.html" title=" " alt="" coords="231,181,413,221"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="325,134,325,167,319,167,319,134"/>
-<area shape="rect" id="Node000005" href="$signalObject_8hpp_source.html" title=" " alt="" coords="117,269,348,295"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="302,224,258,262,254,258,299,220"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="372,269,451,295"/>
-<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="345,220,390,258,386,262,342,224"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="187,343,278,368"/>
-<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="235,295,235,329,230,329,230,295"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="30,5,187,45"/>
+<area shape="rect" id="Node000002" href="$capturer_8hpp.html" title=" " alt="" coords="5,93,212,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,46,111,79,106,79,106,46"/>
 </map>

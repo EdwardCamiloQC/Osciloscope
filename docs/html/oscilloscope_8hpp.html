@@ -95,9 +95,10 @@ $(document).ready(function(){initNavTree('oscilloscope_8hpp.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classOscilloscope.html" title="Contain the principal components of the project. So there, are only one instance of this class.">Oscilloscope</a> was designed to display signals that arrive from the serial port.  
+<p>The <a class="el" href="classOscilloscope.html" title="The Oscilloscope class displays four signals that arrive from the serial port. So there,...">Oscilloscope</a> was designed to display signals that arrive from the serial port.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;mutex&gt;</code><br />
+<code>#include &lt;<a class="el" href="voltageSignal_8hpp_source.html">libraries/signal/voltageSignal.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="screen_8hpp_source.html">sys/gui/screen.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="signalCapturer_8hpp_source.html">sys/peripherals/signalCapturer.hpp</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -105,28 +106,28 @@ Include dependency graph for oscilloscope.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="oscilloscope_8hpp__incl.png" border="0" usemap="#asrc_2sys_2oscilloscope_8hpp" alt=""/></div>
 <map name="asrc_2sys_2oscilloscope_8hpp" id="asrc_2sys_2oscilloscope_8hpp">
-<area shape="rect" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="76,5,255,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,69,104"/>
-<area shape="poly" title=" " alt="" coords="146,33,72,74,69,69,143,28"/>
-<area shape="rect" href="screen_8hpp.html" title="The screen shows the signals and allows you to modify each one separately." alt="" coords="94,79,237,104"/>
-<area shape="poly" title=" " alt="" coords="168,31,168,65,163,65,163,31"/>
-<area shape="rect" href="signalCapturer_8hpp.html" title=" " alt="" coords="283,79,530,104"/>
-<area shape="poly" title=" " alt="" coords="205,28,355,72,353,77,203,33"/>
-<area shape="rect" title=" " alt="" coords="36,159,116,185"/>
-<area shape="poly" title=" " alt="" coords="154,106,101,152,98,148,150,102"/>
-<area shape="rect" title=" " alt="" coords="184,401,275,427"/>
-<area shape="poly" title=" " alt="" coords="166,104,161,146,158,209,163,281,170,318,181,352,193,373,208,390,204,394,188,376,176,354,165,319,158,282,153,209,156,146,161,104"/>
-<area shape="rect" href="voltageSignal_8hpp.html" title=" " alt="" coords="191,152,361,192"/>
-<area shape="poly" title=" " alt="" coords="183,102,240,142,237,146,180,106"/>
-<area shape="rect" href="spectrumSignal_8hpp_source.html" title=" " alt="" coords="215,240,398,280"/>
-<area shape="poly" title=" " alt="" coords="285,191,298,226,293,228,280,193"/>
-<area shape="rect" href="signalObject_8hpp_source.html" title=" " alt="" coords="191,328,422,353"/>
-<area shape="poly" title=" " alt="" coords="309,280,309,314,304,314,304,280"/>
-<area shape="rect" title=" " alt="" coords="446,328,525,353"/>
-<area shape="poly" title=" " alt="" coords="351,278,448,320,446,325,348,282"/>
-<area shape="poly" title=" " alt="" coords="296,355,254,394,250,390,292,351"/>
-<area shape="rect" title=" " alt="" coords="385,159,449,185"/>
-<area shape="poly" title=" " alt="" coords="411,104,417,145,411,146,406,105"/>
+<area shape="rect" title="The Oscilloscope was designed to display signals that arrive from the serial port." alt="" coords="222,5,401,31"/>
+<area shape="rect" title=" " alt="" coords="47,86,111,111"/>
+<area shape="poly" title=" " alt="" coords="272,33,124,81,119,83,117,78,122,76,271,28"/>
+<area shape="rect" href="voltageSignal_8hpp.html" title=" " alt="" coords="135,79,306,119"/>
+<area shape="poly" title=" " alt="" coords="300,33,255,72,251,68,296,29"/>
+<area shape="rect" href="screen_8hpp.html" title="The screen shows the signals and allows you to modify each one separately." alt="" coords="331,86,473,111"/>
+<area shape="poly" title=" " alt="" coords="326,29,380,75,377,79,323,33"/>
+<area shape="rect" href="signalCapturer_8hpp.html" title=" " alt="" coords="497,86,744,111"/>
+<area shape="poly" title=" " alt="" coords="357,28,563,80,562,85,356,33"/>
+<area shape="rect" href="spectrumSignal_8hpp_source.html" title=" " alt="" coords="129,167,312,207"/>
+<area shape="poly" title=" " alt="" coords="223,119,223,153,218,153,218,119"/>
+<area shape="rect" href="signalObject_8hpp_source.html" title=" " alt="" coords="5,255,236,280"/>
+<area shape="poly" title=" " alt="" coords="198,209,148,248,145,244,195,205"/>
+<area shape="rect" title=" " alt="" coords="260,255,339,280"/>
+<area shape="poly" title=" " alt="" coords="242,205,280,243,276,247,238,209"/>
+<area shape="rect" title=" " alt="" coords="203,328,294,353"/>
+<area shape="poly" title=" " alt="" coords="143,278,217,319,214,323,140,282"/>
+<area shape="poly" title=" " alt="" coords="404,112,401,144,393,188,378,237,352,282,325,307,295,324,292,320,322,302,348,278,373,234,388,187,396,143,399,111"/>
+<area shape="rect" title=" " alt="" coords="414,174,494,199"/>
+<area shape="poly" title=" " alt="" coords="411,110,442,160,437,163,407,113"/>
+<area shape="rect" title=" " alt="" coords="589,174,653,199"/>
+<area shape="poly" title=" " alt="" coords="623,112,623,160,618,160,618,112"/>
 </map>
 </div>
 </div>
@@ -135,11 +136,11 @@ Include dependency graph for oscilloscope.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOscilloscope.html">Oscilloscope</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contain the principal components of the project. So there, are only one instance of this class.  <a href="classOscilloscope.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classOscilloscope.html" title="The Oscilloscope class displays four signals that arrive from the serial port. So there,...">Oscilloscope</a> class displays four signals that arrive from the serial port. So there, are only one instance of this class.  <a href="classOscilloscope.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classOscilloscope.html" title="Contain the principal components of the project. So there, are only one instance of this class.">Oscilloscope</a> was designed to display signals that arrive from the serial port. </p>
+<div class="textblock"><p>The <a class="el" href="classOscilloscope.html" title="The Oscilloscope class displays four signals that arrive from the serial port. So there,...">Oscilloscope</a> was designed to display signals that arrive from the serial port. </p>
 <dl class="section author"><dt>Author</dt><dd>Edward Camilo </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>v1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>enero 2026 </dd></dl>

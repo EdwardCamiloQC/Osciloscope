@@ -112,9 +112,9 @@ Inheritance diagram for Capturer:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9530cbcfbd801eebebc311e04fdf2f14" id="r_a9530cbcfbd801eebebc311e04fdf2f14"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapturer.html#a9530cbcfbd801eebebc311e04fdf2f14">~Capturer</a> ()=default</td></tr>
 <tr class="separator:a9530cbcfbd801eebebc311e04fdf2f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89d23fcd273b6c0377505394dc860568" id="r_a89d23fcd273b6c0377505394dc860568"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapturer.html#a89d23fcd273b6c0377505394dc860568">readValues</a> (unsigned int nValues)=0</td></tr>
-<tr class="memdesc:a89d23fcd273b6c0377505394dc860568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the values that it arrives.  <br /></td></tr>
-<tr class="separator:a89d23fcd273b6c0377505394dc860568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256236a6a4bc4a2dd9a88ce32c0cf6d3" id="r_a256236a6a4bc4a2dd9a88ce32c0cf6d3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapturer.html#a256236a6a4bc4a2dd9a88ce32c0cf6d3">readValues</a> (<a class="el" href="classVoltageSignal.html">VoltageSignal</a> *volt1, <a class="el" href="classVoltageSignal.html">VoltageSignal</a> *volt2, <a class="el" href="classVoltageSignal.html">VoltageSignal</a> *volt3, <a class="el" href="classVoltageSignal.html">VoltageSignal</a> *volt4, unsigned int nValues)=0</td></tr>
+<tr class="memdesc:a256236a6a4bc4a2dd9a88ce32c0cf6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the values that it arrives.  <br /></td></tr>
+<tr class="separator:a256236a6a4bc4a2dd9a88ce32c0cf6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd8f055e8554d33421309ff5b4f81e26" id="r_abd8f055e8554d33421309ff5b4f81e26"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCapturer.html#abd8f055e8554d33421309ff5b4f81e26">setSampleFrequency</a> (unsigned int freq)=0</td></tr>
 <tr class="memdesc:abd8f055e8554d33421309ff5b4f81e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the sampling rate to acquire the data for the external hardware.  <br /></td></tr>
 <tr class="separator:abd8f055e8554d33421309ff5b4f81e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,8 +147,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a89d23fcd273b6c0377505394dc860568" name="a89d23fcd273b6c0377505394dc860568"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89d23fcd273b6c0377505394dc860568">&#9670;&#160;</a></span>readValues()</h2>
+<a id="a256236a6a4bc4a2dd9a88ce32c0cf6d3" name="a256236a6a4bc4a2dd9a88ce32c0cf6d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a256236a6a4bc4a2dd9a88ce32c0cf6d3">&#9670;&#160;</a></span>readValues()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,9 +159,37 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual void Capturer::readValues </td>
           <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>nValues</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classVoltageSignal.html">VoltageSignal</a> *&#160;</td>
+          <td class="paramname"><em>volt1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classVoltageSignal.html">VoltageSignal</a> *&#160;</td>
+          <td class="paramname"><em>volt2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classVoltageSignal.html">VoltageSignal</a> *&#160;</td>
+          <td class="paramname"><em>volt3</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classVoltageSignal.html">VoltageSignal</a> *&#160;</td>
+          <td class="paramname"><em>volt4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>nValues</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -174,12 +202,16 @@ Public Member Functions</h2></td></tr>
 <p>Reads the values that it arrives. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">volt1</td><td>Reference to the voltage one. </td></tr>
+    <tr><td class="paramname">volt2</td><td>Reference to the voltage two. </td></tr>
+    <tr><td class="paramname">volt3</td><td>Reference to the voltage three. </td></tr>
+    <tr><td class="paramname">volt4</td><td>Reference to the voltage four. </td></tr>
     <tr><td class="paramname">nValues</td><td>Number of data to read. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classComSerial.html#aae23b2e2d04072ee57720d97cefd3589">ComSerial</a>, and <a class="el" href="classSignalGenerator.html#a542e36db759d60cf09e6e383d9285138">SignalGenerator</a>.</p>
+<p>Implemented in <a class="el" href="classComSerial.html#a4f2d44204a3261adb298ed1d711309b4">ComSerial</a>, and <a class="el" href="classSignalGenerator.html#a79e83aa7cb9d4271db58a8be751307c1">SignalGenerator</a>.</p>
 
 </div>
 </div>

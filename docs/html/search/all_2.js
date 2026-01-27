@@ -14,7 +14,7 @@ var searchData=
   ['color_11',['color',['../structGridSpectrum.html#ae41d94f2cdbeffb5655473178aa567f6',1,'GridSpectrum::color'],['../structGridVoltage.html#a30fe588f504c96b9a2de91aac452cc2c',1,'GridVoltage::color']]],
   ['combofreq_12',['comboFreq',['../classScreen.html#a7cba84008029f3d684f204818cab6ade',1,'Screen']]],
   ['combovoltdiv_13',['comboVoltDiv',['../classScreen.html#a5caa9029005feee57a8a3c1400bbda27',1,'Screen']]],
-  ['comserial_14',['comserial',['../classComSerial.html#a46ad64b65be46ea2466d4994bc5457eb',1,'ComSerial::ComSerial(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4)'],['../classComSerial.html#a4674f6d511939d76f9f5631e90c6303e',1,'ComSerial::ComSerial(const ComSerial &amp;)=delete'],['../classComSerial.html',1,'ComSerial']]],
+  ['comserial_14',['comserial',['../classComSerial.html#a4836e9b1722662d7f58d5d474769ad9a',1,'ComSerial::ComSerial()'],['../classComSerial.html#a4674f6d511939d76f9f5631e90c6303e',1,'ComSerial::ComSerial(const ComSerial &amp;)=delete'],['../classComSerial.html',1,'ComSerial']]],
   ['creategrid_15',['creategrid',['../structGridVoltage.html#ab0e2dc836e7611cfb01fcac65d51122b',1,'GridVoltage::createGrid()'],['../structGridSpectrum.html#abc2883d7f98209246c4804a7ae785e7e',1,'GridSpectrum::createGrid()']]],
   ['createvao_16',['createVAO',['../classScreen.html#ae07f13603ad28cec596fd418f3a78b92',1,'Screen']]]
 ];

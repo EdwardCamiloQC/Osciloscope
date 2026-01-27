@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['screen_0',['screen',['../classScreen.html',1,'Screen'],['../classScreen.html#ae7576476fc6e6a6eaa66389fdc41fe72',1,'Screen::Screen()'],['../classScreen.html#a05bc973241a238f8af89e89e76b5f048',1,'Screen::Screen(const Screen &amp;screen)=delete']]],
+  ['screen_0',['screen',['../classScreen.html',1,'Screen'],['../classScreen.html#ae7576476fc6e6a6eaa66389fdc41fe72',1,'Screen::Screen()'],['../classScreen.html#a05bc973241a238f8af89e89e76b5f048',1,'Screen::Screen(const Screen &amp;screen)=delete'],['../classOscilloscope.html#a70e736d0459611252517dc0fd753cb77',1,'Oscilloscope::screen']]],
   ['screen_2ehpp_1',['screen.hpp',['../screen_8hpp.html',1,'']]],
   ['seetransform_2',['seeTransform',['../fft_8hpp.html#abd338a94b1933824694978cdf286d326',1,'fft.hpp']]],
   ['selectcapturer_3',['selectCapturer',['../classSignalCapturer.html#a07b00533fefa94266a8dc778f31fd1db',1,'SignalCapturer']]],
   ['setsamplefrequency_4',['setsamplefrequency',['../classSignalGenerator.html#ac94019c860b401c2f6d988f6e26902aa',1,'SignalGenerator::setSampleFrequency()'],['../classSignalCapturer.html#ac1255eed0e1e0c6c8ecedd2a5b3374ae',1,'SignalCapturer::setSampleFrequency()'],['../classComSerial.html#a3a9ed0f9d862017e0c927bdc056dcc28',1,'ComSerial::setSampleFrequency()'],['../classCapturer.html#abd8f055e8554d33421309ff5b4f81e26',1,'Capturer::setSampleFrequency()']]],
   ['shiftvoltage_5',['shiftVoltage',['../classVoltageSignal.html#a0cf38702f5b1cc38b90f9d9bed999809',1,'VoltageSignal']]],
   ['show_6',['show',['../classScreen.html#a450f492f5c4ebb5066d6e6d2a44f577e',1,'Screen']]],
-  ['signalcapturer_7',['signalcapturer',['../classSignalCapturer.html',1,'SignalCapturer'],['../classSignalCapturer.html#abf91d268b7dd76e6026cf33e138a6826',1,'SignalCapturer::SignalCapturer()']]],
+  ['signalcapturer_7',['signalcapturer',['../classSignalCapturer.html',1,'SignalCapturer'],['../classSignalCapturer.html#a69f772de0627f7325fbbcd9578e1a155',1,'SignalCapturer::SignalCapturer()'],['../classOscilloscope.html#aa2b85fd792bf84e6307e4f8317dd988f',1,'Oscilloscope::signalCapturer']]],
   ['signalcapturer_2ehpp_8',['signalCapturer.hpp',['../signalCapturer_8hpp.html',1,'']]],
-  ['signalgenerator_9',['signalgenerator',['../classSignalGenerator.html',1,'SignalGenerator'],['../classSignalGenerator.html#a0c1038a30a0606a4f49bf11ad7c755fe',1,'SignalGenerator::SignalGenerator(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4)'],['../classSignalGenerator.html#a8f7d652a5a0fbda3e1855262df8ee0fc',1,'SignalGenerator::SignalGenerator(const SignalGenerator &amp;)=delete']]],
+  ['signalgenerator_9',['signalgenerator',['../classSignalGenerator.html',1,'SignalGenerator'],['../classSignalGenerator.html#a5fc94adceb58edfd5e288da59acaf651',1,'SignalGenerator::SignalGenerator()'],['../classSignalGenerator.html#a8f7d652a5a0fbda3e1855262df8ee0fc',1,'SignalGenerator::SignalGenerator(const SignalGenerator &amp;)=delete']]],
   ['signalgenerator_2ehpp_10',['signalGenerator.hpp',['../signalGenerator_8hpp.html',1,'']]],
   ['signalobject_11',['SignalObject',['../classSignalObject.html',1,'']]],
   ['spectrumsignal_12',['spectrumsignal',['../classSpectrumSignal.html',1,'SpectrumSignal'],['../classVoltageSignal.html#abbed1a4c7b1791946996df795e2ae418',1,'VoltageSignal::spectrumSignal']]],
