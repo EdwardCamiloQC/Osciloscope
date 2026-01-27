@@ -339,7 +339,7 @@ void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
     if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))){
         osc->signalCapturer.selectCapturer(std::make_unique<SignalGenerator>());
     }else{
-        //osc->signalCapturer.selectCapturer(std::make_unique<ComSerial>());
+        osc->signalCapturer.selectCapturer(std::make_unique<ComSerial>());
     }
 }
 
