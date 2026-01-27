@@ -2,14 +2,16 @@
     \brief The screen shows the signals and allows you to modify each one separately.
     \author Edward Camilo
     \version v1.0
-    \date enero 2026
+    \date January 2026
  */
 #ifndef _SCREEN_H_
     #define _SCREEN_H_
 
     #include <gtk/gtk.h>
     #include <epoxy/gl.h>
-    #include <libraries/signal/voltageSignal.hpp>
+
+    //Forward declaration
+    class SignalObject;
 
     /** \brief The structure that contains the grid shape where the voltage signals will be printed.
         \struct GridVoltage
@@ -116,17 +118,18 @@
         private:
             GtkApplication *appGtk {nullptr};
         public:
-            VoltageSignal voltage1; ///< Voltage one.
-            VoltageSignal voltage2; ///< Voltage two.
-            VoltageSignal voltage3; ///< Voltage three.
-            VoltageSignal voltage4; ///< Voltage four.
             GtkWidget *window {nullptr}; ///< Oscilloscope window.
             GtkWidget *boxPanels {nullptr}; ///< General boxes that contains the second boxes.
-            GtkWidget *boxView, *boxControl {nullptr}; ///< Second boxes that contains printAreas and control areas.
-            GtkWidget *glAreaVoltage, *glAreaSpectrum {nullptr}; ///< Print areas.
+            GtkWidget *boxView {nullptr}; ///< Second box that contains print areas.
+            GtkWidget *glAreaVoltage {nullptr}; ///< Print areas.
+            GtkWidget *glAreaSpectrum {nullptr};
+            GtkWidget *boxControl {nullptr}; ///< Second box that contains control area.
+            GtkCssProvider *provider {nullptr}; ///< Style for start-stop button.
+            GtkWidget *led {nullptr};
+            GtkStyleContext *context {nullptr};
             GtkWidget *buttonStartStop {nullptr}; ///< Start stop.
             GtkWidget *separator1 {nullptr};
-            GtkWidget *lavelVoltDiv {nullptr}; ///< Label that shows volt/div selected.
+            GtkWidget *labelVoltDiv {nullptr}; ///< Label that shows volt/div selected.
             GtkWidget *comboVoltDiv {nullptr}; ///< Options for volt/vid.
             GtkWidget *gridSignals {nullptr}; ///< .
             GtkWidget *checkSignal1 {nullptr}; ///< Show signal1 on-off.
@@ -148,6 +151,8 @@
             GtkWidget *spinFreq {nullptr}; ///< Change of the frequency.
             GtkWidget *comboFreq {nullptr}; ///< Range in frequency.
             GtkWidget *separator3 {nullptr};
+            GtkWidget *labelTestSignal {nullptr};
+            GtkWidget *checkTestSignal {nullptr};
             GtkWidget *labelPort {nullptr}; ///< Label that indicates the serial port.
             GtkWidget *boxPort {nullptr};
             GtkWidget *dropPort {nullptr}; ///< .
