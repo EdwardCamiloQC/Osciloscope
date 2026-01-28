@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <sys/oscilloscope.hpp>
+#include <sys/peripherals/puertoSerie.hpp>
 
 //----------
 //      THREADS
@@ -30,6 +31,7 @@ Oscilloscope::Oscilloscope(): stateOnOff_(true),
         voltage2.calculateSpectrum();
         voltage3.calculateSpectrum();
         voltage4.calculateSpectrum();
+        signalCapturer.selectCapturer(std::make_unique<ComSerial>());
 }
 
 Oscilloscope::~Oscilloscope(){
