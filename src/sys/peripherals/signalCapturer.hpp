@@ -29,12 +29,19 @@
             ~SignalCapturer();
 
             /** \brief Data capture begins.
+                \param nValues: Amount of data points that the signal must shift.
              */
-            void start();
+            void start(unsigned int nValues);
 
             /** \brief Sends the sample rate.
+                \param valueFreq: value of the frequency without the multiplier.
              */
-            void setSampleFrequency();
+            void setSampleFrequency(unsigned int freq);
+
+            /** \brief Sets the multiplier correspondly to the frequency.
+                \param mult: Multiplier frequency.
+             */
+            void setMultiplierFrequency(unsigned int mult);
 
             /** \brief Selects between the capturers.
                 \param theCapturer: The capturer to use.
@@ -42,8 +49,9 @@
             void selectCapturer(std::unique_ptr<Capturer> &&capturer);
         private:
             /** \brief Capture loop.
+                \param nValues: Number of data points to capture.
              */
-            void loopCatchVoltages();
+            void loopCatchVoltages(unsigned int nValues);
 
             //void inspection();
 
@@ -51,6 +59,8 @@
         private:
             std::thread catcher; ///< Thread that catchs the data.
             std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
+            unsigned int frequency {50};
+            unsigned int multiplier {1};
             //sd_device *devide;
     };
 #endif
