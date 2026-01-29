@@ -18,8 +18,16 @@ SignalCapturer::~SignalCapturer(){
     }
 }
 
-void SignalCapturer::start(){
-    catcher = std::thread(&SignalCapturer::loopCatchVoltages, this);
+void SignalCapturer::start(unsigned int nValues){
+    catcher = std::thread(&SignalCapturer::loopCatchVoltages, this, nValues);
+}
+
+void SignalCapturer::setSampleFrequency(unsigned int freq){
+    frequency = freq;
+}
+
+void SignalCapturer::setMultiplierFrequency(unsigned int mult){
+    multiplier = mult;
 }
 
 void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
@@ -29,20 +37,20 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
 //~~~~~~~~~~
 //      PRIVATE METHODS
 //~~~~~~~~~~
-void SignalCapturer::loopCatchVoltages(){
+void SignalCapturer::loopCatchVoltages(unsigned int nValues){
     Oscilloscope *osc = Oscilloscope::getInstance();
     while(osc->stateOnOff_){
         if(capturer){
             //shift the voltages
-            osc->voltage1.shiftVoltage(4);
-            osc->voltage2.shiftVoltage(4);
-            osc->voltage3.shiftVoltage(4);
-            osc->voltage4.shiftVoltage(4);
+            osc->voltage1.shiftVoltage(nValues);
+            osc->voltage2.shiftVoltage(nValues);
+            osc->voltage3.shiftVoltage(nValues);
+            osc->voltage4.shiftVoltage(nValues);
             capturer->readValues(&(osc->voltage1),
                                 &(osc->voltage2),
                                 &(osc->voltage3),
                                 &(osc->voltage4),
-                                4);
+                                nValues);
             osc->voltage1.calculateSpectrum();
             osc->voltage2.calculateSpectrum();
             osc->voltage3.calculateSpectrum();
@@ -51,6 +59,7 @@ void SignalCapturer::loopCatchVoltages(){
             std::cerr << "without concrete capturer" << std::endl;
         }
         //std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<unsigned int>(1000/(frequency*multiplier))));
     }
 }
 
