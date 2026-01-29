@@ -25,7 +25,10 @@ std::mutex Oscilloscope::mutex_;
 //----------
 //----------
 Oscilloscope::Oscilloscope(): stateOnOff_(true),
-    voltage1(8, SIGNAL_COLOR::RED), voltage2(8, SIGNAL_COLOR::ORANGE), voltage3(8, SIGNAL_COLOR::BLUE), voltage4(8, SIGNAL_COLOR::GREEN),
+    voltage1(128, SIGNAL_COLOR::RED),
+    voltage2(128, SIGNAL_COLOR::ORANGE),
+    voltage3(128, SIGNAL_COLOR::BLUE),
+    voltage4(128, SIGNAL_COLOR::GREEN),
     screen(), signalCapturer(nullptr){
         voltage1.calculateSpectrum();
         voltage2.calculateSpectrum();
@@ -55,7 +58,7 @@ void Oscilloscope::destroyInstance(){
 }
 
 int Oscilloscope::run(int &argc, char**& argv){
-    signalCapturer.start();
+    signalCapturer.start(static_cast<unsigned int>(voltage1.length/8));
     return screen.show(argc, argv);
 }
 
