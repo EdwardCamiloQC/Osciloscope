@@ -71,23 +71,25 @@ gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData
     // Verificar si el shader está en uso
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+    if(screen->stateStartStop_){
+        osc->voltage1.applyOffset(screen->offset1_, screen->voltDiv_);
+        osc->voltage2.applyOffset(screen->offset2_, screen->voltDiv_);
+        osc->voltage3.applyOffset(screen->offset3_, screen->voltDiv_);
+        osc->voltage4.applyOffset(screen->offset4_, screen->voltDiv_);
+    }
     if(static_cast<unsigned int>(currentProgram) == (screen->idShaderVolt) && (screen->idShaderVolt) != 0){
         //aqui dibuja
         screen->gridVoltage.draw();
         if(screen->stateSignal1_){
-            osc->voltage1.applyOffset(screen->offset1_, screen->voltDiv_);
             screen->drawVAO(osc->voltage1);
         }
         if(screen->stateSignal2_){
-            osc->voltage2.applyOffset(screen->offset2_, screen->voltDiv_);
             screen->drawVAO(osc->voltage2);
         }
         if(screen->stateSignal3_){
-            osc->voltage3.applyOffset(screen->offset3_, screen->voltDiv_);
             screen->drawVAO(osc->voltage3);
         }
         if(screen->stateSignal4_){
-            osc->voltage4.applyOffset(screen->offset4_, screen->voltDiv_);
             screen->drawVAO(osc->voltage4);
         }
     }
@@ -179,6 +181,12 @@ static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer 
     // Verificar si el shader está en uso
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+    if(screen->stateStartStop_){
+        osc->voltage1.spectrumSignal.updateVertex();
+        osc->voltage2.spectrumSignal.updateVertex();
+        osc->voltage3.spectrumSignal.updateVertex();
+        osc->voltage4.spectrumSignal.updateVertex();
+    }
     if(static_cast<unsigned int>(currentProgram) == (screen->idShaderSpec) && (screen->idShaderSpec) != 0){
         screen->gridSpectrum.draw();
         //aqui dibuja
@@ -313,25 +321,25 @@ void funcOffset4(GtkSpinButton *spinButton, gpointer userData){
 }
 
 void funcComboBoxFreq(GtkWidget *widget, gpointer userData){
-    Screen *screen = static_cast<Screen*>(userData);
+    Oscilloscope *osc = Oscilloscope::getInstance();
     switch(gtk_combo_box_get_active(GTK_COMBO_BOX(widget))){
         case 0:
-            screen->multiplier_ = 1;
+            osc->signalCapturer.setMultiplierFrequency(1);
             break;
         case 1:
-            screen->multiplier_ = 1000;
+            osc->signalCapturer.setMultiplierFrequency(1000);
             break;
         case 2:
-            screen->multiplier_ = 1000000;
+            osc->signalCapturer.setMultiplierFrequency(1000000);
             break;
         default:
-            screen->multiplier_ = 1;
+            osc->signalCapturer.setMultiplierFrequency(1);
     }
 }
 
 void funcSpinButtonFreq(GtkSpinButton *spinButton, gpointer userData){
-    Screen *screen = static_cast<Screen*>(userData);
-    screen->frequency_ = gtk_spin_button_get_value_as_int(spinButton);
+    Oscilloscope *osc = Oscilloscope::getInstance();
+    osc->signalCapturer.setSampleFrequency(gtk_spin_button_get_value_as_int(spinButton));
 }
 
 void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
@@ -425,7 +433,7 @@ static void activate(GtkApplication* app, gpointer userData){
 
             screen->labelFreq = gtk_label_new("Freq");
             screen->boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-            screen->adjustmentFreq = gtk_adjustment_new(50.0, 0.0, 100.0, 1.0, 5.0, 0.0);
+            screen->adjustmentFreq = gtk_adjustment_new(50.0, 1.0, 100.0, 1.0, 5.0, 0.0);
             screen->spinFreq = gtk_spin_button_new(screen->adjustmentFreq, 1.0, 0);
             screen->comboFreq = gtk_combo_box_text_new();
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "1", "Hz");

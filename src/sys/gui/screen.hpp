@@ -164,7 +164,7 @@
             bool stateSignal1_{false}, stateSignal2_{false}, stateSignal3_{false}, stateSignal4_{false}; ///< State that indicates when the signals should or should not be displayed.
             float voltDiv_ {1.0f}; ///< current value needed to calculate the sampling rate.
             float offset1_{0.0f}, offset2_{0.0f}, offset3_{0.0f}, offset4_{0.0f}; ///< Voltage's offsets.
-            unsigned int frequency_ {100}, multiplier_ {1}; ///< Frequency.
+
         // Methods
         public:
             /** \note Constructor.
