@@ -143,13 +143,12 @@
             GtkWidget *spinOffset3 {nullptr}; ///< Change offset to signal3.
             GtkWidget *spinOffset4 {nullptr}; ///< Change offset to signal4.
             GtkWidget *separator2 {nullptr};
-            GtkWidget *labelFreq {nullptr}; ///< Label for the frequency.
             GtkWidget *boxFreq {nullptr};
             GtkAdjustment *adjustmentFreq {nullptr};
             GtkWidget *spinFreq {nullptr}; ///< Change of the frequency.
             GtkWidget *comboFreq {nullptr}; ///< Range in frequency.
+            GtkWidget *checkTestSignal {nullptr}; ///< Enable the test signal.
             GtkWidget *separator3 {nullptr};
-            GtkWidget *checkTestSignal {nullptr};
             GtkWidget *labelPort {nullptr}; ///< Label that indicates the serial port.
             GtkWidget *boxPort {nullptr};
             GtkWidget *dropPort {nullptr}; ///< .

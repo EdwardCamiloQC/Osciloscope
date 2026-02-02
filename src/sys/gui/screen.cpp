@@ -427,7 +427,6 @@ static void activate(GtkApplication* app, gpointer userData){
 
             screen->separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->labelFreq = gtk_label_new("Freq");
             screen->boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
             screen->adjustmentFreq = gtk_adjustment_new(50.0, 1.0, 100.0, 1.0, 5.0, 0.0);
             screen->spinFreq = gtk_spin_button_new(screen->adjustmentFreq, 1.0, 0);
@@ -436,10 +435,9 @@ static void activate(GtkApplication* app, gpointer userData){
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "2", "Khz");
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "3", "Mhz");
                 gtk_combo_box_set_active(GTK_COMBO_BOX(screen->comboFreq), 0);
+            screen->checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             screen->separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-
-            screen->checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             screen->labelPort = gtk_label_new("Port");
             screen->boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
@@ -456,12 +454,11 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->comboVoltDiv, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->gridSignals, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator2, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelFreq, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->boxFreq, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->spinFreq, true, false, 1);
     gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->comboFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator3, true, true, 20);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->checkTestSignal, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator3, true, true, 20);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelPort, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->boxPort, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxPort), screen->dropPort, true, true, 1);
