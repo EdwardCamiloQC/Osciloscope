@@ -24,10 +24,12 @@ void SignalCapturer::start(unsigned int nValues){
 
 void SignalCapturer::setSampleFrequency(unsigned int freq){
     frequency = freq;
+    capturer->setSampleFrequency(frequency * multiplier);
 }
 
 void SignalCapturer::setMultiplierFrequency(unsigned int mult){
     multiplier = mult;
+    capturer->setSampleFrequency(frequency * multiplier);
 }
 
 void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
