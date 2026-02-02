@@ -227,18 +227,17 @@ static void resize(){
 //----------
 void funcStartStop(GtkWidget *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    //GtkWidget *led = GTK_WIDGET(userData);
-    //GtkStyleContext *context = gtk_widget_get_style_context(led);
+    screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
 
     screen->stateStartStop_ = !(screen->stateStartStop_);
     if(screen->stateStartStop_){
         gtk_button_set_label(GTK_BUTTON(widget), "Stop");
-        //gtk_style_context_remove_class(context, "led-on");
-        //gtk_style_context_add_class(context, "led-off");
+        gtk_style_context_remove_class(screen->context, "led-off");
+        gtk_style_context_add_class(screen->context, "led-on");
     }else{
         gtk_button_set_label(GTK_BUTTON(widget), "Start");
-        //gtk_style_context_remove_class(context, "led-off");
-        //gtk_style_context_add_class(context, "led-on");
+        gtk_style_context_remove_class(screen->context, "led-on");
+        gtk_style_context_add_class(screen->context, "led-off");
     }
 }
 
@@ -386,15 +385,12 @@ static void activate(GtkApplication* app, gpointer userData){
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(screen->provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
             //g_object_unref(provider);
 
-            screen->led = gtk_drawing_area_new();
-            gtk_widget_set_size_request(screen->led, 50, 50);
-            screen->context = gtk_widget_get_style_context(screen->led);
-            gtk_style_context_add_class(screen->context, "led-off");
             screen->buttonStartStop = gtk_button_new_with_label("Start");
+            screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
+            gtk_style_context_add_class(screen->context, "led-off");
 
             screen->separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->labelVoltDiv = gtk_label_new("Volt/Div");
             screen->comboVoltDiv = gtk_combo_box_text_new();
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "1", "0.1v/div");
                 gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "2", "0.2v/div");
@@ -443,7 +439,6 @@ static void activate(GtkApplication* app, gpointer userData){
 
             screen->separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->labelTestSignal = gtk_label_new("Test Signal");
             screen->checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             screen->labelPort = gtk_label_new("Port");
@@ -458,7 +453,6 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_box_pack_start(GTK_BOX(screen->boxPanels), screen->boxControl, false, false, 1);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->buttonStartStop, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator1, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelVoltDiv, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->comboVoltDiv, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->gridSignals, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator2, true, true, 20);
@@ -467,7 +461,6 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->spinFreq, true, false, 1);
     gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->comboFreq, true, false, 1);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator3, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelTestSignal, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->checkTestSignal, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelPort, false, false, 5);
     gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->boxPort, false, false, 5);

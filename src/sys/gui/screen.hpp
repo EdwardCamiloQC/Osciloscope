@@ -125,11 +125,9 @@
             GtkWidget *glAreaSpectrum {nullptr};
             GtkWidget *boxControl {nullptr}; ///< Second box that contains control area.
             GtkCssProvider *provider {nullptr}; ///< Style for start-stop button.
-            GtkWidget *led {nullptr};
             GtkStyleContext *context {nullptr};
             GtkWidget *buttonStartStop {nullptr}; ///< Start stop.
             GtkWidget *separator1 {nullptr};
-            GtkWidget *labelVoltDiv {nullptr}; ///< Label that shows volt/div selected.
             GtkWidget *comboVoltDiv {nullptr}; ///< Options for volt/vid.
             GtkWidget *gridSignals {nullptr}; ///< .
             GtkWidget *checkSignal1 {nullptr}; ///< Show signal1 on-off.
@@ -151,7 +149,6 @@
             GtkWidget *spinFreq {nullptr}; ///< Change of the frequency.
             GtkWidget *comboFreq {nullptr}; ///< Range in frequency.
             GtkWidget *separator3 {nullptr};
-            GtkWidget *labelTestSignal {nullptr};
             GtkWidget *checkTestSignal {nullptr};
             GtkWidget *labelPort {nullptr}; ///< Label that indicates the serial port.
             GtkWidget *boxPort {nullptr};
