@@ -1,13 +1,19 @@
 .led-on{
-    background-color: green;
-    border-radius: 25px;
-    min-width: 50px;
-    min-height: 50px;
+    background-image: none;
+    background-color:green;
+    color:black;
+    border-color:white;
+    border-radius:25px;
+    min-width:50px;
+    min-height:50px;
 }
 
 .led-off{
-    background-color: red;
-    border-radius: 25px;
-    min-width: 50px;
-    min-height: 50px;
+    background-image: none;
+    background-color:red;
+    color:black;
+    border-color:white;
+    border-radius:25px;
+    min-width:50px;
+    min-height:50px;
 }
