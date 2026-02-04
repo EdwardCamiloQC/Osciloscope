@@ -109,9 +109,7 @@
     template<typename T>
     void normalizeSignal(T *transform, unsigned int n){
         for(unsigned int i = 0; i < n; i++){
-            if(std::abs(transform[i]) != 0.0){
-                transform[i] = transform[i]/std::abs(transform[i]);
-            }
+            transform[i] = transform[i]/std::abs(std::complex<T>(n,0));
         }
     }
 
@@ -141,8 +139,33 @@
      */
     template<typename T>
     void seeTransform(const std::complex<T>* transform, unsigned int n){
+        std::cout << "\nFFT\n";
         for(size_t k=0; k<n; k++){
-            std::cout << transform[k];
+            std::cout << transform[k] << std::endl;
+        }
+    }
+
+    /** \brief Shows the signal module.
+        \param signalModule: Signal module.
+        \param n: Length.
+     */
+    template<typename T>
+    void seeModule(const T signalModule, unsigned int n){
+        std::cout << "\nMODULE\n";
+        for(unsigned int k=0; k<n; k++){
+            std::cout << signalModule[k] << std::endl;
+        }
+    }
+
+    /** \brief Shows the signal argument.
+        \param signalModule: Signal argument.
+        \param n: Length.
+     */
+    template<typename T>
+    void seeArgument(const T signalModule, unsigned int n){
+        std::cout << "\nMODULE\n";
+        for(unsigned int k=0; k<n; k++){
+            std::cout << signalModule[k] << std::endl;
         }
     }
     
