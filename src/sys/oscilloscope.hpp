@@ -24,6 +24,7 @@
             static std::mutex mutex_;
         public:
             bool stateOnOff_; ///< State that indicates whether the application is running.
+            bool stateStartStop_ {false}; ///< State that indicates when to update the signals or not.
             VoltageSignal voltage1; ///< Voltage one.
             VoltageSignal voltage2; ///< Voltage two.
             VoltageSignal voltage3; ///< Voltage three.
@@ -35,7 +36,7 @@
         private:
             /** \brief Creates the instance.
              */
-            Oscilloscope();
+            Oscilloscope(unsigned int lenSignals);
 
             /** \brief Deletes the instance.
              */

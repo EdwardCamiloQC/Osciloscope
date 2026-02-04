@@ -24,17 +24,21 @@ std::mutex Oscilloscope::mutex_;
 //      METHODS
 //----------
 //----------
-Oscilloscope::Oscilloscope(): stateOnOff_(true),
-    voltage1(128, SIGNAL_COLOR::RED),
-    voltage2(128, SIGNAL_COLOR::ORANGE),
-    voltage3(128, SIGNAL_COLOR::BLUE),
-    voltage4(128, SIGNAL_COLOR::GREEN),
+Oscilloscope::Oscilloscope(unsigned int lenSignals = 128):
+    stateOnOff_(true),
+    stateStartStop_(false),
+    voltage1(lenSignals, SIGNAL_COLOR::RED),
+    voltage2(lenSignals, SIGNAL_COLOR::ORANGE),
+    voltage3(lenSignals, SIGNAL_COLOR::BLUE),
+    voltage4(lenSignals, SIGNAL_COLOR::GREEN),
     screen(), signalCapturer(nullptr){
         voltage1.calculateSpectrum();
         voltage2.calculateSpectrum();
         voltage3.calculateSpectrum();
         voltage4.calculateSpectrum();
         signalCapturer.selectCapturer(std::make_unique<ComSerial>());
+        signalCapturer.setSampleFrequency(50);
+        signalCapturer.setMultiplierFrequency(1);
 }
 
 Oscilloscope::~Oscilloscope(){
