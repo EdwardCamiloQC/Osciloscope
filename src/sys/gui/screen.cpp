@@ -71,12 +71,12 @@ gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData
     // Verificar si el shader está en uso
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-    if(screen->stateStartStop_){
-        osc->voltage1.applyOffset(screen->offset1_, screen->voltDiv_);
-        osc->voltage2.applyOffset(screen->offset2_, screen->voltDiv_);
-        osc->voltage3.applyOffset(screen->offset3_, screen->voltDiv_);
-        osc->voltage4.applyOffset(screen->offset4_, screen->voltDiv_);
-    }
+
+    osc->voltage1.applyOffset(screen->offset1_, screen->voltDiv_);
+    osc->voltage2.applyOffset(screen->offset2_, screen->voltDiv_);
+    osc->voltage3.applyOffset(screen->offset3_, screen->voltDiv_);
+    osc->voltage4.applyOffset(screen->offset4_, screen->voltDiv_);
+
     if(static_cast<unsigned int>(currentProgram) == (screen->idShaderVolt) && (screen->idShaderVolt) != 0){
         //aqui dibuja
         screen->gridVoltage.draw();
@@ -181,7 +181,7 @@ static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer 
     // Verificar si el shader está en uso
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-    if(screen->stateStartStop_){
+    if(osc->stateStartStop_){
         osc->voltage1.spectrumSignal.updateVertex();
         osc->voltage2.spectrumSignal.updateVertex();
         osc->voltage3.spectrumSignal.updateVertex();
@@ -226,11 +226,12 @@ static void resize(){
 //      CALLBACKS CONTROL PANEL
 //----------
 void funcStartStop(GtkWidget *widget, gpointer userData){
+    Oscilloscope *osc = Oscilloscope::getInstance();
     Screen *screen = static_cast<Screen*>(userData);
     screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
 
-    screen->stateStartStop_ = !(screen->stateStartStop_);
-    if(screen->stateStartStop_){
+    osc->stateStartStop_ = !(osc->stateStartStop_);
+    if(osc->stateStartStop_){
         gtk_button_set_label(GTK_BUTTON(widget), "Stop");
         gtk_style_context_remove_class(screen->context, "led-off");
         gtk_style_context_add_class(screen->context, "led-on");
