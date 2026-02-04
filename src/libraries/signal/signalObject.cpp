@@ -32,7 +32,7 @@ void SignalObject::organizeAbscissas(){
     abscissas[0] = -1.0f;
     vertex[0] = abscissas[0];
     for(unsigned int i = 1; i < length; i++){
-        abscissas[i] = abscissas[i-1] + static_cast<float>(2.0f/length);
+        abscissas[i] = abscissas[i-1] + static_cast<float>(2.0f/(length-1.0f));
         vertex[2*i] = abscissas[i];
     }
 }
