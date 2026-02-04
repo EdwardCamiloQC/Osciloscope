@@ -42,23 +42,25 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
 void SignalCapturer::loopCatchVoltages(unsigned int nValues){
     Oscilloscope *osc = Oscilloscope::getInstance();
     while(osc->stateOnOff_){
-        if(capturer){
-            //shift the voltages
-            osc->voltage1.shiftVoltage(nValues);
-            osc->voltage2.shiftVoltage(nValues);
-            osc->voltage3.shiftVoltage(nValues);
-            osc->voltage4.shiftVoltage(nValues);
-            capturer->readValues(&(osc->voltage1),
-                                &(osc->voltage2),
-                                &(osc->voltage3),
-                                &(osc->voltage4),
-                                nValues);
-            osc->voltage1.calculateSpectrum();
-            osc->voltage2.calculateSpectrum();
-            osc->voltage3.calculateSpectrum();
-            osc->voltage4.calculateSpectrum();
-        }else{
-            std::cerr << "without concrete capturer" << std::endl;
+        if(osc->stateStartStop_){
+            if(capturer){
+                //shift the voltages
+                osc->voltage1.shiftVoltage(nValues);
+                osc->voltage2.shiftVoltage(nValues);
+                osc->voltage3.shiftVoltage(nValues);
+                osc->voltage4.shiftVoltage(nValues);
+                capturer->readValues(&(osc->voltage1),
+                                    &(osc->voltage2),
+                                    &(osc->voltage3),
+                                    &(osc->voltage4),
+                                    nValues);
+                osc->voltage1.calculateSpectrum();
+                osc->voltage2.calculateSpectrum();
+                osc->voltage3.calculateSpectrum();
+                osc->voltage4.calculateSpectrum();
+            }else{
+                std::cerr << "without concrete capturer" << std::endl;
+            }
         }
         //std::this_thread::sleep_for(std::chrono::seconds(2));
         std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<unsigned int>(1000/(frequency*multiplier))));
