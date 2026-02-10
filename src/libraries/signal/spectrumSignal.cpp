@@ -13,8 +13,8 @@ SpectrumSignal::~SpectrumSignal(){
 }
 
 void SpectrumSignal::calculateSpectrum(const float *signal){
-    fft(signal, length, spectrum, true);
-    calculateModule(spectrum, length, moduleSpectrum);
+    SIGNALS::FFT::fft(signal, length, spectrum);
+    SIGNALS::FFT::calculateModule(spectrum, length, moduleSpectrum);
 }
 
 void SpectrumSignal::updateVertex(){
