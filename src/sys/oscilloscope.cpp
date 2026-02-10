@@ -6,10 +6,10 @@
 //----------
 //      THREADS
 //----------
-gpointer inspectionTtyDevices(gpointer userData){
+/*gpointer inspectionTtyDevices(gpointer userData){
     std::cout << "hilo" << std::endl;
     return nullptr;
-}
+}*/
 
 //----------
 //----------
