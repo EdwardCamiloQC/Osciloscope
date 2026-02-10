@@ -108,7 +108,7 @@ gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData
     return TRUE;
 }
 
-void resizeVoltage(GtkGLArea *area, gpointer userData){
+void resizeVoltage([[maybe_unused]]GtkGLArea *area, [[maybe_unused]]gpointer userData){
     //
 }
 
@@ -320,7 +320,7 @@ void funcOffset4(GtkSpinButton *spinButton, gpointer userData){
     screen->offset4_ = gtk_spin_button_get_value(spinButton);
 }
 
-void funcComboBoxFreq(GtkWidget *widget, gpointer userData){
+void funcComboBoxFreq(GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     switch(gtk_combo_box_get_active(GTK_COMBO_BOX(widget))){
         case 0:
@@ -337,12 +337,12 @@ void funcComboBoxFreq(GtkWidget *widget, gpointer userData){
     }
 }
 
-void funcSpinButtonFreq(GtkSpinButton *spinButton, gpointer userData){
+void funcSpinButtonFreq(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     osc->signalCapturer.setSampleFrequency(gtk_spin_button_get_value_as_int(spinButton));
 }
 
-void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
+void funcCheckTestSignal(GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))){
         osc->signalCapturer.selectCapturer(std::make_unique<SignalGenerator>());
@@ -351,18 +351,18 @@ void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
     }
 }
 
-void funcComboPort(GtkComboBoxText *widget, gpointer userData){
+void funcComboPort([[maybe_unused]]GtkComboBoxText *widget, [[maybe_unused]]gpointer userData){
     //
 }
 
-void funcButtonPort(GtkWidget *widget, gpointer userData){
+void funcButtonPort([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     //
 }
 
 //----------
 //      WINDOW CALLBACKS
 //----------
-static void destroyWindow(GtkWidget *widget, gpointer userData){
+static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     osc->stateOnOff_ = false;
 }

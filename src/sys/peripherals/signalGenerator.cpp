@@ -12,7 +12,7 @@ SignalGenerator::SignalGenerator(){
 SignalGenerator::~SignalGenerator(){
 }
 
-void SignalGenerator::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
+void SignalGenerator::readValues(VoltageSignal *volt1, [[maybe_unused]]VoltageSignal *volt2, [[maybe_unused]]VoltageSignal *volt3, [[maybe_unused]]VoltageSignal *volt4, unsigned int nValues){
     double deltaT = 8.0/(frequency*(128-1));
     double t = (deltaT/2) * (128-1);
     for(unsigned int i = volt1->length - nValues; i < volt1->length; i++){
