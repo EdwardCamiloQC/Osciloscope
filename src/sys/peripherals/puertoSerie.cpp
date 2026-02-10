@@ -85,7 +85,7 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
 void ComSerial::setSampleFrequency(unsigned int freq){
     char sendFreq[50];
     if(mySerial.IsOpen()){
-        sprintf(sendFreq, "v\n");
+        sprintf(sendFreq, "%u\n", freq);
         //mySerial.write(sendFreq, 2);
     }
 }
