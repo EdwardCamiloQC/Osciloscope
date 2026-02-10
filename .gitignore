@@ -94,6 +94,7 @@ dkms.conf
 .ionide
 
 build
+lsan.supp
 
 ### CMake ###
 CMakeLists.txt.user
