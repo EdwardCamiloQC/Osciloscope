@@ -4,14 +4,6 @@
 #include <sys/peripherals/puertoSerie.hpp>
 
 //----------
-//      THREADS
-//----------
-/*gpointer inspectionTtyDevices(gpointer userData){
-    std::cout << "hilo" << std::endl;
-    return nullptr;
-}*/
-
-//----------
 //----------
 //      STATICS ATTRIBUTES
 //----------

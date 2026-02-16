@@ -1,13 +1,14 @@
 /** \file oscilloscope.hpp
     \brief The Oscilloscope was designed to display signals that arrive from the serial port.
     \author Edward Camilo
-    \version v1.0
-    \date enero 2026
+    \version v3.0
+    \date February 2026
  */
 #ifndef _OSCILLOSCOPE_H_
     #define _OSCILLOSCOPE_H_
 
     #include <mutex>
+    #include <atomic>
 
     #include <libraries/signal/voltageSignal.hpp>
     #include <sys/gui/screen.hpp>
@@ -20,17 +21,17 @@
     class Oscilloscope{
         // Attributes
         private:
-            static Oscilloscope* instance_; ///< Unique instance of the project.
-            static std::mutex mutex_;
+            static Oscilloscope *instance_; ///< Unique instance of the project.
+            static std::mutex   mutex_;
         public:
-            bool stateOnOff_; ///< State that indicates whether the application is running.
-            bool stateStartStop_ {false}; ///< State that indicates when to update the signals or not.
-            VoltageSignal voltage1; ///< Voltage one.
-            VoltageSignal voltage2; ///< Voltage two.
-            VoltageSignal voltage3; ///< Voltage three.
-            VoltageSignal voltage4; ///< Voltage four.
-            Screen screen; ///< Screen where shows the signals and configures some parameters.
-            SignalCapturer signalCapturer; ///< This is the capturer that stores the data signals.
+            std::atomic<bool>   stateOnOff_ {false}; ///< State that indicates whether the application is running.
+            bool                stateStartStop_ {false}; ///< State that indicates when to update the signals or not.
+            VoltageSignal       voltage1; ///< Voltage one.
+            VoltageSignal       voltage2; ///< Voltage two.
+            VoltageSignal       voltage3; ///< Voltage three.
+            VoltageSignal       voltage4; ///< Voltage four.
+            Screen              screen; ///< Screen where shows the signals and configures some parameters.
+            SignalCapturer      signalCapturer; ///< This is the capturer that stores the data signals.
         
         // Methods
         private:
