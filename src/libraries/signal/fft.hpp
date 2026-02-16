@@ -1,7 +1,7 @@
 /** \file fft.hpp
     \author Edward Camilo
-    \version v1.0
-    \date enero 2026
+    \version v2.0
+    \date February 2026
  */
 #ifndef _FFT_H_
     #define _FFT_H_
