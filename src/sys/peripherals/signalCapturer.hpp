@@ -56,7 +56,7 @@
             //void inspection();
 
         //  Attributes
-        private:
+        public:
             std::thread catcher; ///< Thread that catchs the data.
             std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
             unsigned int frequency {50};
