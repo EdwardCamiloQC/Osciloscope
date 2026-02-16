@@ -32,13 +32,9 @@ static int updateDropPort(Screen *userData, bool add, char *text){
     if(add){
         if(foundIndex == -1){
             gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(userData->dropPort), text);
-        }else{
-            gtk_combo_box_set_active(GTK_COMBO_BOX(userData->dropPort), foundIndex);
         }
     }else{
-        if(foundIndex == -1){
-            gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
-        }
+        gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
     }
 
     return G_SOURCE_REMOVE;
