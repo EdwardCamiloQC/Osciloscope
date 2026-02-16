@@ -15,6 +15,9 @@ ComSerial::~ComSerial(){
 }
 
 bool ComSerial::openPort(const char* port){
+    if(!(port)){
+        return false;
+    }
     if(!mySerial.IsOpen()){
         try{
             mySerial.Open(port);
@@ -51,6 +54,10 @@ bool ComSerial::closePort(){
 
 bool ComSerial::getFlagSerial(){
     return mySerial.IsOpen();
+}
+
+TypeIdCapturer ComSerial::getId(){
+    return SERIAL_PORT_ID;
 }
 
 void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){

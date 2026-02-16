@@ -24,3 +24,19 @@ void SignalGenerator::readValues(VoltageSignal *volt1, [[maybe_unused]]VoltageSi
 void SignalGenerator::setSampleFrequency(unsigned int freq){
     frequency = freq;
 }
+
+bool SignalGenerator::openPort([[maybe_unused]]const char* port){
+    return 0;
+}
+
+bool SignalGenerator::closePort(){
+    return 0;
+}
+
+bool SignalGenerator::getFlagSerial(){
+    return 0;
+}
+
+TypeIdCapturer SignalGenerator::getId(){
+    return GENERATE_SIGNAL_ID;
+}

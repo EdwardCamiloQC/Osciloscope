@@ -54,5 +54,22 @@
                 \override
              */
             void setSampleFrequency(unsigned int freq) override;
+
+            /** \note This function does nothing.
+             */
+            bool openPort(const char* port) override;
+
+            /** \note This function does nothing.
+             */
+            bool closePort() override;
+
+            /** \note This function does nothing.
+             */
+            bool getFlagSerial() override;
+
+            /** \brief Get id capturer.
+                \return Id.
+             */
+            TypeIdCapturer getId() override;
     };
 #endif

@@ -9,6 +9,11 @@
     //Forward declaration
     class VoltageSignal;
 
+    typedef enum{
+        SERIAL_PORT_ID,
+        GENERATE_SIGNAL_ID
+    }TypeIdCapturer;
+
     /** \brief It is a interface that allows change between some catchers. 
         \class
      */
@@ -33,5 +38,13 @@
                 \param freq: Frequency.
              */
             virtual void setSampleFrequency(unsigned int freq) = 0;
+
+            virtual bool openPort(const char *port) = 0;
+
+            virtual bool closePort() = 0;
+
+            virtual bool getFlagSerial() = 0;
+
+            virtual TypeIdCapturer getId() = 0;
     };
 #endif
