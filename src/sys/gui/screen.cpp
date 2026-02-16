@@ -7,6 +7,84 @@
 #include <sys/peripherals/puertoSerie.hpp>
 #include <sys/peripherals/signalGenerator.hpp>
 
+//==================================================
+//  STATIC FUNCTIONS
+//==================================================
+static int updateDropPort(Screen *userData, bool add, char *text){
+    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(userData->dropPort));
+    GtkTreeIter iter;
+    gboolean valid = gtk_tree_model_get_iter_first(model, &iter);
+    int index = 0;
+    int foundIndex = -1;
+    while(valid){
+        gchar *itemText = NULL;
+        gtk_tree_model_get(model, &iter, 0, &itemText, -1);
+        if(itemText != NULL && g_strcmp0(itemText, text) == 0){
+            foundIndex = index;
+            g_free(itemText);
+            break;
+        }
+        g_free(itemText);
+        valid = gtk_tree_model_iter_next(model, &iter);
+        index++;
+    }
+
+    if(add){
+        if(foundIndex == -1){
+            gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(userData->dropPort), text);
+        }else{
+            gtk_combo_box_set_active(GTK_COMBO_BOX(userData->dropPort), foundIndex);
+        }
+    }else{
+        if(foundIndex == -1){
+            gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
+        }
+    }
+
+    return G_SOURCE_REMOVE;
+}
+
+//==================================================
+//  INSPECTION PORTS
+//==================================================
+void inspectionTtyDevices(Screen *userData){
+    Oscilloscope *osc = Oscilloscope::getInstance();
+
+	int fd = udev_monitor_get_fd(userData->monitor); //fd:fileDescriptor
+	std::cout << "Monitoreando eventos en el descriptor:" << fd << std::endl;
+
+    while(osc->stateOnOff_.load(std::memory_order_relaxed)){
+		fd_set fds;
+		FD_ZERO(&fds);
+		FD_SET(fd, &fds);
+
+        struct timeval tv;
+        tv.tv_sec = 0;
+        tv.tv_usec = 1000;
+
+		//Bloquea hasta que haya un evento
+		int ret = select(fd + 1, &fds, nullptr, nullptr, &tv);
+		if(ret > 0 && FD_ISSET(fd, &fds)){
+			struct udev_device *dev = udev_monitor_receive_device(userData->monitor);
+			if(dev){
+				const char *action = udev_device_get_action(dev);
+				const char *devnode = udev_device_get_devnode(dev);
+				if(action && devnode){
+					if(strcmp(action, "add") == 0){
+                        updateDropPort(userData, true, g_strdup(devnode));
+                    }else if(strcmp(action, "remove") == 0){
+                        updateDropPort(userData, false, g_strdup(devnode));
+                    }
+				}
+				udev_device_unref(dev);
+			}
+		}else if(ret < 0){
+			std::cerr << "Error en select()\n";
+			break;
+		}
+	}
+}
+
 //----------
 //      CALLBACKS CANVA VOLTAGE
 //----------
@@ -355,8 +433,21 @@ void funcComboPort([[maybe_unused]]GtkComboBoxText *widget, [[maybe_unused]]gpoi
     //
 }
 
-void funcButtonPort([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
-    //
+void funcButtonPort(GtkWidget *widget, gpointer userData){
+    Oscilloscope *osc = Oscilloscope::getInstance();
+    Screen *screen = static_cast<Screen*>(userData);
+
+    if(osc->signalCapturer.capturer->getId() == SERIAL_PORT_ID){
+        if(!(osc->signalCapturer.capturer->getFlagSerial())){
+            if(osc->signalCapturer.capturer->openPort(screen->routePort.c_str())){
+                gtk_button_set_label(GTK_BUTTON(widget), "Close");
+            }
+        }else{
+            if(!osc->signalCapturer.capturer->closePort()){
+                gtk_button_set_label(GTK_BUTTON(widget), "Open");
+            }
+        }
+    }
 }
 
 //----------
@@ -364,7 +455,7 @@ void funcButtonPort([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer 
 //----------
 static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    osc->stateOnOff_ = false;
+    osc->stateOnOff_.store(false);
 }
 
 static void activate(GtkApplication* app, gpointer userData){
@@ -384,7 +475,6 @@ static void activate(GtkApplication* app, gpointer userData){
                 g_error_free(error);
             }
             gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(screen->provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-            //g_object_unref(provider);
 
             screen->buttonStartStop = gtk_button_new_with_label("Start");
             screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
@@ -486,9 +576,9 @@ static void activate(GtkApplication* app, gpointer userData){
     g_signal_connect(screen->comboFreq, "changed", G_CALLBACK(funcComboBoxFreq), userData);
     g_signal_connect(screen->spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
     g_signal_connect(screen->checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
-    g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), nullptr);
-    g_signal_connect(screen->buttonPort, "clicked", G_CALLBACK(funcButtonPort), nullptr);
-    g_signal_connect(screen->window, "destroy", G_CALLBACK(destroyWindow), nullptr);
+    g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), userData);
+    g_signal_connect(screen->buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
+    g_signal_connect(screen->window, "destroy", G_CALLBACK(destroyWindow), userData);
 
     GdkDisplay *display = gdk_display_get_default();
     GdkMonitor *monitor = gdk_display_get_monitor(display, 0);
@@ -499,9 +589,6 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_window_set_default_size(GTK_WINDOW(screen->window), monitorGeometry.width, 700);
     gtk_window_present(GTK_WINDOW(screen->window));
     gtk_widget_show_all(screen->window);
-
-    //fla
-    //g_thread_new("TTY Devices", inspectionTtyDevices, userData);
 }
 
 //----------
@@ -509,10 +596,18 @@ static void activate(GtkApplication* app, gpointer userData){
 //----------
 Screen::Screen()
     : appGtk(gtk_application_new("com.oscilloscope", G_APPLICATION_DEFAULT_FLAGS)){
+    routePort.reserve(50);
+    routePort.clear();
+    createContextUdev();
     g_signal_connect(appGtk, "activate", G_CALLBACK(activate), this);
+    inspectorPt = std::thread(&inspectionTtyDevices, this);
 }
 
 Screen::~Screen(){
+    if(inspectorPt.joinable()){
+        inspectorPt.join();
+    }
+    deleteContextUdev();
     if(appGtk){
         g_object_unref(appGtk);
     }
@@ -520,6 +615,52 @@ Screen::~Screen(){
 
 int Screen::show(int &argc, char** argv){
     return g_application_run(G_APPLICATION(appGtk), argc, argv);
+}
+
+int Screen::createContextUdev(){
+    //crear contexto udev
+	udev = udev_new();
+	if(!(udev)){
+		std::cerr << "No se pudo crear el contexto udev\n";
+		return EXIT_FAILURE;
+	}
+
+	//Crear monitor para recibir eventos desde udev a través de netlink
+	monitor = udev_monitor_new_from_netlink(udev, "udev");
+	if(!(monitor)){
+		std::cerr << "no se pudo crear el monitor de udev\n";
+		udev_unref(udev);
+		return EXIT_FAILURE;
+	}
+
+	//Filtrar eventos para el subsistema "tty"
+	if(udev_monitor_filter_add_match_subsystem_devtype(monitor, "tty", nullptr) < 0){
+		std::cerr << "Error al aplicar el filtro para el subsistema tty\n";
+		udev_monitor_unref(monitor);
+		udev_unref(udev);
+		return EXIT_FAILURE;
+	}
+
+	//Habilitar la recepcion de eventos
+	if(udev_monitor_enable_receiving(monitor) < 0){
+		std::cerr << "error al habilitar la recepcion de eventos\n";
+		udev_monitor_unref(monitor);
+		udev_unref(udev);
+		return EXIT_FAILURE;
+	}
+
+    return EXIT_SUCCESS;
+}
+
+int Screen::deleteContextUdev(){
+    if(monitor){
+        udev_monitor_unref(monitor);
+    }
+    if(udev){
+        udev_unref(udev);
+    }
+
+    return EXIT_SUCCESS;
 }
 
 //----------
