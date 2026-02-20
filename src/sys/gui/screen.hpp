@@ -120,41 +120,8 @@
         private:
             GtkApplication *appGtk {nullptr};
         public:
-            GtkWidget           *window {nullptr}; ///< Oscilloscope window.
-            GtkWidget           *boxPanels {nullptr}; ///< General boxes that contains the second boxes.
-            GtkWidget           *boxView {nullptr}; ///< Second box that contains print areas.
-            GtkWidget           *glAreaVoltage {nullptr}; ///< Print areas.
-            GtkWidget           *glAreaSpectrum {nullptr};
-            GtkWidget           *boxControl {nullptr}; ///< Second box that contains control area.
-            GtkCssProvider      *provider {nullptr}; ///< Style for start-stop button.
             GtkStyleContext     *context {nullptr};
-            GtkWidget           *buttonStartStop {nullptr}; ///< Start stop.
-            GtkWidget           *separator1 {nullptr};
-            GtkWidget           *comboVoltDiv {nullptr}; ///< Options for volt/vid.
-            GtkWidget           *gridSignals {nullptr}; ///< .
-            GtkWidget           *checkSignal1 {nullptr}; ///< Show signal1 on-off.
-            GtkWidget           *checkSignal2 {nullptr}; ///< Show signal2 on-off.
-            GtkWidget           *checkSignal3 {nullptr}; ///< Show signal3 on-off.
-            GtkWidget           *checkSignal4 {nullptr}; ///< Show signal4 on-off.
-            GtkAdjustment       *adjustment1 {nullptr};
-            GtkAdjustment       *adjustment2 {nullptr};
-            GtkAdjustment       *adjustment3 {nullptr};
-            GtkAdjustment       *adjustment4 {nullptr};
-            GtkWidget           *spinOffset1 {nullptr}; ///< Change offset to signal1.
-            GtkWidget           *spinOffset2 {nullptr}; ///< Change offset to signal2.
-            GtkWidget           *spinOffset3 {nullptr}; ///< Change offset to signal3.
-            GtkWidget           *spinOffset4 {nullptr}; ///< Change offset to signal4.
-            GtkWidget           *separator2 {nullptr};
-            GtkWidget           *boxFreq {nullptr};
-            GtkAdjustment       *adjustmentFreq {nullptr};
-            GtkWidget           *spinFreq {nullptr}; ///< Change of the frequency.
-            GtkWidget           *comboFreq {nullptr}; ///< Range in frequency.
-            GtkWidget           *checkTestSignal {nullptr}; ///< Enable the test signal.
-            GtkWidget           *separator3 {nullptr};
-            GtkWidget           *labelPort {nullptr}; ///< Label that indicates the serial port.
-            GtkWidget           *boxPort {nullptr};
-            GtkWidget           *dropPort {nullptr}; ///< .
-            GtkWidget           *buttonPort {nullptr}; ///< Open or close the serial port.
+            GtkWidget           *dropPort {nullptr};
             struct udev         *udev {nullptr};
             struct udev_monitor *monitor {nullptr};
             std::thread         inspectorPt;

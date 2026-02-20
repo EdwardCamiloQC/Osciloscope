@@ -302,7 +302,7 @@ static void resize(){
 void funcStartStop(GtkWidget *widget, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     Screen *screen = static_cast<Screen*>(userData);
-    screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
+    screen->context = gtk_widget_get_style_context(widget);
 
     osc->stateStartStop_ = !(osc->stateStartStop_);
     if(osc->stateStartStop_){
@@ -456,135 +456,135 @@ static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpo
 
 static void activate(GtkApplication* app, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->window = gtk_application_window_new(app);
-    screen->boxPanels = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-        screen->boxView = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-            screen->glAreaVoltage = gtk_gl_area_new();
-            screen->glAreaSpectrum = gtk_gl_area_new();
-            gtk_widget_set_size_request(screen->glAreaSpectrum, -1, 100);
+    GtkWidget *window = gtk_application_window_new(app);
+    GtkWidget *boxPanels = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+        GtkWidget *boxView = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+            GtkWidget *glAreaVoltage = gtk_gl_area_new();
+            GtkWidget *glAreaSpectrum = gtk_gl_area_new();
+            gtk_widget_set_size_request(glAreaSpectrum, -1, 100);
 
-        screen->boxControl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-            screen->provider = gtk_css_provider_new();
+        GtkWidget *boxControl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+            GtkCssProvider *provider = gtk_css_provider_new();
             GError *error = nullptr;
-            if(!gtk_css_provider_load_from_path(screen->provider, "./src/styles/styleButtonStartStop.css", &error)){
+            if(!gtk_css_provider_load_from_path(provider, "./src/styles/styleButtonStartStop.css", &error)){
                 g_warning("Error cargando CSS: %s", error->message);
                 g_error_free(error);
             }
-            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(screen->provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-            screen->buttonStartStop = gtk_button_new_with_label("Start");
-            screen->context = gtk_widget_get_style_context(screen->buttonStartStop);
+            GtkWidget *buttonStartStop = gtk_button_new_with_label("Start");
+            screen->context = gtk_widget_get_style_context(buttonStartStop);
             gtk_style_context_add_class(screen->context, "led-off");
 
-            screen->separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            GtkWidget *separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->comboVoltDiv = gtk_combo_box_text_new();
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "1", "0.1v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "2", "0.2v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "3", "0.3v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "4", "0.4v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "5", "0.5v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "6", "1v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "7", "2v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "8", "3v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "9", "4v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboVoltDiv), "10", "5v/div");
-                gtk_combo_box_set_active(GTK_COMBO_BOX(screen->comboVoltDiv), 5);
-            screen->gridSignals = gtk_grid_new();
-            screen->checkSignal1 = gtk_check_button_new_with_label("signal1");
-            screen->checkSignal2 = gtk_check_button_new_with_label("signal2");
-            screen->checkSignal3 = gtk_check_button_new_with_label("signal3");
-            screen->checkSignal4 = gtk_check_button_new_with_label("signal4");
-            screen->adjustment1 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
-            screen->adjustment2 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
-            screen->adjustment3 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
-            screen->adjustment4 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
-            screen->spinOffset1 = gtk_spin_button_new(screen->adjustment1, 0.1, 2);
-            screen->spinOffset2 = gtk_spin_button_new(screen->adjustment2, 0.1, 2);
-            screen->spinOffset3 = gtk_spin_button_new(screen->adjustment3, 0.1, 2);
-            screen->spinOffset4 = gtk_spin_button_new(screen->adjustment4, 0.1, 2);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->checkSignal1, 0, 0, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->spinOffset1, 1, 0, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->checkSignal2, 0, 1, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->spinOffset2, 1, 1, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->checkSignal3, 0, 2, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->spinOffset3, 1, 2, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->checkSignal4, 0, 3, 1, 1);
-                gtk_grid_attach(GTK_GRID(screen->gridSignals), screen->spinOffset4, 1, 3, 1, 1);
+            GtkWidget *comboVoltDiv = gtk_combo_box_text_new();
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "1", "0.1v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "2", "0.2v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "3", "0.3v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "4", "0.4v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "5", "0.5v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "6", "1v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "7", "2v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "8", "3v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "9", "4v/div");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "10", "5v/div");
+                gtk_combo_box_set_active(GTK_COMBO_BOX(comboVoltDiv), 5);
+            GtkWidget *gridSignals = gtk_grid_new();
+            GtkWidget *checkSignal1 = gtk_check_button_new_with_label("signal1");
+            GtkWidget *checkSignal2 = gtk_check_button_new_with_label("signal2");
+            GtkWidget *checkSignal3 = gtk_check_button_new_with_label("signal3");
+            GtkWidget *checkSignal4 = gtk_check_button_new_with_label("signal4");
+            GtkAdjustment *adjustment1 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
+            GtkAdjustment *adjustment2 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
+            GtkAdjustment *adjustment3 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
+            GtkAdjustment *adjustment4 = gtk_adjustment_new(0.0, -3.3, 3.0, 0.1, 0.0, 0.0);
+            GtkWidget *spinOffset1 = gtk_spin_button_new(adjustment1, 0.1, 2);
+            GtkWidget *spinOffset2 = gtk_spin_button_new(adjustment2, 0.1, 2);
+            GtkWidget *spinOffset3 = gtk_spin_button_new(adjustment3, 0.1, 2);
+            GtkWidget *spinOffset4 = gtk_spin_button_new(adjustment4, 0.1, 2);
+                gtk_grid_attach(GTK_GRID(gridSignals), checkSignal1, 0, 0, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), spinOffset1, 1, 0, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), checkSignal2, 0, 1, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), spinOffset2, 1, 1, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), checkSignal3, 0, 2, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), spinOffset3, 1, 2, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), checkSignal4, 0, 3, 1, 1);
+                gtk_grid_attach(GTK_GRID(gridSignals), spinOffset4, 1, 3, 1, 1);
 
-            screen->separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            GtkWidget *separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-            screen->adjustmentFreq = gtk_adjustment_new(50.0, 1.0, 100.0, 1.0, 5.0, 0.0);
-            screen->spinFreq = gtk_spin_button_new(screen->adjustmentFreq, 1.0, 0);
-            screen->comboFreq = gtk_combo_box_text_new();
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "1", "Hz");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "2", "Khz");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(screen->comboFreq), "3", "Mhz");
-                gtk_combo_box_set_active(GTK_COMBO_BOX(screen->comboFreq), 0);
-            screen->checkTestSignal = gtk_check_button_new_with_label("Test signal");
+            GtkWidget *boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+            GtkAdjustment *adjustmentFreq = gtk_adjustment_new(50.0, 1.0, 100.0, 1.0, 5.0, 0.0);
+            GtkWidget *spinFreq = gtk_spin_button_new(adjustmentFreq, 1.0, 0);
+            GtkWidget *comboFreq = gtk_combo_box_text_new();
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "1", "Hz");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "2", "Khz");
+                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "3", "Mhz");
+                gtk_combo_box_set_active(GTK_COMBO_BOX(comboFreq), 0);
+            GtkWidget *checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
-            screen->separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            GtkWidget *separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
-            screen->labelPort = gtk_label_new("Port");
-            screen->boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+            GtkWidget *labelPort = gtk_label_new("Port");
+            GtkWidget *boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
             screen->dropPort = gtk_combo_box_text_new();
-            screen->buttonPort = gtk_button_new_with_label("Open");
+            GtkWidget *buttonPort = gtk_button_new_with_label("Open");
 
-    gtk_container_add(GTK_CONTAINER(screen->window), screen->boxPanels);
-    gtk_box_pack_start(GTK_BOX(screen->boxPanels), screen->boxView, true, true, 0);
-    gtk_box_pack_start(GTK_BOX(screen->boxView), screen->glAreaVoltage, true, true, 0);
-    gtk_box_pack_start(GTK_BOX(screen->boxView), screen->glAreaSpectrum, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxPanels), screen->boxControl, false, false, 1);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->buttonStartStop, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator1, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->comboVoltDiv, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->gridSignals, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator2, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->boxFreq, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->spinFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(screen->boxFreq), screen->comboFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->checkTestSignal, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->separator3, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->labelPort, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxControl), screen->boxPort, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(screen->boxPort), screen->dropPort, true, true, 1);
-    gtk_box_pack_start(GTK_BOX(screen->boxPort), screen->buttonPort, false, true, 1);
+    gtk_container_add(GTK_CONTAINER(window), boxPanels);
+    gtk_box_pack_start(GTK_BOX(boxPanels), boxView, true, true, 0);
+    gtk_box_pack_start(GTK_BOX(boxView), glAreaVoltage, true, true, 0);
+    gtk_box_pack_start(GTK_BOX(boxView), glAreaSpectrum, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxPanels), boxControl, false, false, 1);
+    gtk_box_pack_start(GTK_BOX(boxControl), buttonStartStop, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxControl), separator1, true, true, 20);
+    gtk_box_pack_start(GTK_BOX(boxControl), comboVoltDiv, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxControl), gridSignals, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxControl), separator2, true, true, 20);
+    gtk_box_pack_start(GTK_BOX(boxControl), boxFreq, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxFreq), spinFreq, true, false, 1);
+    gtk_box_pack_start(GTK_BOX(boxFreq), comboFreq, true, false, 1);
+    gtk_box_pack_start(GTK_BOX(boxControl), checkTestSignal, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxControl), separator3, true, true, 20);
+    gtk_box_pack_start(GTK_BOX(boxControl), labelPort, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxControl), boxPort, false, false, 5);
+    gtk_box_pack_start(GTK_BOX(boxPort), screen->dropPort, true, true, 1);
+    gtk_box_pack_start(GTK_BOX(boxPort), buttonPort, false, true, 1);
 
-    g_signal_connect(screen->glAreaVoltage, "realize", G_CALLBACK(realizeVoltage), userData);
-    g_signal_connect(screen->glAreaVoltage, "unrealize", G_CALLBACK(unrealizeVoltage), userData);
-    g_signal_connect(screen->glAreaVoltage, "render", G_CALLBACK(renderVoltage), userData);
-    g_signal_connect(screen->glAreaVoltage, "resize", G_CALLBACK(resizeVoltage), userData);
-    g_signal_connect(screen->glAreaSpectrum, "realize", G_CALLBACK(realizeSpectrum), userData);
-    g_signal_connect(screen->glAreaSpectrum, "unrealize", G_CALLBACK(unrealizeSpectrum), userData);
-    g_signal_connect(screen->glAreaSpectrum, "resize", G_CALLBACK(resize), userData);
-    g_signal_connect(screen->glAreaSpectrum, "render", G_CALLBACK(renderSpectrum), userData);
-    g_signal_connect(screen->buttonStartStop, "clicked", G_CALLBACK(funcStartStop), userData);
-    g_signal_connect(screen->comboVoltDiv, "changed", G_CALLBACK(funcVoltDiv), userData);
-    g_signal_connect(screen->checkSignal1, "clicked", G_CALLBACK(funcCheckSig1), userData);
-    g_signal_connect(screen->checkSignal2, "clicked", G_CALLBACK(funcCheckSig2), userData);
-    g_signal_connect(screen->checkSignal3, "clicked", G_CALLBACK(funcCheckSig3), userData);
-    g_signal_connect(screen->checkSignal4, "clicked", G_CALLBACK(funcCheckSig4), userData);
-    g_signal_connect(screen->spinOffset1, "value_changed", G_CALLBACK(funcOffset1), userData);
-    g_signal_connect(screen->spinOffset2, "value_changed", G_CALLBACK(funcOffset2), userData);
-    g_signal_connect(screen->spinOffset3, "value_changed", G_CALLBACK(funcOffset3), userData);
-    g_signal_connect(screen->spinOffset4, "value_changed", G_CALLBACK(funcOffset4), userData);
-    g_signal_connect(screen->comboFreq, "changed", G_CALLBACK(funcComboBoxFreq), userData);
-    g_signal_connect(screen->spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
-    g_signal_connect(screen->checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
+    g_signal_connect(glAreaVoltage, "realize", G_CALLBACK(realizeVoltage), userData);
+    g_signal_connect(glAreaVoltage, "unrealize", G_CALLBACK(unrealizeVoltage), userData);
+    g_signal_connect(glAreaVoltage, "render", G_CALLBACK(renderVoltage), userData);
+    g_signal_connect(glAreaVoltage, "resize", G_CALLBACK(resizeVoltage), userData);
+    g_signal_connect(glAreaSpectrum, "realize", G_CALLBACK(realizeSpectrum), userData);
+    g_signal_connect(glAreaSpectrum, "unrealize", G_CALLBACK(unrealizeSpectrum), userData);
+    g_signal_connect(glAreaSpectrum, "resize", G_CALLBACK(resize), userData);
+    g_signal_connect(glAreaSpectrum, "render", G_CALLBACK(renderSpectrum), userData);
+    g_signal_connect(buttonStartStop, "clicked", G_CALLBACK(funcStartStop), userData);
+    g_signal_connect(comboVoltDiv, "changed", G_CALLBACK(funcVoltDiv), userData);
+    g_signal_connect(checkSignal1, "clicked", G_CALLBACK(funcCheckSig1), userData);
+    g_signal_connect(checkSignal2, "clicked", G_CALLBACK(funcCheckSig2), userData);
+    g_signal_connect(checkSignal3, "clicked", G_CALLBACK(funcCheckSig3), userData);
+    g_signal_connect(checkSignal4, "clicked", G_CALLBACK(funcCheckSig4), userData);
+    g_signal_connect(spinOffset1, "value_changed", G_CALLBACK(funcOffset1), userData);
+    g_signal_connect(spinOffset2, "value_changed", G_CALLBACK(funcOffset2), userData);
+    g_signal_connect(spinOffset3, "value_changed", G_CALLBACK(funcOffset3), userData);
+    g_signal_connect(spinOffset4, "value_changed", G_CALLBACK(funcOffset4), userData);
+    g_signal_connect(comboFreq, "changed", G_CALLBACK(funcComboBoxFreq), userData);
+    g_signal_connect(spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
+    g_signal_connect(checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
     g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), userData);
-    g_signal_connect(screen->buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
-    g_signal_connect(screen->window, "destroy", G_CALLBACK(destroyWindow), userData);
+    g_signal_connect(buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
+    g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), userData);
 
     GdkDisplay *display = gdk_display_get_default();
     GdkMonitor *monitor = gdk_display_get_monitor(display, 0);
     GdkRectangle monitorGeometry;
     gdk_monitor_get_geometry(monitor, &monitorGeometry);
 
-    gtk_window_set_title(GTK_WINDOW(screen->window), "Oscilloscope");
-    gtk_window_set_default_size(GTK_WINDOW(screen->window), monitorGeometry.width, 700);
-    gtk_window_present(GTK_WINDOW(screen->window));
-    gtk_widget_show_all(screen->window);
+    gtk_window_set_title(GTK_WINDOW(window), "Oscilloscope");
+    gtk_window_set_default_size(GTK_WINDOW(window), monitorGeometry.width, 700);
+    gtk_window_present(GTK_WINDOW(window));
+    gtk_widget_show_all(window);
 }
 
 //----------
