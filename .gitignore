@@ -95,6 +95,7 @@ dkms.conf
 
 build
 lsan.supp
+logo.txt
 
 ### CMake ###
 CMakeLists.txt.user
