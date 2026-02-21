@@ -1,3 +1,7 @@
+<h1>
+    OSCILLOSCOPE
+</h1>
+
 <p align="center">
     <img src="./AppOsc.png">
 </p>
