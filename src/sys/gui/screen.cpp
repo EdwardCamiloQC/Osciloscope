@@ -1,5 +1,6 @@
 #include <iostream>
 #include <glm/glm.hpp>
+#include <glib-unix.h>
 
 #include <sys/gui/screen.hpp>
 #include <sys/shaders/shader.hpp>
@@ -10,7 +11,7 @@
 //==================================================
 //  STATIC FUNCTIONS
 //==================================================
-static int updateDropPort(Screen *userData, bool add, char *text){
+static void updateDropPort(Screen *userData, bool add, char *text){
     GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(userData->dropPort));
     GtkTreeIter iter;
     gboolean valid = gtk_tree_model_get_iter_first(model, &iter);
@@ -38,49 +39,37 @@ static int updateDropPort(Screen *userData, bool add, char *text){
             gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
         }
     }
-
-    return G_SOURCE_REMOVE;
 }
 
 //==================================================
 //  INSPECTION PORTS
 //==================================================
-void inspectionTtyDevices(Screen *userData){
-    Oscilloscope *osc = Oscilloscope::getInstance();
+static gboolean udev_monitor_callback([[maybe_unused]]gint fd, [[maybe_unused]]GIOCondition condition, gpointer userData){
+    Screen *screen = static_cast<Screen*>(userData);
 
-	int fd = udev_monitor_get_fd(userData->monitor); //fd:fileDescriptor
-	std::cout << "Monitoreando eventos en el descriptor:" << fd << std::endl;
+    struct udev_device *dev = udev_monitor_receive_device(screen->monitor);
+    if(!dev){
+        return TRUE;
+    }
 
-    while(osc->stateOnOff_.load(std::memory_order_relaxed)){
-		fd_set fds;
-		FD_ZERO(&fds);
-		FD_SET(fd, &fds);
+    const char *action = udev_device_get_action(dev);
+    const char *devnode = udev_device_get_devnode(dev);
 
-        struct timeval tv;
-        tv.tv_sec = 0;
-        tv.tv_usec = 1000;
+    if(action && devnode){
+        if(strcmp(action, "add") == 0){
+            gchar *copy = g_strdup(devnode);
+            updateDropPort(screen, true, copy);
+            g_free(copy);
+        }else if(strcmp(action, "remove") == 0){
+            gchar *copy = g_strdup(devnode);
+            updateDropPort(screen, false, copy);
+            g_free(copy);
+        }
+    }
+    
+    udev_device_unref(dev);
 
-		//Bloquea hasta que haya un evento
-		int ret = select(fd + 1, &fds, nullptr, nullptr, &tv);
-		if(ret > 0 && FD_ISSET(fd, &fds)){
-			struct udev_device *dev = udev_monitor_receive_device(userData->monitor);
-			if(dev){
-				const char *action = udev_device_get_action(dev);
-				const char *devnode = udev_device_get_devnode(dev);
-				if(action && devnode){
-					if(strcmp(action, "add") == 0){
-                        updateDropPort(userData, true, g_strdup(devnode));
-                    }else if(strcmp(action, "remove") == 0){
-                        updateDropPort(userData, false, g_strdup(devnode));
-                    }
-				}
-				udev_device_unref(dev);
-			}
-		}else if(ret < 0){
-			std::cerr << "Error en select()\n";
-			break;
-		}
-	}
+    return TRUE;
 }
 
 //----------
@@ -429,7 +418,9 @@ void funcCheckTestSignal(GtkWidget *widget, [[maybe_unused]]gpointer userData){
 
 void funcComboPort(GtkComboBoxText *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->routePort = gtk_combo_box_text_get_active_text(widget);
+    if(gtk_combo_box_text_get_active_text(widget) != nullptr){
+        screen->routePort = gtk_combo_box_text_get_active_text(widget);
+    }
 }
 
 void funcButtonPort(GtkWidget *widget, gpointer userData){
@@ -456,7 +447,6 @@ void funcButtonPort(GtkWidget *widget, gpointer userData){
 //----------
 static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    osc->signalCapturer.capturer->closePort();
     osc->stateOnOff_.store(false);
 }
 
@@ -591,6 +581,11 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_window_set_default_size(GTK_WINDOW(window), monitorGeometry.width, 700);
     gtk_window_present(GTK_WINDOW(window));
     gtk_widget_show_all(window);
+
+    int udev_fd = udev_monitor_get_fd(screen->monitor);
+    if(udev_fd >= 0){
+        g_unix_fd_add(udev_fd, G_IO_IN, udev_monitor_callback, screen);
+    }
 }
 
 //----------
@@ -602,13 +597,9 @@ Screen::Screen()
     routePort.clear();
     createContextUdev();
     g_signal_connect(appGtk, "activate", G_CALLBACK(activate), this);
-    inspectorPt = std::thread(&inspectionTtyDevices, this);
 }
 
 Screen::~Screen(){
-    if(inspectorPt.joinable()){
-        inspectorPt.join();
-    }
     deleteContextUdev();
     if(appGtk){
         g_object_unref(appGtk);

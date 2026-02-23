@@ -10,7 +10,6 @@
     #include <gtk/gtk.h>
     #include <epoxy/gl.h>
     #include <libudev.h>
-    #include <thread>
 
     //Forward declaration
     class SignalObject;
@@ -124,7 +123,6 @@
             GtkWidget           *dropPort {nullptr};
             struct udev         *udev {nullptr};
             struct udev_monitor *monitor {nullptr};
-            std::thread         inspectorPt;
             std::string         routePort;
             GridVoltage         gridVoltage; ///< Grid voltage.
             GridSpectrum        gridSpectrum; ///< Grid Spectrum.
