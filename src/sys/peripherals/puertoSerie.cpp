@@ -22,15 +22,16 @@ bool ComSerial::openPort(const char* port){
         try{
             mySerial.Open(port);
             if(!mySerial.fail()){
-                mySerial.SetBaudRate(LibSerial::BaudRate::BAUD_115200);
+                mySerial.SetBaudRate(LibSerial::BaudRate::BAUD_9600);
                 mySerial.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
                 mySerial.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
                 mySerial.SetParity(LibSerial::Parity::PARITY_NONE);
                 mySerial.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
             }
+            std::cout << "Serial Abierto: " << port << std::endl;
         }
         catch(std::exception& e){
-            std::cerr << "error al abrir serial" << e.what() << std::endl;
+            std::cerr << "Error al abrir serial: " << port << "-->" << e.what() << std::endl;
         }
         return true;
     }
@@ -45,7 +46,7 @@ bool ComSerial::closePort(){
                 std::cout << "Serial Cerrado\n";
             }
         }catch(std::exception& e){
-            std::cerr << "Error al cerrar el puerto serie" << e.what() << std::endl;
+            std::cerr << "Error al cerrar el puerto serie: " << "-->" << e.what() << std::endl;
         }
         return true;
     }
