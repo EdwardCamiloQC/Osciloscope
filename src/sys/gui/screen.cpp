@@ -34,7 +34,9 @@ static int updateDropPort(Screen *userData, bool add, char *text){
             gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(userData->dropPort), text);
         }
     }else{
-        gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
+        if(foundIndex >= 0){
+            gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
+        }
     }
 
     return G_SOURCE_REMOVE;
@@ -425,8 +427,9 @@ void funcCheckTestSignal(GtkWidget *widget, [[maybe_unused]]gpointer userData){
     }
 }
 
-void funcComboPort([[maybe_unused]]GtkComboBoxText *widget, [[maybe_unused]]gpointer userData){
-    //
+void funcComboPort(GtkComboBoxText *widget, gpointer userData){
+    Screen *screen = static_cast<Screen*>(userData);
+    screen->routePort = gtk_combo_box_text_get_active_text(widget);
 }
 
 void funcButtonPort(GtkWidget *widget, gpointer userData){
@@ -434,13 +437,15 @@ void funcButtonPort(GtkWidget *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
 
     if(osc->signalCapturer.capturer->getId() == SERIAL_PORT_ID){
-        if(!(osc->signalCapturer.capturer->getFlagSerial())){
-            if(osc->signalCapturer.capturer->openPort(screen->routePort.c_str())){
-                gtk_button_set_label(GTK_BUTTON(widget), "Close");
+        if(osc->signalCapturer.capturer->getFlagSerial()){
+            osc->signalCapturer.capturer->closePort();
+            if(!(osc->signalCapturer.capturer->getFlagSerial())){
+                gtk_button_set_label(GTK_BUTTON(widget), "Open");
             }
         }else{
-            if(!osc->signalCapturer.capturer->closePort()){
-                gtk_button_set_label(GTK_BUTTON(widget), "Open");
+            osc->signalCapturer.capturer->openPort(screen->routePort.c_str());
+            if(osc->signalCapturer.capturer->getFlagSerial()){
+                gtk_button_set_label(GTK_BUTTON(widget), "Close");
             }
         }
     }
@@ -451,6 +456,7 @@ void funcButtonPort(GtkWidget *widget, gpointer userData){
 //----------
 static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
+    osc->signalCapturer.capturer->closePort();
     osc->stateOnOff_.store(false);
 }
 
