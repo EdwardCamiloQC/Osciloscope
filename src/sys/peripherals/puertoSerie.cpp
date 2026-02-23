@@ -69,7 +69,7 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
         for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
             try{
                 if(startWith(line, "#")){
-                    sscanf(line.c_str(), "#@%x@%x@%x@%x/n", &signal1, &signal2, &signal3, &signal4);
+                    sscanf(line.c_str(), "#@%x@%x@%x@%x\r\n", &signal1, &signal2, &signal3, &signal4);
                     volt1->voltage[i] = static_cast<float>(signal1)*3.3f/65535.0f;
                     volt2->voltage[i] = static_cast<float>(signal2)*3.3f/65535.0f;
                     volt3->voltage[i] = static_cast<float>(signal3)*3.3f/65535.0f;
