@@ -4,8 +4,8 @@
     \version v3.0
     \date February 2026
  */
-#ifndef _OSCILLOSCOPE_H_
-    #define _OSCILLOSCOPE_H_
+#ifndef ED_OSCILLOSCOPE_H_
+    #define ED_OSCILLOSCOPE_H_
 
     #include <mutex>
     #include <atomic>
@@ -14,26 +14,21 @@
     #include <sys/gui/screen.hpp>
     #include <sys/peripherals/signalCapturer.hpp>
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // CLASS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief The Oscilloscope class displays four signals that arrive from the serial port.
             So there, are only one instance of this class.
         \class Oscilloscope.
      */
     class Oscilloscope{
-        // Attributes
-        private:
-            static Oscilloscope *instance_; ///< Unique instance of the project.
-            static std::mutex   mutex_;
-        public:
-            std::atomic<bool>   stateOnOff_ {false}; ///< State that indicates whether the application is running.
-            bool                stateStartStop_ {false}; ///< State that indicates when to update the signals or not.
-            VoltageSignal       voltage1; ///< Voltage one.
-            VoltageSignal       voltage2; ///< Voltage two.
-            VoltageSignal       voltage3; ///< Voltage three.
-            VoltageSignal       voltage4; ///< Voltage four.
-            Screen              screen; ///< Screen where shows the signals and configures some parameters.
-            SignalCapturer      signalCapturer; ///< This is the capturer that stores the data signals.
-        
-        // Methods
+        //==========
+        //~~~~~~~~~~
+        // METHODS
+        //~~~~~~~~~~
+        //==========
         private:
             /** \brief Creates the instance.
              */
@@ -66,5 +61,23 @@
                 \return Returns the any error with a int value.
              */
             int run(int& argc, char**& argv);
+        
+        //==========
+        //~~~~~~~~~~ 
+        // ATTRIBUTES
+        //~~~~~~~~~~
+        //==========
+        private:
+            static Oscilloscope        *instance_; ///< Unique instance of the project.
+        public:
+            static std::mutex          mutex_;
+            static std::atomic<bool>   stateOnOff_; ///< State that indicates whether the application is running.
+            static std::atomic<bool>   stateStartStop_; ///< State that indicates when to update the signals or not.
+            VoltageSignal              voltage1_; ///< Voltage one.
+            VoltageSignal              voltage2_; ///< Voltage two.
+            VoltageSignal              voltage3_; ///< Voltage three.
+            VoltageSignal              voltage4_; ///< Voltage four.
+            Screen                     screen_; ///< Screen where shows the signals and configures some parameters.
+            SignalCapturer             signalCapturer_; ///< This is the capturer that stores the data signals.
     };
 #endif
