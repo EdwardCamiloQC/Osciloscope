@@ -41,25 +41,28 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
 //~~~~~~~~~~
 void SignalCapturer::loopCatchVoltages(unsigned int nValues){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    while(osc->stateOnOff_){
-        if(osc->stateStartStop_){
-            if(capturer){
-                //shift the voltages
-                osc->voltage1.shiftVoltage(nValues);
-                osc->voltage2.shiftVoltage(nValues);
-                osc->voltage3.shiftVoltage(nValues);
-                osc->voltage4.shiftVoltage(nValues);
-                capturer->readValues(&(osc->voltage1),
-                                    &(osc->voltage2),
-                                    &(osc->voltage3),
-                                    &(osc->voltage4),
-                                    nValues);
-                osc->voltage1.calculateSpectrum();
-                osc->voltage2.calculateSpectrum();
-                osc->voltage3.calculateSpectrum();
-                osc->voltage4.calculateSpectrum();
-            }else{
+    while(osc->stateOnOff_.load(std::memory_order_acquire)){
+        if(osc->stateStartStop_.load(std::memory_order_acquire)){
+            {
+                std::lock_guard<std::mutex> lock(osc->mutex_);
+                if(capturer){
+                    //shift the voltages
+                    osc->voltage1_.shiftVoltage(nValues);
+                    osc->voltage2_.shiftVoltage(nValues);
+                    osc->voltage3_.shiftVoltage(nValues);
+                    osc->voltage4_.shiftVoltage(nValues);
+                    capturer->readValues(&(osc->voltage1_),
+                                        &(osc->voltage2_),
+                                        &(osc->voltage3_),
+                                        &(osc->voltage4_),
+                                        nValues);
+                    osc->voltage1_.calculateSpectrum();
+                    osc->voltage2_.calculateSpectrum();
+                    osc->voltage3_.calculateSpectrum();
+                    osc->voltage4_.calculateSpectrum();
+                }else{
                 std::cerr << "without concrete capturer" << std::endl;
+                }
             }
         }
         //std::this_thread::sleep_for(std::chrono::seconds(2));

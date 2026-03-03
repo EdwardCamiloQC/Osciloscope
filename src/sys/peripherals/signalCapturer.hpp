@@ -3,21 +3,32 @@
     \version v1.0
     \date enero 2026
  */
-#ifndef _SIGNAL_CAPTURER_H_
-    #define _SIGNAL_CAPTURER_H_
+#ifndef ED_SIGNAL_CAPTURER_H_
+    #define ED_SIGNAL_CAPTURER_H_
 
     #include <thread>
-    /*extern "C"{
-        #include <systemd/sd-device.h>
-    }*/
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // FORWARD DECLARATION
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     class Capturer;
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // CLASS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief It collects the data it that receives.
         \class
      */
     class SignalCapturer{
-        //  Methods
+        //==========
+        //~~~~~~~~~~
+        // METHODS
+        //~~~~~~~~~~
+        //==========
         public:
             /** \brief Relates the capturer.
                 \param theCapturer: Agregation with the capturer.
@@ -53,14 +64,15 @@
              */
             void loopCatchVoltages(unsigned int nValues);
 
-            //void inspection();
-
-        //  Attributes
+        //==========
+        //~~~~~~~~~~
+        // ATTRIBUTES
+        //~~~~~~~~~~
+        //==========
         public:
             std::thread catcher; ///< Thread that catchs the data.
             std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
             unsigned int frequency {50};
             unsigned int multiplier {1};
-            //sd_device *devide;
     };
 #endif
