@@ -3,17 +3,31 @@
     \version v1.0
     \date enero 2026
  */
-#ifndef _CAPTURER_H_
-    #define _CAPTURER_H_
+#ifndef ED_CAPTURER_H_
+    #define ED_CAPTURER_H_
 
-    //Forward declaration
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // FORWARD DECLARATION
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     class VoltageSignal;
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // TYPES DECLARATIONS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     typedef enum{
         SERIAL_PORT_ID,
         GENERATE_SIGNAL_ID
     }TypeIdCapturer;
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // CLASS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief It is a interface that allows change between some catchers. 
         \class
      */
@@ -39,9 +53,9 @@
              */
             virtual void setSampleFrequency(unsigned int freq) = 0;
 
-            virtual bool openPort(const char *port) = 0;
+            virtual int openPort(const char *port) = 0;
 
-            virtual bool closePort() = 0;
+            virtual int closePort() = 0;
 
             virtual bool getFlagSerial() = 0;
 
