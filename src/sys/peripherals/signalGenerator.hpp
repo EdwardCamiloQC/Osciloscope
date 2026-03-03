@@ -3,23 +3,32 @@
     \version v1.0
     \date January 2026
  */
-#ifndef _SIGNAL_GENERATOR_HPP_
-    #define _SIGNAL_GENERATOR_HPP_
+#ifndef ED_SIGNAL_GENERATOR_HPP_
+    #define ED_SIGNAL_GENERATOR_HPP_
 
     #include <sys/peripherals/capturer.hpp>
 
-    //Forward declaration
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // FORWARD DECLARATION
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     class VoltageSignal;
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // CLASS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief Generates test signals.
         \class
      */
     class SignalGenerator: public Capturer{
-        //Attributes
-        private:
-            unsigned int frequency {1}; ///< Frequency with which the data is taken.
-
-        //Methods
+        //==========
+        //~~~~~~~~~~
+        // METHODS
+        //~~~~~~~~~~
+        //==========
         public:
             /** \brief Constructor.
              */
@@ -57,11 +66,11 @@
 
             /** \note This function does nothing.
              */
-            bool openPort(const char* port) override;
+            int openPort(const char* port) override;
 
             /** \note This function does nothing.
              */
-            bool closePort() override;
+            int closePort() override;
 
             /** \note This function does nothing.
              */
@@ -71,5 +80,13 @@
                 \return Id.
              */
             TypeIdCapturer getId() override;
+        
+        //==========
+        //~~~~~~~~~~
+        // ATTRIBUTES
+        //~~~~~~~~~~
+        //==========
+        private:
+            unsigned int frequency {1}; ///< Frequency with which the data is taken.
     };
 #endif
