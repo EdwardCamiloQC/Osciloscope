@@ -5,9 +5,11 @@
 #include <sys/oscilloscope.hpp>
 #include <sys/peripherals/capturer.hpp>
 
-//~~~~~~~~~~
-//      PUBLIC METHODS
-//~~~~~~~~~~
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// PUBLIC METHODS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 SignalCapturer::SignalCapturer(Capturer *theCapturer)
     :capturer(theCapturer){
 }
@@ -36,9 +38,11 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
     capturer = std::move(theCapturer);
 }
 
-//~~~~~~~~~~
-//      PRIVATE METHODS
-//~~~~~~~~~~
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// PRIVATE METHODS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 void SignalCapturer::loopCatchVoltages(unsigned int nValues){
     Oscilloscope *osc = Oscilloscope::getInstance();
     while(osc->stateOnOff_.load(std::memory_order_acquire)){
