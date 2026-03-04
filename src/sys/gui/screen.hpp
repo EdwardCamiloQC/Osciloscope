@@ -4,16 +4,25 @@
     \version v2.0
     \date February 2026
  */
-#ifndef _SCREEN_H_
-    #define _SCREEN_H_
+#ifndef ED_SCREEN_H_
+    #define ED_SCREEN_H_
 
     #include <gtk/gtk.h>
     #include <epoxy/gl.h>
     #include <libudev.h>
 
-    //Forward declaration
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // FORWARD DECLARATION
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     class SignalObject;
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // TYPES DECLARATIONS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief The structure that contains the grid shape where the voltage signals will be printed.
         \struct GridVoltage
      */
@@ -111,34 +120,20 @@
         void draw();
     };
 
+    //==================================================
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // CLASS
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //==================================================
     /** \brief The screen display the signals and updates at a set time.
         \class
      */
     class Screen{
-        // Attributes
-        private:
-            GtkApplication *appGtk {nullptr};
-        public:
-            GtkStyleContext     *context {nullptr};
-            GtkWidget           *dropPort {nullptr};
-            struct udev         *udev {nullptr};
-            struct udev_monitor *monitor {nullptr};
-            std::string         routePort;
-            GridVoltage         gridVoltage; ///< Grid voltage.
-            GridSpectrum        gridSpectrum; ///< Grid Spectrum.
-            GLuint              idShaderVolt {0}; ///< Id shaders .
-            GLuint              idShaderSpec {0};
-            bool                stateSignal1_ {false}; ///< State that indicates when the signals should or should not be displayed.
-            bool                stateSignal2_ {false};
-            bool                stateSignal3_ {false};
-            bool                stateSignal4_ {false};
-            float               voltDiv_ {1.0f}; ///< current value needed to calculate the sampling rate.
-            float               offset1_ {0.0f}; ///< Voltage's offsets.
-            float               offset2_ {0.0f};
-            float               offset3_ {0.0f};
-            float               offset4_ {0.0f};
-
-        // Methods
+        //==========
+        //~~~~~~~~~~
+        // METHODS
+        //~~~~~~~~~~
+        //==========
         public:
             /** \note Constructor.
              */
@@ -190,5 +185,33 @@
                 \return Error.
              */
             bool drawVAO(SignalObject &signalObject) const;
+
+        //==========
+        //~~~~~~~~~~
+        // ATTRIBUTES
+        //~~~~~~~~~~
+        //==========
+        private:
+            GtkApplication *appGtk {nullptr};
+        public:
+            GtkStyleContext     *context {nullptr};
+            GtkWidget           *dropPort {nullptr};
+            GtkWidget           *buttonPort {nullptr};
+            struct udev         *udev {nullptr};
+            struct udev_monitor *monitor {nullptr};
+            std::string         routePort;
+            GridVoltage         gridVoltage; ///< Grid voltage.
+            GridSpectrum        gridSpectrum; ///< Grid Spectrum.
+            GLuint              idShaderVolt {0}; ///< Id shaders .
+            GLuint              idShaderSpec {0};
+            bool                stateSignal1_ {false}; ///< State that indicates when the signals should or should not be displayed.
+            bool                stateSignal2_ {false};
+            bool                stateSignal3_ {false};
+            bool                stateSignal4_ {false};
+            float               voltDiv_ {1.0f}; ///< current value needed to calculate the sampling rate.
+            float               offset1_ {0.0f}; ///< Voltage's offsets.
+            float               offset2_ {0.0f};
+            float               offset3_ {0.0f};
+            float               offset4_ {0.0f};
     };
 #endif
