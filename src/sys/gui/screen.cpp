@@ -9,7 +9,9 @@
 #include <sys/peripherals/signalGenerator.hpp>
 
 //==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  STATIC FUNCTIONS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 static void updateDropPort(Screen *userData, bool add, char *text){
     GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(userData->dropPort));
@@ -42,7 +44,9 @@ static void updateDropPort(Screen *userData, bool add, char *text){
 }
 
 //==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //  INSPECTION PORTS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 static gboolean udev_monitor_callback([[maybe_unused]]gint fd, [[maybe_unused]]GIOCondition condition, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
@@ -72,9 +76,11 @@ static gboolean udev_monitor_callback([[maybe_unused]]gint fd, [[maybe_unused]]G
     return TRUE;
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      CALLBACKS CANVA VOLTAGE
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 void realizeVoltage(GtkGLArea *area, gpointer userData){
     Screen* screen = static_cast<Screen*>(userData);
     Oscilloscope *osc = Oscilloscope::getInstance();
@@ -94,10 +100,10 @@ void realizeVoltage(GtkGLArea *area, gpointer userData){
     glEnable(GL_DEPTH_TEST);
 
     screen->gridVoltage.createGrid();
-    screen->createVAO(osc->voltage1);
-    screen->createVAO(osc->voltage2);
-    screen->createVAO(osc->voltage3);
-    screen->createVAO(osc->voltage4);
+    screen->createVAO(osc->voltage1_);
+    screen->createVAO(osc->voltage2_);
+    screen->createVAO(osc->voltage3_);
+    screen->createVAO(osc->voltage4_);
 }
 
 void unrealizeVoltage(GtkGLArea *area, gpointer userData){
@@ -110,10 +116,10 @@ void unrealizeVoltage(GtkGLArea *area, gpointer userData){
     }
 
     screen->gridVoltage.deleteGrid();
-    screen->deleteVAO(osc->voltage1);
-    screen->deleteVAO(osc->voltage2);
-    screen->deleteVAO(osc->voltage3);
-    screen->deleteVAO(osc->voltage4);
+    screen->deleteVAO(osc->voltage1_);
+    screen->deleteVAO(osc->voltage2_);
+    screen->deleteVAO(osc->voltage3_);
+    screen->deleteVAO(osc->voltage4_);
 
     glDeleteProgram(screen->idShaderVolt);
 }
@@ -137,25 +143,25 @@ gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
 
-    osc->voltage1.applyOffset(screen->offset1_, screen->voltDiv_);
-    osc->voltage2.applyOffset(screen->offset2_, screen->voltDiv_);
-    osc->voltage3.applyOffset(screen->offset3_, screen->voltDiv_);
-    osc->voltage4.applyOffset(screen->offset4_, screen->voltDiv_);
+    osc->voltage1_.applyOffset(screen->offset1_, screen->voltDiv_);
+    osc->voltage2_.applyOffset(screen->offset2_, screen->voltDiv_);
+    osc->voltage3_.applyOffset(screen->offset3_, screen->voltDiv_);
+    osc->voltage4_.applyOffset(screen->offset4_, screen->voltDiv_);
 
     if(static_cast<unsigned int>(currentProgram) == (screen->idShaderVolt) && (screen->idShaderVolt) != 0){
         //aqui dibuja
         screen->gridVoltage.draw();
         if(screen->stateSignal1_){
-            screen->drawVAO(osc->voltage1);
+            screen->drawVAO(osc->voltage1_);
         }
         if(screen->stateSignal2_){
-            screen->drawVAO(osc->voltage2);
+            screen->drawVAO(osc->voltage2_);
         }
         if(screen->stateSignal3_){
-            screen->drawVAO(osc->voltage3);
+            screen->drawVAO(osc->voltage3_);
         }
         if(screen->stateSignal4_){
-            screen->drawVAO(osc->voltage4);
+            screen->drawVAO(osc->voltage4_);
         }
     }
 
@@ -177,9 +183,11 @@ void resizeVoltage([[maybe_unused]]GtkGLArea *area, [[maybe_unused]]gpointer use
     //
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      CALLBACKS CANVA SPECTRUM
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 static void realizeSpectrum(GtkGLArea *area, gpointer userData){
     Screen* screen = static_cast<Screen*>(userData);
     Oscilloscope *osc = Oscilloscope::getInstance();
@@ -201,10 +209,10 @@ static void realizeSpectrum(GtkGLArea *area, gpointer userData){
     screen->gridSpectrum.createGrid();
 
     //Aqui crea los espectros
-    screen->createVAO(osc->voltage1.spectrumSignal);
-    screen->createVAO(osc->voltage2.spectrumSignal);
-    screen->createVAO(osc->voltage3.spectrumSignal);
-    screen->createVAO(osc->voltage4.spectrumSignal);
+    screen->createVAO(osc->voltage1_.spectrumSignal);
+    screen->createVAO(osc->voltage2_.spectrumSignal);
+    screen->createVAO(osc->voltage3_.spectrumSignal);
+    screen->createVAO(osc->voltage4_.spectrumSignal);
 }
 
 static void unrealizeSpectrum(GtkGLArea *area, gpointer userData){
@@ -218,10 +226,10 @@ static void unrealizeSpectrum(GtkGLArea *area, gpointer userData){
 
     screen->gridSpectrum.deleteGrid();
     //Aqui Elimina los spectros
-    screen->deleteVAO(osc->voltage1.spectrumSignal);
-    screen->deleteVAO(osc->voltage2.spectrumSignal);
-    screen->deleteVAO(osc->voltage3.spectrumSignal);
-    screen->deleteVAO(osc->voltage4.spectrumSignal);
+    screen->deleteVAO(osc->voltage1_.spectrumSignal);
+    screen->deleteVAO(osc->voltage2_.spectrumSignal);
+    screen->deleteVAO(osc->voltage3_.spectrumSignal);
+    screen->deleteVAO(osc->voltage4_.spectrumSignal);
 
     glDeleteProgram(screen->idShaderSpec);
 }
@@ -246,27 +254,27 @@ static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer 
     // Verificar si el shader está en uso
     GLint currentProgram;
     glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
-    if(osc->stateStartStop_){
-        osc->voltage1.spectrumSignal.updateVertex();
-        osc->voltage2.spectrumSignal.updateVertex();
-        osc->voltage3.spectrumSignal.updateVertex();
-        osc->voltage4.spectrumSignal.updateVertex();
+    if(osc->stateStartStop_.load(std::memory_order_acquire)){
+        osc->voltage1_.spectrumSignal.updateVertex();
+        osc->voltage2_.spectrumSignal.updateVertex();
+        osc->voltage3_.spectrumSignal.updateVertex();
+        osc->voltage4_.spectrumSignal.updateVertex();
     }
     if(static_cast<unsigned int>(currentProgram) == (screen->idShaderSpec) && (screen->idShaderSpec) != 0){
         screen->gridSpectrum.draw();
         //aqui dibuja
         screen->gridVoltage.draw();
         if(screen->stateSignal1_){
-            screen->drawVAO(osc->voltage1.spectrumSignal);
+            screen->drawVAO(osc->voltage1_.spectrumSignal);
         }
         if(screen->stateSignal2_){
-            screen->drawVAO(osc->voltage2.spectrumSignal);
+            screen->drawVAO(osc->voltage2_.spectrumSignal);
         }
         if(screen->stateSignal3_){
-            screen->drawVAO(osc->voltage3.spectrumSignal);
+            screen->drawVAO(osc->voltage3_.spectrumSignal);
         }
         if(screen->stateSignal4_){
-            screen->drawVAO(osc->voltage4.spectrumSignal);
+            screen->drawVAO(osc->voltage4_.spectrumSignal);
         }
     }
 
@@ -287,16 +295,18 @@ static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer 
 static void resize(){
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      CALLBACKS CONTROL PANEL
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 void funcStartStop(GtkWidget *widget, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     Screen *screen = static_cast<Screen*>(userData);
     screen->context = gtk_widget_get_style_context(widget);
 
-    osc->stateStartStop_ = !(osc->stateStartStop_);
-    if(osc->stateStartStop_){
+    osc->stateStartStop_.store(!(osc->stateStartStop_), std::memory_order_release);
+    if(osc->stateStartStop_.load(std::memory_order_acquire)){
         gtk_button_set_label(GTK_BUTTON(widget), "Stop");
         gtk_style_context_remove_class(screen->context, "led-off");
         gtk_style_context_add_class(screen->context, "led-on");
@@ -389,37 +399,42 @@ void funcComboBoxFreq(GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     switch(gtk_combo_box_get_active(GTK_COMBO_BOX(widget))){
         case 0:
-            osc->signalCapturer.setMultiplierFrequency(1);
+            osc->signalCapturer_.setMultiplierFrequency(1);
             break;
         case 1:
-            osc->signalCapturer.setMultiplierFrequency(1000);
+            osc->signalCapturer_.setMultiplierFrequency(1000);
             break;
         case 2:
-            osc->signalCapturer.setMultiplierFrequency(1000000);
+            osc->signalCapturer_.setMultiplierFrequency(1000000);
             break;
         default:
-            osc->signalCapturer.setMultiplierFrequency(1);
+            osc->signalCapturer_.setMultiplierFrequency(1);
     }
 }
 
 void funcSpinButtonFreq(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    osc->signalCapturer.setSampleFrequency(gtk_spin_button_get_value_as_int(spinButton));
+    osc->signalCapturer_.setSampleFrequency(gtk_spin_button_get_value_as_int(spinButton));
 }
 
-void funcCheckTestSignal(GtkWidget *widget, [[maybe_unused]]gpointer userData){
+void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
+    Screen *screen = reinterpret_cast<Screen*>(userData);
+
     if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))){
-        osc->signalCapturer.selectCapturer(std::make_unique<SignalGenerator>());
+        gtk_button_set_label(GTK_BUTTON(screen->buttonPort), "Open");
+        osc->signalCapturer_.selectCapturer(std::make_unique<SignalGenerator>());
     }else{
-        osc->signalCapturer.selectCapturer(std::make_unique<ComSerial>());
+        osc->signalCapturer_.selectCapturer(std::make_unique<ComSerial>());
     }
 }
 
 void funcComboPort(GtkComboBoxText *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    if(gtk_combo_box_text_get_active_text(widget) != nullptr){
-        screen->routePort = gtk_combo_box_text_get_active_text(widget);
+    gchar *text = gtk_combo_box_text_get_active_text(widget);
+    if(text != nullptr){
+        screen->routePort = text;
+        g_free(text);
     }
 }
 
@@ -427,27 +442,30 @@ void funcButtonPort(GtkWidget *widget, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     Screen *screen = static_cast<Screen*>(userData);
 
-    if(osc->signalCapturer.capturer->getId() == SERIAL_PORT_ID){
-        if(osc->signalCapturer.capturer->getFlagSerial()){
-            osc->signalCapturer.capturer->closePort();
-            if(!(osc->signalCapturer.capturer->getFlagSerial())){
+    if(osc->signalCapturer_.capturer->getId() == SERIAL_PORT_ID){
+        if(osc->signalCapturer_.capturer->getFlagSerial()){
+            osc->signalCapturer_.capturer->closePort();
+            if(!(osc->signalCapturer_.capturer->getFlagSerial())){
                 gtk_button_set_label(GTK_BUTTON(widget), "Open");
             }
         }else{
-            osc->signalCapturer.capturer->openPort(screen->routePort.c_str());
-            if(osc->signalCapturer.capturer->getFlagSerial()){
+            osc->signalCapturer_.capturer->openPort(screen->routePort.c_str());
+            if(osc->signalCapturer_.capturer->getFlagSerial()){
                 gtk_button_set_label(GTK_BUTTON(widget), "Close");
             }
         }
     }
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      WINDOW CALLBACKS
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 static void destroyWindow([[maybe_unused]]GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    osc->stateOnOff_.store(false);
+    osc->stateStartStop_.store(false, std::memory_order_release);
+    osc->stateOnOff_.store(false, std::memory_order_release);
 }
 
 static void activate(GtkApplication* app, gpointer userData){
@@ -525,7 +543,7 @@ static void activate(GtkApplication* app, gpointer userData){
             GtkWidget *labelPort = gtk_label_new("Port");
             GtkWidget *boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
             screen->dropPort = gtk_combo_box_text_new();
-            GtkWidget *buttonPort = gtk_button_new_with_label("Open");
+            screen->buttonPort = gtk_button_new_with_label("Open");
 
     gtk_container_add(GTK_CONTAINER(window), boxPanels);
     gtk_box_pack_start(GTK_BOX(boxPanels), boxView, true, true, 0);
@@ -545,7 +563,7 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_box_pack_start(GTK_BOX(boxControl), labelPort, false, false, 5);
     gtk_box_pack_start(GTK_BOX(boxControl), boxPort, false, false, 5);
     gtk_box_pack_start(GTK_BOX(boxPort), screen->dropPort, true, true, 1);
-    gtk_box_pack_start(GTK_BOX(boxPort), buttonPort, false, true, 1);
+    gtk_box_pack_start(GTK_BOX(boxPort), screen->buttonPort, false, true, 1);
 
     g_signal_connect(glAreaVoltage, "realize", G_CALLBACK(realizeVoltage), userData);
     g_signal_connect(glAreaVoltage, "unrealize", G_CALLBACK(unrealizeVoltage), userData);
@@ -569,7 +587,7 @@ static void activate(GtkApplication* app, gpointer userData){
     g_signal_connect(spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
     g_signal_connect(checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
     g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), userData);
-    g_signal_connect(buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
+    g_signal_connect(screen->buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
     g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), userData);
 
     GdkDisplay *display = gdk_display_get_default();
@@ -588,9 +606,11 @@ static void activate(GtkApplication* app, gpointer userData){
     }
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      PUBLIC METHODS
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 Screen::Screen()
     : appGtk(gtk_application_new("com.oscilloscope", G_APPLICATION_DEFAULT_FLAGS)){
     routePort.reserve(50);
@@ -656,9 +676,11 @@ int Screen::deleteContextUdev(){
     return EXIT_SUCCESS;
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      PRIVATE METHODS
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 bool Screen::createVAO(SignalObject &signalObject){
     glGenVertexArrays(1, &signalObject.vao);
     glGenBuffers(2, signalObject.vbo);
@@ -722,9 +744,11 @@ bool Screen:: drawVAO(SignalObject &signalObject) const{
     return 0;
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      METHODS GRID_VOLTAGE
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 void GridVoltage::createGrid(){
     //Genera el VAO y el VBO
     glGenVertexArrays(1, &(this->vao));
@@ -766,9 +790,11 @@ void GridVoltage::draw(){
     glBindVertexArray(0);
 }
 
-//----------
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //      METHODS GRID_SPECTRUM
-//----------
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
 void GridSpectrum::createGrid(){
     //Genera el VAO y el VBO
     glGenVertexArrays(1, &(vao));
