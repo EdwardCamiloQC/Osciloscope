@@ -61,6 +61,6 @@ void Oscilloscope::destroyInstance(){
 }
 
 int Oscilloscope::run(int &argc, char**& argv){
-    signalCapturer_.start(static_cast<unsigned int>(32/2));
+    signalCapturer_.start(static_cast<unsigned int>(4)); // 32bytes/2bytes/4canales
     return screen_.show(argc, argv);
 }
