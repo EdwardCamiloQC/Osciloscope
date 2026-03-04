@@ -67,7 +67,7 @@ TypeIdCapturer ComSerial::getId(){
 
 void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
     if(mySerial_.IsOpen()){
-        char inputValues[32]; //64: 4 canales, dos bytes por dato y nValues capturados.
+        char inputValues[32]; //32bytes: 4 canales, dos bytes por dato y nValues capturados.
         unsigned int offsetIndx = 0;
         while(offsetIndx < sizeof(inputValues)){
             try{
