@@ -597,6 +597,7 @@ static void activate(GtkApplication* app, gpointer userData){
 
     gtk_window_set_title(GTK_WINDOW(window), "Oscilloscope");
     gtk_window_set_default_size(GTK_WINDOW(window), monitorGeometry.width, 700);
+    gtk_window_set_icon_from_file(GTK_WINDOW(window), "/home/edward/Documentos/MisProyectos/Osciloscopio/logo.png", NULL);
     gtk_window_present(GTK_WINDOW(window));
     gtk_widget_show_all(window);
 
