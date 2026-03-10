@@ -69,7 +69,6 @@ void SignalCapturer::loopCatchVoltages(unsigned int nValues){
                 }
             }
         }
-        //std::this_thread::sleep_for(std::chrono::seconds(2));
-        std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<unsigned int>(8000 * nValues/(frequency*multiplier*osc->voltage1_.length))));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(static_cast<unsigned int>(8000000000 * nValues/(frequency*multiplier*osc->voltage1_.length))));
     }
 }
