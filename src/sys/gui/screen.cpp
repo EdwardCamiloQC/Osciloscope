@@ -395,26 +395,9 @@ void funcOffset4(GtkSpinButton *spinButton, gpointer userData){
     screen->offset4_ = gtk_spin_button_get_value(spinButton);
 }
 
-void funcComboBoxFreq(GtkWidget *widget, [[maybe_unused]]gpointer userData){
-    Oscilloscope *osc = Oscilloscope::getInstance();
-    switch(gtk_combo_box_get_active(GTK_COMBO_BOX(widget))){
-        case 0:
-            osc->signalCapturer_.setMultiplierFrequency(1);
-            break;
-        case 1:
-            osc->signalCapturer_.setMultiplierFrequency(1000);
-            break;
-        case 2:
-            osc->signalCapturer_.setMultiplierFrequency(1000000);
-            break;
-        default:
-            osc->signalCapturer_.setMultiplierFrequency(1);
-    }
-}
-
 void funcSpinButtonFreq(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    osc->signalCapturer_.setSampleFrequency(gtk_spin_button_get_value_as_int(spinButton));
+    osc->signalCapturer_.setTimeDiv(gtk_spin_button_get_value(spinButton));
 }
 
 void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
@@ -529,13 +512,9 @@ static void activate(GtkApplication* app, gpointer userData){
             GtkWidget *separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
 
             GtkWidget *boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-            GtkAdjustment *adjustmentFreq = gtk_adjustment_new(50.0, 1.0, 100.0, 1.0, 5.0, 0.0);
-            GtkWidget *spinFreq = gtk_spin_button_new(adjustmentFreq, 1.0, 0);
-            GtkWidget *comboFreq = gtk_combo_box_text_new();
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "1", "Hz");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "2", "Khz");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboFreq), "3", "Mhz");
-                gtk_combo_box_set_active(GTK_COMBO_BOX(comboFreq), 0);
+            GtkAdjustment *adjustmentFreq = gtk_adjustment_new(1.0, 0.001, 100.0, 0.001, 1.0, 0.0);
+            GtkWidget *spinFreq = gtk_spin_button_new(adjustmentFreq, 1.0, 3);
+            GtkWidget *labelFreq = gtk_label_new("ms/div");
             GtkWidget *checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             GtkWidget *separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
@@ -557,7 +536,7 @@ static void activate(GtkApplication* app, gpointer userData){
     gtk_box_pack_start(GTK_BOX(boxControl), separator2, true, true, 20);
     gtk_box_pack_start(GTK_BOX(boxControl), boxFreq, false, false, 5);
     gtk_box_pack_start(GTK_BOX(boxFreq), spinFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(boxFreq), comboFreq, true, false, 1);
+    gtk_box_pack_start(GTK_BOX(boxFreq), labelFreq, true, false, 1);
     gtk_box_pack_start(GTK_BOX(boxControl), checkTestSignal, false, false, 5);
     gtk_box_pack_start(GTK_BOX(boxControl), separator3, true, true, 20);
     gtk_box_pack_start(GTK_BOX(boxControl), labelPort, false, false, 5);
@@ -583,7 +562,6 @@ static void activate(GtkApplication* app, gpointer userData){
     g_signal_connect(spinOffset2, "value_changed", G_CALLBACK(funcOffset2), userData);
     g_signal_connect(spinOffset3, "value_changed", G_CALLBACK(funcOffset3), userData);
     g_signal_connect(spinOffset4, "value_changed", G_CALLBACK(funcOffset4), userData);
-    g_signal_connect(comboFreq, "changed", G_CALLBACK(funcComboBoxFreq), userData);
     g_signal_connect(spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
     g_signal_connect(checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
     g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), userData);

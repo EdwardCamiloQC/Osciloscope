@@ -31,8 +31,6 @@ Oscilloscope::Oscilloscope(unsigned int lenSignals = 128):
     voltage3_.calculateSpectrum();
     voltage4_.calculateSpectrum();
     signalCapturer_.selectCapturer(std::make_unique<ComSerial>());
-    signalCapturer_.setSampleFrequency(50);
-    signalCapturer_.setMultiplierFrequency(1);
 }
 
 Oscilloscope::~Oscilloscope(){

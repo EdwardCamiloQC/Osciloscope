@@ -24,14 +24,9 @@ void SignalCapturer::start(unsigned int nValues){
     catcher = std::thread(&SignalCapturer::loopCatchVoltages, this, nValues);
 }
 
-void SignalCapturer::setSampleFrequency(unsigned int freq){
-    frequency = freq;
-    capturer->setSampleFrequency(frequency * multiplier);
-}
-
-void SignalCapturer::setMultiplierFrequency(unsigned int mult){
-    multiplier = mult;
-    capturer->setSampleFrequency(frequency * multiplier);
+void SignalCapturer::setTimeDiv(double tDiv){
+    timeDiv = tDiv;
+    capturer->setSampleFrequency(static_cast<unsigned int>(timeDiv));
 }
 
 void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
@@ -69,6 +64,6 @@ void SignalCapturer::loopCatchVoltages(unsigned int nValues){
                 }
             }
         }
-        std::this_thread::sleep_for(std::chrono::nanoseconds(static_cast<unsigned int>(8000000000 * nValues/(frequency*multiplier*osc->voltage1_.length))));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(static_cast<unsigned int>(8* timeDiv* 1000000* nValues/osc->voltage1_.length)));
     }
 }

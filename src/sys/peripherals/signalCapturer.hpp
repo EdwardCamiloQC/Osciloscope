@@ -47,12 +47,7 @@
             /** \brief Sends the sample rate.
                 \param valueFreq: value of the frequency without the multiplier.
              */
-            void setSampleFrequency(unsigned int freq);
-
-            /** \brief Sets the multiplier correspondly to the frequency.
-                \param mult: Multiplier frequency.
-             */
-            void setMultiplierFrequency(unsigned int mult);
+            void setTimeDiv(double tDiv);
 
             /** \brief Selects between the capturers.
                 \param theCapturer: The capturer to use.
@@ -72,7 +67,6 @@
         public:
             std::thread catcher; ///< Thread that catchs the data.
             std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
-            unsigned int frequency {50};
-            unsigned int multiplier {1};
+            double timeDiv {1.0};
     };
 #endif
