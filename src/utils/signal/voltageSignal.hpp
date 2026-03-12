@@ -6,7 +6,7 @@
 #ifndef _VOLTAGE_SIGNAL_H_
     #define _VOLTAGE_SIGNAL_H_
 
-    #include <libraries/signal/spectrumSignal.hpp>
+    #include <utils/signal/spectrumSignal.hpp>
 
     /** \brief The class corresponding to the voltage.
         \class

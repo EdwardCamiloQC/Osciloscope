@@ -1,5 +1,5 @@
-#include <libraries/signal/spectrumSignal.hpp>
-#include <libraries/signal/fft.hpp>
+#include <utils/signal/spectrumSignal.hpp>
+#include <utils/signal/fft.hpp>
 
 SpectrumSignal::SpectrumSignal(unsigned int len, SIGNAL_COLOR color)
     :SignalObject(len, color), moduleSpectrum(nullptr), spectrum(nullptr){

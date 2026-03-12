@@ -1,8 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <sys/peripherals/puertoSerie.hpp>
-#include <libraries/signal/voltageSignal.hpp>
+#include <utils/capturers/puertoSerie.hpp>
+#include <utils/signal/voltageSignal.hpp>
 
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

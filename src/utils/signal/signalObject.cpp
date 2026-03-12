@@ -1,4 +1,4 @@
-#include <libraries/signal/signalObject.hpp>
+#include <utils/signal/signalObject.hpp>
 
 //----------
 //      PUBLIC METHODS

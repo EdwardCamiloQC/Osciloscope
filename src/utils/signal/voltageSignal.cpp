@@ -1,4 +1,4 @@
-#include <libraries/signal/voltageSignal.hpp>
+#include <utils/signal/voltageSignal.hpp>
 
 //----------
 //      PUBLIC METHODS

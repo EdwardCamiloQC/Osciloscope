@@ -1,8 +1,8 @@
 #include <math.h>
 #include <iostream>
 
-#include <sys/peripherals/signalGenerator.hpp>
-#include <sys/oscilloscope.hpp>
+#include <utils/capturers/signalGenerator.hpp>
+#include <oscilloscope.hpp>
 
 #define PI 3.14159265358979323846
 

@@ -1,9 +1,9 @@
 #include <iostream>
 #include <chrono>
 
-#include <sys/peripherals/signalCapturer.hpp>
-#include <sys/oscilloscope.hpp>
-#include <sys/peripherals/capturer.hpp>
+#include <modules/peripherals/signalCapturer.hpp>
+#include <oscilloscope.hpp>
+#include <utils/capturers/capturer.hpp>
 
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,6 +59,7 @@ void SignalCapturer::loopCatchVoltages(unsigned int nValues){
                     osc->voltage2_.calculateSpectrum();
                     osc->voltage3_.calculateSpectrum();
                     osc->voltage4_.calculateSpectrum();
+                    osc->screen_.draw_signals();
                 }else{
                 std::cerr << "without concrete capturer" << std::endl;
                 }

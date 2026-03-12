@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include <sys/oscilloscope.hpp>
-#include <sys/peripherals/puertoSerie.hpp>
+#include <oscilloscope.hpp>
+#include <utils/capturers/puertoSerie.hpp>
 
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,7 +18,7 @@ std::atomic<bool> Oscilloscope::stateStartStop_ {false};
 // PRIVATE METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-Oscilloscope::Oscilloscope(unsigned int lenSignals = 128):
+Oscilloscope::Oscilloscope(unsigned int lenSignals = LENGTH_VOLT_SIGNAL):
     voltage1_(lenSignals, SIGNAL_COLOR::RED),
     voltage2_(lenSignals, SIGNAL_COLOR::ORANGE),
     voltage3_(lenSignals, SIGNAL_COLOR::BLUE),

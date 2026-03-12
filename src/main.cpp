@@ -1,4 +1,4 @@
-#include <sys/oscilloscope.hpp>
+#include <oscilloscope.hpp>
 
 int main(int argc, char**argv){
     Oscilloscope *myOscilloscope = Oscilloscope::getInstance();

@@ -6,7 +6,7 @@
 #ifndef _SPECTRUM_SIGNAL_H_
     #define _SPECTRUM_SIGNAL_H_
 
-    #include <libraries/signal/signalObject.hpp>
+    #include <utils/signal/signalObject.hpp>
     #include <complex>
 
     /** \brief Spectrum of a function.

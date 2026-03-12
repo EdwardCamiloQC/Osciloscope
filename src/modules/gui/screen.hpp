@@ -158,6 +158,10 @@
              */
             int show(int &argc, char** argv);
 
+            /** \brief
+             */
+            void draw_signals(void) const;
+
             /** \brief Creates the contex to Udev.
                 \return Status.
              */
@@ -194,24 +198,26 @@
         private:
             GtkApplication *appGtk {nullptr};
         public:
-            GtkStyleContext     *context {nullptr};
-            GtkWidget           *dropPort {nullptr};
-            GtkWidget           *buttonPort {nullptr};
-            struct udev         *udev {nullptr};
-            struct udev_monitor *monitor {nullptr};
+            GtkWidget           *glAreaVoltage  {nullptr}; ///<
+            GtkWidget           *glAreaSpectrum {nullptr}; ///<
+            GtkWidget           *dropPort       {nullptr}; ///<
+            GtkWidget           *buttonPort     {nullptr}; ///<
+            GtkTextBuffer       *bufferConsole  {nullptr}; ///<
+            struct udev         *udev           {nullptr}; ///<
+            struct udev_monitor *monitor        {nullptr}; ///<
             std::string         routePort;
-            GridVoltage         gridVoltage; ///< Grid voltage.
-            GridSpectrum        gridSpectrum; ///< Grid Spectrum.
-            GLuint              idShaderVolt {0}; ///< Id shaders .
-            GLuint              idShaderSpec {0};
-            bool                stateSignal1_ {false}; ///< State that indicates when the signals should or should not be displayed.
-            bool                stateSignal2_ {false};
-            bool                stateSignal3_ {false};
-            bool                stateSignal4_ {false};
-            float               voltDiv_ {1.0f}; ///< current value needed to calculate the sampling rate.
-            float               offset1_ {0.0f}; ///< Voltage's offsets.
-            float               offset2_ {0.0f};
-            float               offset3_ {0.0f};
-            float               offset4_ {0.0f};
+            GridVoltage         gridVoltage;               ///< Grid voltage.
+            GridSpectrum        gridSpectrum;              ///< Grid Spectrum.
+            GLuint              idShaderVolt    {0};       ///< Id shaders .
+            GLuint              idShaderSpec    {0};
+            bool                stateSignal1_   {false};   ///< State that indicates when the signals should or should not be displayed.
+            bool                stateSignal2_   {false};
+            bool                stateSignal3_   {false};
+            bool                stateSignal4_   {false};
+            float               voltDiv_        {1.0f};    ///< current value needed to calculate the sampling rate.
+            float               offset1_        {0.0f};    ///< Voltage's offsets.
+            float               offset2_        {0.0f};
+            float               offset3_        {0.0f};
+            float               offset4_        {0.0f};
     };
 #endif

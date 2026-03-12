@@ -10,9 +10,9 @@
     #include <mutex>
     #include <atomic>
 
-    #include <libraries/signal/voltageSignal.hpp>
-    #include <sys/gui/screen.hpp>
-    #include <sys/peripherals/signalCapturer.hpp>
+    #include <utils/signal/voltageSignal.hpp>
+    #include <modules/gui/screen.hpp>
+    #include <modules/peripherals/signalCapturer.hpp>
 
     //==================================================
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,16 +68,17 @@
         //~~~~~~~~~~
         //==========
         private:
-            static Oscilloscope        *instance_; ///< Unique instance of the project.
+            static Oscilloscope        *instance_;      ///< Unique instance of the project.
         public:
             static std::mutex          mutex_;
-            static std::atomic<bool>   stateOnOff_; ///< State that indicates whether the application is running.
+            static std::atomic<bool>   stateOnOff_;     ///< State that indicates whether the application is running.
             static std::atomic<bool>   stateStartStop_; ///< State that indicates when to update the signals or not.
-            VoltageSignal              voltage1_; ///< Voltage one.
-            VoltageSignal              voltage2_; ///< Voltage two.
-            VoltageSignal              voltage3_; ///< Voltage three.
-            VoltageSignal              voltage4_; ///< Voltage four.
-            Screen                     screen_; ///< Screen where shows the signals and configures some parameters.
+            VoltageSignal              voltage1_;       ///< Voltage one.
+            VoltageSignal              voltage2_;       ///< Voltage two.
+            VoltageSignal              voltage3_;       ///< Voltage three.
+            VoltageSignal              voltage4_;       ///< Voltage four.
+            Screen                     screen_;         ///< Screen where shows the signals and configures some parameters.
             SignalCapturer             signalCapturer_; ///< This is the capturer that stores the data signals.
+            static constexpr unsigned long LENGTH_VOLT_SIGNAL {128};
     };
 #endif

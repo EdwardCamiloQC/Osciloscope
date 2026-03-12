@@ -2,11 +2,11 @@
 #include <glm/glm.hpp>
 #include <glib-unix.h>
 
-#include <sys/gui/screen.hpp>
-#include <sys/shaders/shader.hpp>
-#include <sys/oscilloscope.hpp>
-#include <sys/peripherals/puertoSerie.hpp>
-#include <sys/peripherals/signalGenerator.hpp>
+#include <modules/gui/screen.hpp>
+#include <shaders/shader.hpp>
+#include <oscilloscope.hpp>
+#include <utils/capturers/puertoSerie.hpp>
+#include <utils/capturers/signalGenerator.hpp>
 
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,33 +14,100 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 static void updateDropPort(Screen *userData, bool add, char *text){
-    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(userData->dropPort));
-    GtkTreeIter iter;
-    gboolean valid = gtk_tree_model_get_iter_first(model, &iter);
-    int index = 0;
-    int foundIndex = -1;
-    while(valid){
-        gchar *itemText = NULL;
-        gtk_tree_model_get(model, &iter, 0, &itemText, -1);
-        if(itemText != NULL && g_strcmp0(itemText, text) == 0){
-            foundIndex = index;
-            g_free(itemText);
-            break;
+    GtkDropDown *dropPort = GTK_DROP_DOWN(userData->dropPort);
+    GListModel *model = gtk_drop_down_get_model(dropPort);
+
+    if(model == nullptr){
+        if(add){
+            const char *auxArr[] = {text, nullptr};
+            GtkStringList *newList = gtk_string_list_new(static_cast<const char* const*>(auxArr));
+            gtk_drop_down_set_model(dropPort, G_LIST_MODEL(newList));
+            g_object_unref(newList);
         }
-        g_free(itemText);
-        valid = gtk_tree_model_iter_next(model, &iter);
-        index++;
+        return;
+    }
+
+    unsigned int n = g_list_model_get_n_items(model);
+    int foundIndex = -1;
+
+    for(unsigned int i = 0; i < n; i++){
+        GObject *item = reinterpret_cast<GObject*>(g_list_model_get_item(model, i));
+        if(GTK_IS_STRING_OBJECT(item)){
+            const char *s = gtk_string_object_get_string(GTK_STRING_OBJECT(item));
+            if(g_strcmp0(s, text) == 0){
+                foundIndex = static_cast<int>(i);
+                g_object_unref(item);//eee
+            }
+        }
+        g_object_unref(item);
     }
 
     if(add){
-        if(foundIndex == -1){
-            gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(userData->dropPort), text);
+        if(foundIndex != -1){
+            g_object_unref(model);
+            return;
         }
+
+        gchar **arr = g_new0(gchar*, n + 2); /* n existentes + 1 nuevo + NULL */
+        for(guint i = 0; i < n; ++i){
+            GObject *item = reinterpret_cast<GObject*>(g_list_model_get_item(model, i)); /* nueva ref */
+            if(GTK_IS_STRING_OBJECT(item)){
+                const char *s = gtk_string_object_get_string(GTK_STRING_OBJECT(item));
+                arr[i] = g_strdup(s);
+            }else{
+                arr[i] = g_strdup(""); /* fallback */
+            }
+            g_object_unref(item);
+        }
+        arr[n] = g_strdup(text);
+        arr[n+1] = nullptr;
+
+        GtkStringList *new_list = gtk_string_list_new((const char * const *)arr);
+        gtk_drop_down_set_model(dropPort, G_LIST_MODEL(new_list));
+        g_object_unref(new_list);
+
+        /* liberar arr y strings duplicadas */
+        for(guint i = 0; i < n + 1; ++i)
+            g_free(arr[i]);
+        g_free(arr);
     }else{
-        if(foundIndex >= 0){
-            gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(userData->dropPort), foundIndex);
+        if(foundIndex < 0){
+            g_object_unref(model);
+            return;
         }
+
+        if(n <= 1){
+            gtk_drop_down_set_model(dropPort, nullptr);
+            g_object_unref(model);
+            return;
+        }
+
+        gchar **arr = g_new0(gchar*, n); /* n-1 elementos + NULL => tamaño n */
+        guint j = 0;
+        for (guint i = 0; i < n; ++i) {
+            if ((int)i == foundIndex)
+                continue;
+
+            GObject *item = reinterpret_cast<GObject*>(g_list_model_get_item(model, i)); /* nueva ref */
+            if (GTK_IS_STRING_OBJECT(item)) {
+                const char *s = gtk_string_object_get_string(GTK_STRING_OBJECT(item));
+                arr[j++] = g_strdup(s);
+            } else {
+                arr[j++] = g_strdup("");
+            }
+            g_object_unref(item);
+        }
+        arr[j] = NULL;
+
+        GtkStringList *new_list = gtk_string_list_new((const char * const *)arr);
+        gtk_drop_down_set_model(dropPort, G_LIST_MODEL(new_list));
+        g_object_unref(new_list);
+
+        for (guint k = 0; k < j; ++k)
+            g_free(arr[k]);
+        g_free(arr);
     }
+    g_object_unref(model);
 }
 
 //==================================================
@@ -87,11 +154,14 @@ void realizeVoltage(GtkGLArea *area, gpointer userData){
 
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSignal : realize\n", -1);
         std::cerr << "Failed to link contex areaSignal : realize" << std::endl;
         return;
     }
 
-    ProgramShader shader("./src/sys/shaders/code.vs", "./src/sys/shaders/code.fs");
+    ProgramShader shader("./src/shaders/codeVertexES.vs", "./src/shaders/codeFragmentES.fs");
     screen->idShaderVolt = shader.shaderProgramId;
 
     glEnable(GL_CULL_FACE);
@@ -112,6 +182,9 @@ void unrealizeVoltage(GtkGLArea *area, gpointer userData){
 
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSignal : unrealize\n", -1);
         std::cerr << "Failed to link contex areaSignal : unrealize" << std::endl; 
     }
 
@@ -124,13 +197,15 @@ void unrealizeVoltage(GtkGLArea *area, gpointer userData){
     glDeleteProgram(screen->idShaderVolt);
 }
 
-gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData){
+gboolean renderVoltage(GtkGLArea *area, [[maybe_unused]]GdkGLContext *context, gpointer userData){
     Screen* screen = static_cast<Screen*>(userData);
     Oscilloscope *osc = Oscilloscope::getInstance();
 
     gtk_gl_area_make_current(area);
-    gdk_gl_context_make_current(context);
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSignal : render\n", -1);
         std::cerr << "Failed to link contex areaSignal : render" << std::endl;
         return FALSE;
     }
@@ -168,19 +243,19 @@ gboolean renderVoltage(GtkGLArea *area, GdkGLContext *context, gpointer userData
     // Verificar errores de OpenGL
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "OpenGL Error\n", -1);
         std::cerr << "OpenGL Error: " << error << std::endl;
     }
 
     glFlush();
 
-    gtk_gl_area_attach_buffers(area);
-    gtk_gl_area_queue_render(area);
-    gtk_widget_queue_draw((GtkWidget*)area);
     return TRUE;
 }
 
 void resizeVoltage([[maybe_unused]]GtkGLArea *area, [[maybe_unused]]gpointer userData){
-    //
+    //glViewport(0, 0, width, height);
 }
 
 //==================================================
@@ -193,12 +268,24 @@ static void realizeSpectrum(GtkGLArea *area, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
 
     gtk_gl_area_make_current(area);
+
+    if(!gtk_gl_area_get_context(area)){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "No OpenGL context available\n", -1);
+        std::cerr << "No OpenGL context available\n";
+        return;
+    }
+
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSpectrum : realize\n", -1);
         std::cerr << "Failed to link contex areaSpectrum : realize" << std::endl;
         return;
     }
 
-    ProgramShader shader("./src/sys/shaders/code.vs", "./src/sys/shaders/code.fs");
+    ProgramShader shader("./src/shaders/codeVertexES.vs", "./src/shaders/codeFragmentES.fs");
     screen->idShaderSpec = shader.shaderProgramId;
 
     glEnable(GL_CULL_FACE);
@@ -221,6 +308,9 @@ static void unrealizeSpectrum(GtkGLArea *area, gpointer userData){
 
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSpectrum : unrealize\n", -1);
         std::cerr << "Failed to link contex areaSpectrum : unrealize" << std::endl; 
     }
 
@@ -234,13 +324,15 @@ static void unrealizeSpectrum(GtkGLArea *area, gpointer userData){
     glDeleteProgram(screen->idShaderSpec);
 }
 
-static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer userData){
+static gboolean renderSpectrum(GtkGLArea *area, [[maybe_unused]]GdkGLContext *context, gpointer userData){
     Screen* screen = static_cast<Screen*>(userData);
     Oscilloscope *osc = Oscilloscope::getInstance();
 
     gtk_gl_area_make_current(area);
-    gdk_gl_context_make_current(context);
     if(gtk_gl_area_get_error(area) != NULL){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "Failed to link contex areaSpectrum : render\n", -1);
         std::cerr << "Failed to link contex areaSpectrum : render" << std::endl;
         return FALSE;
     }
@@ -281,14 +373,14 @@ static gboolean renderSpectrum(GtkGLArea *area, GdkGLContext *context, gpointer 
     // Verificar errores de OpenGL
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert(screen->bufferConsole, &end, "OpenGL Error\n", -1);
         std::cerr << "OpenGL Error: " << error << std::endl;
     }
 
     glFlush();
 
-    gtk_gl_area_attach_buffers(area);
-    gtk_gl_area_queue_render(area);
-    gtk_widget_queue_draw((GtkWidget*)area);
     return TRUE;
 }
 
@@ -300,26 +392,24 @@ static void resize(){
 //      CALLBACKS CONTROL PANEL
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-void funcStartStop(GtkWidget *widget, gpointer userData){
+void funcStartStop(GtkWidget *widget, [[maybe_unused]]gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
-    Screen *screen = static_cast<Screen*>(userData);
-    screen->context = gtk_widget_get_style_context(widget);
 
     osc->stateStartStop_.store(!(osc->stateStartStop_), std::memory_order_release);
     if(osc->stateStartStop_.load(std::memory_order_acquire)){
         gtk_button_set_label(GTK_BUTTON(widget), "Stop");
-        gtk_style_context_remove_class(screen->context, "led-off");
-        gtk_style_context_add_class(screen->context, "led-on");
+        gtk_widget_remove_css_class(widget, "led-off");
+        gtk_widget_add_css_class(widget, "led-on");
     }else{
         gtk_button_set_label(GTK_BUTTON(widget), "Start");
-        gtk_style_context_remove_class(screen->context, "led-on");
-        gtk_style_context_add_class(screen->context, "led-off");
+        gtk_widget_remove_css_class(widget, "led-on");
+        gtk_widget_add_css_class(widget, "led-off");
     }
 }
 
-void funcVoltDiv(GtkComboBox *widget, gpointer userData){
+void funcVoltDiv(GtkDropDown *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    switch(gtk_combo_box_get_active(widget)){
+    switch(gtk_drop_down_get_selected(widget)){
         case 0:
             screen->voltDiv_ = 0.1f;
             break;
@@ -355,44 +445,48 @@ void funcVoltDiv(GtkComboBox *widget, gpointer userData){
     }
 }
 
-void funcCheckSig1(GtkWidget *widget, gpointer userData){
+void funcCheckSig1(GtkCheckButton *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->stateSignal1_ = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    screen->stateSignal1_ = gtk_check_button_get_active(widget);
 }
 
-void funcCheckSig2(GtkWidget *widget, gpointer userData){
+void funcCheckSig2(GtkCheckButton *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->stateSignal2_ = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    screen->stateSignal2_ = gtk_check_button_get_active(widget);
 }
 
-void funcCheckSig3(GtkWidget *widget, gpointer userData){
+void funcCheckSig3(GtkCheckButton *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->stateSignal3_ = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    screen->stateSignal3_ = gtk_check_button_get_active(widget);
 }
 
-void funcCheckSig4(GtkWidget *widget, gpointer userData){
+void funcCheckSig4(GtkCheckButton *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    screen->stateSignal4_ = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    screen->stateSignal4_ = gtk_check_button_get_active(widget);
 }
 
 void funcOffset1(GtkSpinButton *spinButton, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
     screen->offset1_ = gtk_spin_button_get_value(spinButton);
+    screen->draw_signals();
 }
 
 void funcOffset2(GtkSpinButton *spinButton, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
     screen->offset2_ = gtk_spin_button_get_value(spinButton);
+    screen->draw_signals();
 }
 
 void funcOffset3(GtkSpinButton *spinButton, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
     screen->offset3_ = gtk_spin_button_get_value(spinButton);
+    screen->draw_signals();
 }
 
 void funcOffset4(GtkSpinButton *spinButton, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
     screen->offset4_ = gtk_spin_button_get_value(spinButton);
+    screen->draw_signals();
 }
 
 void funcSpinButtonFreq(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
@@ -400,24 +494,27 @@ void funcSpinButtonFreq(GtkSpinButton *spinButton, [[maybe_unused]]gpointer user
     osc->signalCapturer_.setTimeDiv(gtk_spin_button_get_value(spinButton));
 }
 
-void funcCheckTestSignal(GtkWidget *widget, gpointer userData){
+void funcCheckTestSignal(GtkCheckButton *widget, gpointer userData){
     Oscilloscope *osc = Oscilloscope::getInstance();
     Screen *screen = reinterpret_cast<Screen*>(userData);
 
-    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget))){
-        gtk_button_set_label(GTK_BUTTON(screen->buttonPort), "Open");
+    if(gtk_check_button_get_active(widget)){
         osc->signalCapturer_.selectCapturer(std::make_unique<SignalGenerator>());
+        gtk_button_set_label(GTK_BUTTON(screen->buttonPort), "Open");
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+        gtk_text_buffer_insert_with_tags_by_name(screen->bufferConsole, &end, "Puerto serial cerrado\n", -1, "close", NULL);
     }else{
         osc->signalCapturer_.selectCapturer(std::make_unique<ComSerial>());
     }
 }
 
-void funcComboPort(GtkComboBoxText *widget, gpointer userData){
+void funcDropPort(GtkDropDown *widget, gpointer userData){
     Screen *screen = static_cast<Screen*>(userData);
-    gchar *text = gtk_combo_box_text_get_active_text(widget);
+    GtkStringObject *item = reinterpret_cast<GtkStringObject*>(gtk_drop_down_get_selected_item(widget));
+    const char *text = gtk_string_object_get_string(item);
     if(text != nullptr){
         screen->routePort = text;
-        g_free(text);
     }
 }
 
@@ -430,11 +527,17 @@ void funcButtonPort(GtkWidget *widget, gpointer userData){
             osc->signalCapturer_.capturer->closePort();
             if(!(osc->signalCapturer_.capturer->getFlagSerial())){
                 gtk_button_set_label(GTK_BUTTON(widget), "Open");
+                GtkTextIter end;
+                gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+                gtk_text_buffer_insert_with_tags_by_name(screen->bufferConsole, &end, "Puerto serial cerrado\n", -1, "close", NULL);
             }
         }else{
             osc->signalCapturer_.capturer->openPort(screen->routePort.c_str());
             if(osc->signalCapturer_.capturer->getFlagSerial()){
                 gtk_button_set_label(GTK_BUTTON(widget), "Close");
+                GtkTextIter end;
+                gtk_text_buffer_get_end_iter(screen->bufferConsole, &end);
+                gtk_text_buffer_insert_with_tags_by_name(screen->bufferConsole, &end, "Puerto serial abierto\n", -1, "open", NULL);
             }
         }
     }
@@ -456,37 +559,66 @@ static void activate(GtkApplication* app, gpointer userData){
     GtkWidget *window = gtk_application_window_new(app);
     GtkWidget *boxPanels = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
         GtkWidget *boxView = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
-            GtkWidget *glAreaVoltage = gtk_gl_area_new();
-            GtkWidget *glAreaSpectrum = gtk_gl_area_new();
-            gtk_widget_set_size_request(glAreaSpectrum, -1, 100);
+        gtk_widget_set_hexpand(boxView, true);
+        gtk_widget_set_vexpand(boxView, true);
+            screen->glAreaVoltage = gtk_gl_area_new();
+            gtk_widget_set_size_request(screen->glAreaVoltage, -1, 700);
+
+            screen->glAreaSpectrum = gtk_gl_area_new();
+            gtk_widget_set_size_request(screen->glAreaSpectrum, -1, 100);
+
+            GtkTextTagTable *tagTableConsole = gtk_text_tag_table_new();
+            screen->bufferConsole = gtk_text_buffer_new(tagTableConsole);
+            GtkWidget *appConsole = gtk_text_view_new_with_buffer(screen->bufferConsole);
+            gtk_text_view_set_editable(GTK_TEXT_VIEW(appConsole), false);
+            gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(appConsole), false);
+            gtk_text_view_set_monospace(GTK_TEXT_VIEW(appConsole), true);
+            GtkWidget *windowScrool = gtk_scrolled_window_new();
+            gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(windowScrool), appConsole);
+            gtk_widget_set_size_request(windowScrool, -1, 100);
+
+            GtkTextTag *tag_error = gtk_text_tag_new("error");
+            g_object_set(tag_error, "foreground", "red", NULL);
+            gtk_text_tag_table_add(tagTableConsole, tag_error);
+
+            GtkTextTag *tag_open = gtk_text_tag_new("open");
+            g_object_set(tag_open, "foreground", "green", NULL);
+            gtk_text_tag_table_add(tagTableConsole, tag_open);
+
+            GtkTextTag *tag_close = gtk_text_tag_new("close");
+            g_object_set(tag_close, "foreground", "purple", NULL);
+            gtk_text_tag_table_add(tagTableConsole, tag_close);
 
         GtkWidget *boxControl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
+        gtk_widget_set_vexpand(boxControl, true);
             GtkCssProvider *provider = gtk_css_provider_new();
-            GError *error = nullptr;
-            if(!gtk_css_provider_load_from_path(provider, "./src/styles/styleButtonStartStop.css", &error)){
-                g_warning("Error cargando CSS: %s", error->message);
-                g_error_free(error);
-            }
-            gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+            GFile *fileStyles = g_file_new_for_path("./src/styles/styleButtonStartStop.css"); 
+            gtk_css_provider_load_from_file(provider, fileStyles);
+            g_object_unref(fileStyles);
+            gtk_style_context_add_provider_for_display(gdk_display_get_default(), GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
             GtkWidget *buttonStartStop = gtk_button_new_with_label("Start");
-            screen->context = gtk_widget_get_style_context(buttonStartStop);
-            gtk_style_context_add_class(screen->context, "led-off");
+            gtk_widget_add_css_class(buttonStartStop, "led-off");
 
             GtkWidget *separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            gtk_widget_set_vexpand(separator1, true);
 
-            GtkWidget *comboVoltDiv = gtk_combo_box_text_new();
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "1", "0.1v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "2", "0.2v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "3", "0.3v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "4", "0.4v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "5", "0.5v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "6", "1v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "7", "2v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "8", "3v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "9", "4v/div");
-                gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(comboVoltDiv), "10", "5v/div");
-                gtk_combo_box_set_active(GTK_COMBO_BOX(comboVoltDiv), 5);
+            const char *optionsVolDiv[] = {
+                "0.1v/div",
+                "0.2v/div",
+                "0.3v/div",
+                "0.4v/div",
+                "0.5v/div",
+                "1v/div",
+                "2v/div",
+                "3v/div",
+                "4v/div",
+                "5v/div",
+                nullptr
+            };
+            GtkStringList *listVoltDiv = gtk_string_list_new(optionsVolDiv);
+            GtkWidget *dropVoltDiv = gtk_drop_down_new(G_LIST_MODEL(listVoltDiv), nullptr);
+            gtk_drop_down_set_selected(GTK_DROP_DOWN(dropVoltDiv), 5);
             GtkWidget *gridSignals = gtk_grid_new();
             GtkWidget *checkSignal1 = gtk_check_button_new_with_label("signal1");
             GtkWidget *checkSignal2 = gtk_check_button_new_with_label("signal2");
@@ -510,6 +642,7 @@ static void activate(GtkApplication* app, gpointer userData){
                 gtk_grid_attach(GTK_GRID(gridSignals), spinOffset4, 1, 3, 1, 1);
 
             GtkWidget *separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            gtk_widget_set_vexpand(separator2, true);
 
             GtkWidget *boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
             GtkAdjustment *adjustmentFreq = gtk_adjustment_new(1.0, 0.001, 100.0, 0.001, 1.0, 0.0);
@@ -518,66 +651,67 @@ static void activate(GtkApplication* app, gpointer userData){
             GtkWidget *checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             GtkWidget *separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+            gtk_widget_set_vexpand(separator3, true);
 
             GtkWidget *labelPort = gtk_label_new("Port");
             GtkWidget *boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
-            screen->dropPort = gtk_combo_box_text_new();
+            screen->dropPort = gtk_drop_down_new(nullptr, nullptr);
             screen->buttonPort = gtk_button_new_with_label("Open");
 
-    gtk_container_add(GTK_CONTAINER(window), boxPanels);
-    gtk_box_pack_start(GTK_BOX(boxPanels), boxView, true, true, 0);
-    gtk_box_pack_start(GTK_BOX(boxView), glAreaVoltage, true, true, 0);
-    gtk_box_pack_start(GTK_BOX(boxView), glAreaSpectrum, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxPanels), boxControl, false, false, 1);
-    gtk_box_pack_start(GTK_BOX(boxControl), buttonStartStop, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxControl), separator1, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(boxControl), comboVoltDiv, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxControl), gridSignals, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxControl), separator2, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(boxControl), boxFreq, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxFreq), spinFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(boxFreq), labelFreq, true, false, 1);
-    gtk_box_pack_start(GTK_BOX(boxControl), checkTestSignal, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxControl), separator3, true, true, 20);
-    gtk_box_pack_start(GTK_BOX(boxControl), labelPort, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxControl), boxPort, false, false, 5);
-    gtk_box_pack_start(GTK_BOX(boxPort), screen->dropPort, true, true, 1);
-    gtk_box_pack_start(GTK_BOX(boxPort), screen->buttonPort, false, true, 1);
+    gtk_window_set_child(GTK_WINDOW(window), boxPanels);
+    gtk_box_append(GTK_BOX(boxPanels), boxView);
+    gtk_box_append(GTK_BOX(boxView), screen->glAreaVoltage);
+    gtk_box_append(GTK_BOX(boxView), screen->glAreaSpectrum);
+    gtk_box_append(GTK_BOX(boxView), windowScrool);
+    gtk_box_append(GTK_BOX(boxPanels), boxControl);
+    gtk_box_append(GTK_BOX(boxControl), buttonStartStop);
+    gtk_box_append(GTK_BOX(boxControl), separator1);
+    gtk_box_append(GTK_BOX(boxControl), dropVoltDiv);
+    gtk_box_append(GTK_BOX(boxControl), gridSignals);
+    gtk_box_append(GTK_BOX(boxControl), separator2);
+    gtk_box_append(GTK_BOX(boxControl), boxFreq);
+    gtk_box_append(GTK_BOX(boxFreq), spinFreq);
+    gtk_box_append(GTK_BOX(boxFreq), labelFreq);
+    gtk_box_append(GTK_BOX(boxControl), checkTestSignal);
+    gtk_box_append(GTK_BOX(boxControl), separator3);
+    gtk_box_append(GTK_BOX(boxControl), labelPort);
+    gtk_box_append(GTK_BOX(boxControl), boxPort);
+    gtk_box_append(GTK_BOX(boxPort), screen->dropPort);
+    gtk_box_append(GTK_BOX(boxPort), screen->buttonPort);
 
-    g_signal_connect(glAreaVoltage, "realize", G_CALLBACK(realizeVoltage), userData);
-    g_signal_connect(glAreaVoltage, "unrealize", G_CALLBACK(unrealizeVoltage), userData);
-    g_signal_connect(glAreaVoltage, "render", G_CALLBACK(renderVoltage), userData);
-    g_signal_connect(glAreaVoltage, "resize", G_CALLBACK(resizeVoltage), userData);
-    g_signal_connect(glAreaSpectrum, "realize", G_CALLBACK(realizeSpectrum), userData);
-    g_signal_connect(glAreaSpectrum, "unrealize", G_CALLBACK(unrealizeSpectrum), userData);
-    g_signal_connect(glAreaSpectrum, "resize", G_CALLBACK(resize), userData);
-    g_signal_connect(glAreaSpectrum, "render", G_CALLBACK(renderSpectrum), userData);
+    g_signal_connect(screen->glAreaVoltage, "realize", G_CALLBACK(realizeVoltage), userData);
+    g_signal_connect(screen->glAreaVoltage, "unrealize", G_CALLBACK(unrealizeVoltage), userData);
+    g_signal_connect(screen->glAreaVoltage, "render", G_CALLBACK(renderVoltage), userData);
+    g_signal_connect(screen->glAreaVoltage, "resize", G_CALLBACK(resizeVoltage), userData);
+    g_signal_connect(screen->glAreaSpectrum, "realize", G_CALLBACK(realizeSpectrum), userData);
+    g_signal_connect(screen->glAreaSpectrum, "unrealize", G_CALLBACK(unrealizeSpectrum), userData);
+    g_signal_connect(screen->glAreaSpectrum, "resize", G_CALLBACK(resize), userData);
+    g_signal_connect(screen->glAreaSpectrum, "render", G_CALLBACK(renderSpectrum), userData);
     g_signal_connect(buttonStartStop, "clicked", G_CALLBACK(funcStartStop), userData);
-    g_signal_connect(comboVoltDiv, "changed", G_CALLBACK(funcVoltDiv), userData);
-    g_signal_connect(checkSignal1, "clicked", G_CALLBACK(funcCheckSig1), userData);
-    g_signal_connect(checkSignal2, "clicked", G_CALLBACK(funcCheckSig2), userData);
-    g_signal_connect(checkSignal3, "clicked", G_CALLBACK(funcCheckSig3), userData);
-    g_signal_connect(checkSignal4, "clicked", G_CALLBACK(funcCheckSig4), userData);
+    g_signal_connect(dropVoltDiv, "notify::selected", G_CALLBACK(funcVoltDiv), userData);
+    g_signal_connect(checkSignal1, "toggled", G_CALLBACK(funcCheckSig1), userData);
+    g_signal_connect(checkSignal2, "toggled", G_CALLBACK(funcCheckSig2), userData);
+    g_signal_connect(checkSignal3, "toggled", G_CALLBACK(funcCheckSig3), userData);
+    g_signal_connect(checkSignal4, "toggled", G_CALLBACK(funcCheckSig4), userData);
     g_signal_connect(spinOffset1, "value_changed", G_CALLBACK(funcOffset1), userData);
     g_signal_connect(spinOffset2, "value_changed", G_CALLBACK(funcOffset2), userData);
     g_signal_connect(spinOffset3, "value_changed", G_CALLBACK(funcOffset3), userData);
     g_signal_connect(spinOffset4, "value_changed", G_CALLBACK(funcOffset4), userData);
     g_signal_connect(spinFreq, "value_changed", G_CALLBACK(funcSpinButtonFreq), userData);
-    g_signal_connect(checkTestSignal, "clicked", G_CALLBACK(funcCheckTestSignal), userData);
-    g_signal_connect(screen->dropPort, "changed", G_CALLBACK(funcComboPort), userData);
+    g_signal_connect(checkTestSignal, "toggled", G_CALLBACK(funcCheckTestSignal), userData);
+    g_signal_connect(screen->dropPort, "notify::selected", G_CALLBACK(funcDropPort), userData);
     g_signal_connect(screen->buttonPort, "clicked", G_CALLBACK(funcButtonPort), userData);
     g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), userData);
 
     GdkDisplay *display = gdk_display_get_default();
-    GdkMonitor *monitor = gdk_display_get_monitor(display, 0);
+    GListModel *monitors = gdk_display_get_monitors(display);
+    GdkMonitor *monitor = GDK_MONITOR(g_list_model_get_item(monitors, 0));
     GdkRectangle monitorGeometry;
     gdk_monitor_get_geometry(monitor, &monitorGeometry);
 
     gtk_window_set_title(GTK_WINDOW(window), "Oscilloscope");
-    gtk_window_set_default_size(GTK_WINDOW(window), monitorGeometry.width, 700);
-    gtk_window_set_icon_from_file(GTK_WINDOW(window), "/home/edward/Documentos/MisProyectos/Osciloscopio/logo.png", NULL);
+    gtk_window_set_default_size(GTK_WINDOW(window), monitorGeometry.width, monitorGeometry.height);
     gtk_window_present(GTK_WINDOW(window));
-    gtk_widget_show_all(window);
 
     int udev_fd = udev_monitor_get_fd(screen->monitor);
     if(udev_fd >= 0){
@@ -609,10 +743,18 @@ int Screen::show(int &argc, char** argv){
     return g_application_run(G_APPLICATION(appGtk), argc, argv);
 }
 
+void Screen::draw_signals() const{
+    gtk_gl_area_queue_render(GTK_GL_AREA(glAreaVoltage));
+    gtk_gl_area_queue_render(GTK_GL_AREA(glAreaSpectrum));
+}
+
 int Screen::createContextUdev(){
     //crear contexto udev
 	udev = udev_new();
 	if(!(udev)){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "No se pudo crear el contexto udev\n", -1);
 		std::cerr << "No se pudo crear el contexto udev\n";
 		return EXIT_FAILURE;
 	}
@@ -620,13 +762,19 @@ int Screen::createContextUdev(){
 	//Crear monitor para recibir eventos desde udev a través de netlink
 	monitor = udev_monitor_new_from_netlink(udev, "udev");
 	if(!(monitor)){
-		std::cerr << "no se pudo crear el monitor de udev\n";
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "No se pudo crear el monitor de udev\n", -1);
+		std::cerr << "No se pudo crear el monitor de udev\n";
 		udev_unref(udev);
 		return EXIT_FAILURE;
 	}
 
 	//Filtrar eventos para el subsistema "tty"
 	if(udev_monitor_filter_add_match_subsystem_devtype(monitor, "tty", nullptr) < 0){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "Error al aplicar el filtro para el subsistema tty\n", -1);
 		std::cerr << "Error al aplicar el filtro para el subsistema tty\n";
 		udev_monitor_unref(monitor);
 		udev_unref(udev);
@@ -635,7 +783,10 @@ int Screen::createContextUdev(){
 
 	//Habilitar la recepcion de eventos
 	if(udev_monitor_enable_receiving(monitor) < 0){
-		std::cerr << "error al habilitar la recepcion de eventos\n";
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "Error al habilitar la recepcion de eventos\n", -1);
+		std::cerr << "Error al habilitar la recepcion de eventos\n";
 		udev_monitor_unref(monitor);
 		udev_unref(udev);
 		return EXIT_FAILURE;
@@ -682,6 +833,9 @@ bool Screen::createVAO(SignalObject &signalObject){
 
     GLenum error = glGetError();
     if(error != GL_NO_ERROR){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "OpenGL Error in createVAO\n", -1);
         std::cerr << "OpenGL Error in createVAO: " << error << std::endl;
         return 1;
     }
@@ -695,6 +849,9 @@ bool Screen:: deleteVAO(SignalObject &signalObject){
 
     GLenum error = glGetError();
     if(error != GL_NO_ERROR){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "OpenGL Error in deleteVAO\n", -1);
         std::cerr << "OpenGL Error in deleteVAO: " << error << std::endl;
         return 1;
     }
@@ -716,6 +873,9 @@ bool Screen:: drawVAO(SignalObject &signalObject) const{
 
     GLenum error = glGetError();
     if(error != GL_NO_ERROR){
+        GtkTextIter end;
+        gtk_text_buffer_get_end_iter(bufferConsole, &end);
+        gtk_text_buffer_insert(bufferConsole, &end, "OpenGL Error in drawVAO\n", -1);
         std::cerr << "OpenGL Error in drawVAO: " << error << std::endl;
         return 1;
     }

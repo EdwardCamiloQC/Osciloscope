@@ -6,7 +6,7 @@
 #ifndef ED_SIGNAL_GENERATOR_HPP_
     #define ED_SIGNAL_GENERATOR_HPP_
 
-    #include <sys/peripherals/capturer.hpp>
+    #include <utils/capturers/capturer.hpp>
 
     //==================================================
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
