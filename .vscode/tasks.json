@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar",
+            "type": "shell",
+            "command": "make",
+            "args": [],
+            "group": {"kind":"build", "isDefault": true}
+        },
+        {
+            "label": "Limpiar",
+            "type": "shell",
+            "command": "make",
+            "args": ["clean"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Ejecutar test",
+            "type": "shell",
+            "command": "make",
+            "args": ["runTest"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Ejecuta con valgrim",
+            "type": "shell",
+            "command": "make",
+            "args": ["runWithValgrind"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Ejecutar deployment",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Compilar con mi Make"],
+            "command": "make",
+            "args": ["runProject"],
+            "problemMatcher": []
+        },
+    ]
+}

@@ -1,0 +1,41 @@
+\doxysection{signal\+Capturer.\+hpp}
+\hypertarget{signalCapturer_8hpp_source}{}\label{signalCapturer_8hpp_source}\index{src/sys/peripherals/signalCapturer.hpp@{src/sys/peripherals/signalCapturer.hpp}}
+\mbox{\hyperlink{signalCapturer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_SIGNAL\_CAPTURER\_H\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_SIGNAL\_CAPTURER\_H\_}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#include\ <thread>}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{comment}{/*extern\ "{}C"{}\{}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ \#include\ <systemd/sd-\/device.h>}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \}*/}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCapturer}{Capturer}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSignalCapturer}{SignalCapturer}}\{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Methods}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalCapturer_a69f772de0627f7325fbbcd9578e1a155}{SignalCapturer}}(\mbox{\hyperlink{classCapturer}{Capturer}}\ *theCapturer);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalCapturer_aa16833117850ccefdafc353b867738a8}{\string~SignalCapturer}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSignalCapturer_a2b70cc831c1b245eb9acf3d273c8d588}{start}}();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSignalCapturer_ac1255eed0e1e0c6c8ecedd2a5b3374ae}{setSampleFrequency}}();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSignalCapturer_a07b00533fefa94266a8dc778f31fd1db}{selectCapturer}}(std::unique\_ptr<Capturer>\ \&\&capturer);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ loopCatchVoltages();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//void\ inspection();}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Attributes}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ std::thread\ catcher;\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<Capturer>\ capturer;\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//sd\_device\ *devide;}}
+\DoxyCodeLine{00055\ \ \ \ \ \};}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

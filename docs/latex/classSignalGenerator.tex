@@ -1,0 +1,117 @@
+\doxysection{Signal\+Generator Class Reference}
+\hypertarget{classSignalGenerator}{}\label{classSignalGenerator}\index{SignalGenerator@{SignalGenerator}}
+
+
+Inheritance diagram for Signal\+Generator\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classSignalGenerator__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Signal\+Generator\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=175pt]{classSignalGenerator__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSignalGenerator_a5fc94adceb58edfd5e288da59acaf651}\label{classSignalGenerator_a5fc94adceb58edfd5e288da59acaf651} 
+{\bfseries Signal\+Generator} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classSignalGenerator_a8f7d652a5a0fbda3e1855262df8ee0fc}{Signal\+Generator}} (const \mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \&)=delete
+\item 
+\mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \& \mbox{\hyperlink{classSignalGenerator_af87b27242e5c555cd12b2c282d566f14}{operator=}} (const \mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \&)=delete
+\item 
+\Hypertarget{classSignalGenerator_a12d8beb0a96904ba4609c4afa469c00b}\label{classSignalGenerator_a12d8beb0a96904ba4609c4afa469c00b} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Signal\+Generator} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSignalGenerator_a79e83aa7cb9d4271db58a8be751307c1}{read\+Values}} (\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt1, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt2, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt3, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt4, unsigned int n\+Values) override
+\begin{DoxyCompactList}\small\item\em Generates the values and stored at the corresponding voltages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classSignalGenerator_ac94019c860b401c2f6d988f6e26902aa}{set\+Sample\+Frequency}} (unsigned int freq) override
+\begin{DoxyCompactList}\small\item\em Sends the corresponding frequency. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classCapturer}{Capturer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14}{\texorpdfstring{$\sim$}{\string~}\+Capturer}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classSignalGenerator_a8f7d652a5a0fbda3e1855262df8ee0fc}\label{classSignalGenerator_a8f7d652a5a0fbda3e1855262df8ee0fc} 
+\index{SignalGenerator@{SignalGenerator}!SignalGenerator@{SignalGenerator}}
+\index{SignalGenerator@{SignalGenerator}!SignalGenerator@{SignalGenerator}}
+\doxysubsubsection{\texorpdfstring{SignalGenerator()}{SignalGenerator()}}
+{\footnotesize\ttfamily Signal\+Generator\+::\+Signal\+Generator (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Copy constructor disabled. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSignalGenerator_af87b27242e5c555cd12b2c282d566f14}\label{classSignalGenerator_af87b27242e5c555cd12b2c282d566f14} 
+\index{SignalGenerator@{SignalGenerator}!operator=@{operator=}}
+\index{operator=@{operator=}!SignalGenerator@{SignalGenerator}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \& Signal\+Generator\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classSignalGenerator}{Signal\+Generator}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Operator assignment disabled. 
+\end{DoxyNote}
+\Hypertarget{classSignalGenerator_a79e83aa7cb9d4271db58a8be751307c1}\label{classSignalGenerator_a79e83aa7cb9d4271db58a8be751307c1} 
+\index{SignalGenerator@{SignalGenerator}!readValues@{readValues}}
+\index{readValues@{readValues}!SignalGenerator@{SignalGenerator}}
+\doxysubsubsection{\texorpdfstring{readValues()}{readValues()}}
+{\footnotesize\ttfamily void Signal\+Generator\+::read\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt1,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt2,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt3,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt4,  }\item[{unsigned int}]{n\+Values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Generates the values and stored at the corresponding voltages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em volt1} & Reference to the voltage one. \\
+\hline
+{\em volt2} & Reference to the voltage two. \\
+\hline
+{\em volt3} & Reference to the voltage three. \\
+\hline
+{\em volt4} & Reference to the voltage four. \\
+\hline
+{\em n\+Values} & Data length to scrolling and storing. \textbackslash{}override \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3}{Capturer}}.
+
+\Hypertarget{classSignalGenerator_ac94019c860b401c2f6d988f6e26902aa}\label{classSignalGenerator_ac94019c860b401c2f6d988f6e26902aa} 
+\index{SignalGenerator@{SignalGenerator}!setSampleFrequency@{setSampleFrequency}}
+\index{setSampleFrequency@{setSampleFrequency}!SignalGenerator@{SignalGenerator}}
+\doxysubsubsection{\texorpdfstring{setSampleFrequency()}{setSampleFrequency()}}
+{\footnotesize\ttfamily void Signal\+Generator\+::set\+Sample\+Frequency (\begin{DoxyParamCaption}\item[{unsigned int}]{freq }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Sends the corresponding frequency. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & Frequency. \textbackslash{}override \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCapturer_abd8f055e8554d33421309ff5b4f81e26}{Capturer}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/peripherals/\mbox{\hyperlink{signalGenerator_8hpp}{signal\+Generator.\+hpp}}\end{DoxyCompactItemize}

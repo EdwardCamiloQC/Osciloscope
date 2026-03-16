@@ -1,0 +1,24 @@
+\doxysection{spectrum\+Signal.\+hpp}
+\hypertarget{spectrumSignal_8hpp_source}{}\label{spectrumSignal_8hpp_source}\index{src/libraries/signal/spectrumSignal.hpp@{src/libraries/signal/spectrumSignal.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_SPECTRUM\_SIGNAL\_H\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_SPECTRUM\_SIGNAL\_H\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\ \ \ \ \#include\ <libraries/signal/signalObject.hpp>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\ \ \ \ \#include\ <complex>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSignalObject}{SignalObject}}\{}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ len,\ SIGNAL\_COLOR\ color);}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSpectrumSignal}{\string~SpectrumSignal}}();}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}\&)=\textcolor{keyword}{delete};}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}\&\ operator=(\mbox{\hyperlink{classSpectrumSignal}{SpectrumSignal}}\&)=\textcolor{keyword}{delete};}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ calculateSpectrum(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ *signal);}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ *moduleSpectrum;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ std::complex<float>\ *spectrum;}
+\DoxyCodeLine{00017\ \ \ \ \ \};}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

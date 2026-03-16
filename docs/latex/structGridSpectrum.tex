@@ -1,0 +1,102 @@
+\doxysection{Grid\+Spectrum Struct Reference}
+\hypertarget{structGridSpectrum}{}\label{structGridSpectrum}\index{GridSpectrum@{GridSpectrum}}
+
+
+The structure that contains the grid shape where the spectrum signals will be printed.  
+
+
+
+
+{\ttfamily \#include $<$screen.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structGridSpectrum_abc2883d7f98209246c4804a7ae785e7e}\label{structGridSpectrum_abc2883d7f98209246c4804a7ae785e7e} 
+void {\bfseries create\+Grid} ()
+\begin{DoxyCompactList}\small\item\em Creates the spectrum grid. \end{DoxyCompactList}\item 
+\Hypertarget{structGridSpectrum_acab61c6809e57c41c98aa88e1be8019f}\label{structGridSpectrum_acab61c6809e57c41c98aa88e1be8019f} 
+void {\bfseries delete\+Grid} ()
+\begin{DoxyCompactList}\small\item\em Deletes the spectrum grid. \end{DoxyCompactList}\item 
+\Hypertarget{structGridSpectrum_ada060b863a8ee2941983d978b5b25a55}\label{structGridSpectrum_ada060b863a8ee2941983d978b5b25a55} 
+void {\bfseries draw} ()
+\begin{DoxyCompactList}\small\item\em Draws the spectrum grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structGridSpectrum_ab0ae790cdc0c8729c80510b1dbb7c59a}\label{structGridSpectrum_ab0ae790cdc0c8729c80510b1dbb7c59a} 
+unsigned int {\bfseries vao}
+\item 
+\Hypertarget{structGridSpectrum_a413181afe21fd668c5854dc989f917fd}\label{structGridSpectrum_a413181afe21fd668c5854dc989f917fd} 
+unsigned int {\bfseries vbo} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Vertex Array Object and Vertex Buffer Objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr float \mbox{\hyperlink{structGridSpectrum_a4ea358bd252f0b5dfc13d8f3fcec1d37}{vertex}} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em Vertices belonging to the spectrum grid. \end{DoxyCompactList}\item 
+static constexpr float \mbox{\hyperlink{structGridSpectrum_ae41d94f2cdbeffb5655473178aa567f6}{color}} \mbox{[}48\mbox{]}
+\begin{DoxyCompactList}\small\item\em Spectrum grid color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The structure that contains the grid shape where the spectrum signals will be printed. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structGridSpectrum_ae41d94f2cdbeffb5655473178aa567f6}\label{structGridSpectrum_ae41d94f2cdbeffb5655473178aa567f6} 
+\index{GridSpectrum@{GridSpectrum}!color@{color}}
+\index{color@{color}!GridSpectrum@{GridSpectrum}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily constexpr float Grid\+Spectrum\+::color\mbox{[}48\mbox{]}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Spectrum grid color. 
+
+\Hypertarget{structGridSpectrum_a4ea358bd252f0b5dfc13d8f3fcec1d37}\label{structGridSpectrum_a4ea358bd252f0b5dfc13d8f3fcec1d37} 
+\index{GridSpectrum@{GridSpectrum}!vertex@{vertex}}
+\index{vertex@{vertex}!GridSpectrum@{GridSpectrum}}
+\doxysubsubsection{\texorpdfstring{vertex}{vertex}}
+{\footnotesize\ttfamily constexpr float Grid\+Spectrum\+::vertex\mbox{[}32\mbox{]}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.25f,\ +1.0f,\ -\/0.25f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.50f,\ +1.0f,\ -\/0.50f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.75f,\ +1.0f,\ -\/0.75f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.00f,\ +1.0f,\ +0.00f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.25f,\ +1.0f,\ +0.25f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.50f,\ +1.0f,\ +0.50f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.75f,\ +1.0f,\ +0.75f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/1.0f,\ \ \ 1.0f,\ \ -\/1.0f}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Vertices belonging to the spectrum grid. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/gui/\mbox{\hyperlink{screen_8hpp}{screen.\+hpp}}\end{DoxyCompactItemize}

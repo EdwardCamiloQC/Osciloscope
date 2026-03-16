@@ -1,0 +1,179 @@
+\doxysection{Com\+Serial Class Reference}
+\hypertarget{classComSerial}{}\label{classComSerial}\index{ComSerial@{ComSerial}}
+
+
+Class that uses the serial port to the comunication with the external hardware.  
+
+
+
+
+{\ttfamily \#include $<$puerto\+Serie.\+hpp$>$}
+
+
+
+Inheritance diagram for Com\+Serial\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=147pt]{classComSerial__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Com\+Serial\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=147pt]{classComSerial__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classComSerial_a4836e9b1722662d7f58d5d474769ad9a}\label{classComSerial_a4836e9b1722662d7f58d5d474769ad9a} 
+{\bfseries Com\+Serial} ()
+\begin{DoxyCompactList}\small\item\em Constructor that receive the voltage references that it will update. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classComSerial_a4674f6d511939d76f9f5631e90c6303e}{Com\+Serial}} (const \mbox{\hyperlink{classComSerial}{Com\+Serial}} \&)=delete
+\item 
+\mbox{\hyperlink{classComSerial}{Com\+Serial}} \& \mbox{\hyperlink{classComSerial_a5a255589c9910be548a068d55393e1c8}{operator=}} (const \mbox{\hyperlink{classComSerial}{Com\+Serial}} \&)=delete
+\item 
+\Hypertarget{classComSerial_a8fdf7eef21af0d9c38dfc574d9420137}\label{classComSerial_a8fdf7eef21af0d9c38dfc574d9420137} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Com\+Serial} ()
+\begin{DoxyCompactList}\small\item\em Destructor. Closes the port if it is open. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSerial_a75bc54386f422e767f0dba0aa6eec59d}{open\+Port}} (const char \texorpdfstring{$\ast$}{*}port)
+\begin{DoxyCompactList}\small\item\em Opens a serial port. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSerial_a85a86f2bcfea0f619dafc6009ce18665}{close\+Port}} ()
+\begin{DoxyCompactList}\small\item\em Closes a serial port. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classComSerial_aa0f5c39f6398318a3594562e5c1de54e}{get\+Flag\+Serial}} ()
+\begin{DoxyCompactList}\small\item\em Returns the port\textquotesingle{}s state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSerial_a4f2d44204a3261adb298ed1d711309b4}{read\+Values}} (\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt1, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt2, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt3, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt4, unsigned int n\+Values) override
+\begin{DoxyCompactList}\small\item\em Reads \textquotesingle{}n\textquotesingle{} values from the serial port to each one of the four voltages associates. Check the values arrive correctly from the external device. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classComSerial_a3a9ed0f9d862017e0c927bdc056dcc28}{set\+Sample\+Frequency}} (unsigned int freq) override
+\begin{DoxyCompactList}\small\item\em Sends the sample rate to the required frequency. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classCapturer}{Capturer}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14}{\texorpdfstring{$\sim$}{\string~}\+Capturer}} ()=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that uses the serial port to the comunication with the external hardware. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classComSerial_a4674f6d511939d76f9f5631e90c6303e}\label{classComSerial_a4674f6d511939d76f9f5631e90c6303e} 
+\index{ComSerial@{ComSerial}!ComSerial@{ComSerial}}
+\index{ComSerial@{ComSerial}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{ComSerial()}{ComSerial()}}
+{\footnotesize\ttfamily Com\+Serial\+::\+Com\+Serial (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSerial}{Com\+Serial}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Copy constructor desabled. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classComSerial_a85a86f2bcfea0f619dafc6009ce18665}\label{classComSerial_a85a86f2bcfea0f619dafc6009ce18665} 
+\index{ComSerial@{ComSerial}!closePort@{closePort}}
+\index{closePort@{closePort}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{closePort()}{closePort()}}
+{\footnotesize\ttfamily bool Com\+Serial\+::close\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Closes a serial port. 
+
+\begin{DoxyReturn}{Returns}
+Returns true if it closes normaly or false id don\textquotesingle{}t. 
+\end{DoxyReturn}
+\Hypertarget{classComSerial_aa0f5c39f6398318a3594562e5c1de54e}\label{classComSerial_aa0f5c39f6398318a3594562e5c1de54e} 
+\index{ComSerial@{ComSerial}!getFlagSerial@{getFlagSerial}}
+\index{getFlagSerial@{getFlagSerial}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{getFlagSerial()}{getFlagSerial()}}
+{\footnotesize\ttfamily bool Com\+Serial\+::get\+Flag\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the port\textquotesingle{}s state. 
+
+\begin{DoxyReturn}{Returns}
+False if is close, or true if is open. 
+\end{DoxyReturn}
+\Hypertarget{classComSerial_a75bc54386f422e767f0dba0aa6eec59d}\label{classComSerial_a75bc54386f422e767f0dba0aa6eec59d} 
+\index{ComSerial@{ComSerial}!openPort@{openPort}}
+\index{openPort@{openPort}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{openPort()}{openPort()}}
+{\footnotesize\ttfamily bool Com\+Serial\+::open\+Port (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{port }\end{DoxyParamCaption})}
+
+
+
+Opens a serial port. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & File\textquotesingle{}s path associated with the serial port generated by the kernel. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true, if the port is open and false if don\textquotesingle{}t. 
+\end{DoxyReturn}
+\Hypertarget{classComSerial_a5a255589c9910be548a068d55393e1c8}\label{classComSerial_a5a255589c9910be548a068d55393e1c8} 
+\index{ComSerial@{ComSerial}!operator=@{operator=}}
+\index{operator=@{operator=}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classComSerial}{Com\+Serial}} \& Com\+Serial\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classComSerial}{Com\+Serial}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Operador assingment desabled. 
+\end{DoxyNote}
+\Hypertarget{classComSerial_a4f2d44204a3261adb298ed1d711309b4}\label{classComSerial_a4f2d44204a3261adb298ed1d711309b4} 
+\index{ComSerial@{ComSerial}!readValues@{readValues}}
+\index{readValues@{readValues}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{readValues()}{readValues()}}
+{\footnotesize\ttfamily void Com\+Serial\+::read\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt1,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt2,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt3,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt4,  }\item[{unsigned int}]{n\+Values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reads \textquotesingle{}n\textquotesingle{} values from the serial port to each one of the four voltages associates. Check the values arrive correctly from the external device. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em volt1} & Reference to the voltage one. \\
+\hline
+{\em volt2} & Reference to the voltage two. \\
+\hline
+{\em volt3} & Reference to the voltage three. \\
+\hline
+{\em volt4} & Reference to the voltage four. \\
+\hline
+{\em n\+Values} & \+: Amount of values to read by voltage signal. \textbackslash{}override \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3}{Capturer}}.
+
+\Hypertarget{classComSerial_a3a9ed0f9d862017e0c927bdc056dcc28}\label{classComSerial_a3a9ed0f9d862017e0c927bdc056dcc28} 
+\index{ComSerial@{ComSerial}!setSampleFrequency@{setSampleFrequency}}
+\index{setSampleFrequency@{setSampleFrequency}!ComSerial@{ComSerial}}
+\doxysubsubsection{\texorpdfstring{setSampleFrequency()}{setSampleFrequency()}}
+{\footnotesize\ttfamily void Com\+Serial\+::set\+Sample\+Frequency (\begin{DoxyParamCaption}\item[{unsigned int}]{freq }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Sends the sample rate to the required frequency. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & \+: Requied frequency. \textbackslash{}override \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classCapturer_abd8f055e8554d33421309ff5b4f81e26}{Capturer}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/peripherals/\mbox{\hyperlink{puertoSerie_8hpp}{puerto\+Serie.\+hpp}}\end{DoxyCompactItemize}

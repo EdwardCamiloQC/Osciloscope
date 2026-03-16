@@ -1,0 +1,320 @@
+\doxysection{Screen Class Reference}
+\hypertarget{classScreen}{}\label{classScreen}\index{Screen@{Screen}}
+
+
+Collaboration diagram for Screen\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{classScreen__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}{Screen}} ()
+\item 
+\mbox{\hyperlink{classScreen_a4243bc17596af96415b09ac48205676d}{\texorpdfstring{$\sim$}{\string~}\+Screen}} ()
+\item 
+\mbox{\hyperlink{classScreen_a05bc973241a238f8af89e89e76b5f048}{Screen}} (const \mbox{\hyperlink{classScreen}{Screen}} \&screen)=delete
+\item 
+\mbox{\hyperlink{classScreen}{Screen}} \& \mbox{\hyperlink{classScreen_afcdae092b2be9937782b10f7cd25b84d}{operator=}} (\mbox{\hyperlink{classScreen}{Screen}} screen)=delete
+\item 
+int \mbox{\hyperlink{classScreen_a450f492f5c4ebb5066d6e6d2a44f577e}{show}} (int \&argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Creates the graphics and shows. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classScreen_ae07f13603ad28cec596fd418f3a78b92}{create\+VAO}} (\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&signal\+Object)
+\begin{DoxyCompactList}\small\item\em Creates the VAOs to the signals. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classScreen_a8c2e84a5caf2ad71918e4722aac9f5f5}{delete\+VAO}} (\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&signal\+Object)
+\begin{DoxyCompactList}\small\item\em Deletes the signal\textquotesingle{}s VAOs. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classScreen_aaa172b986078126dcb2e8e6e5d968727}{draw\+VAO}} (\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&signal\+Object) const
+\begin{DoxyCompactList}\small\item\em Draws the signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classScreen_acfb5a3f516af9adf6c06a427c0066014}\label{classScreen_acfb5a3f516af9adf6c06a427c0066014} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries window} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em \doxylink{classOscilloscope}{Oscilloscope} window. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_ad874ce1c3f9fc3ab3736c5d875e16bcb}\label{classScreen_ad874ce1c3f9fc3ab3736c5d875e16bcb} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries box\+Panels} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em General boxes that contains the second boxes. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a638a85e93f916f00964c6be735ed561d}\label{classScreen_a638a85e93f916f00964c6be735ed561d} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries box\+View} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Second box that contains print areas. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a8a849a3749bef9159f91b710ab350e66}\label{classScreen_a8a849a3749bef9159f91b710ab350e66} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries gl\+Area\+Voltage} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Print areas. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a8d4bfffe408aa5a9a2354a1f4b78e41d}\label{classScreen_a8d4bfffe408aa5a9a2354a1f4b78e41d} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries gl\+Area\+Spectrum} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a6fa70dcf1b2bfa3f45932ecafe234dd7}\label{classScreen_a6fa70dcf1b2bfa3f45932ecafe234dd7} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries box\+Control} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Second box that contains control area. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a82f6034b6aba3920eca0f9592821fa91}\label{classScreen_a82f6034b6aba3920eca0f9592821fa91} 
+Gtk\+Css\+Provider \texorpdfstring{$\ast$}{*} {\bfseries provider} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Style for start-\/stop button. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_aa1ad98ffcccedf6eab2276b56c0da819}\label{classScreen_aa1ad98ffcccedf6eab2276b56c0da819} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries led} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a5cf991b5337baf950ab0fa733f92a8e7}\label{classScreen_a5cf991b5337baf950ab0fa733f92a8e7} 
+Gtk\+Style\+Context \texorpdfstring{$\ast$}{*} {\bfseries context} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a98ae50b5fac95594f64c642d2257213c}\label{classScreen_a98ae50b5fac95594f64c642d2257213c} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries button\+Start\+Stop} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Start stop. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a35af902ebbf28728daa66d10359b1050}\label{classScreen_a35af902ebbf28728daa66d10359b1050} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries separator1} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a23658548bd7e2c09df158aa7f8546706}\label{classScreen_a23658548bd7e2c09df158aa7f8546706} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries label\+Volt\+Div} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Label that shows volt/div selected. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a5caa9029005feee57a8a3c1400bbda27}\label{classScreen_a5caa9029005feee57a8a3c1400bbda27} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries combo\+Volt\+Div} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Options for volt/vid. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a202f39aa24c47cc3cc49f98231f8175f}\label{classScreen_a202f39aa24c47cc3cc49f98231f8175f} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries grid\+Signals} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a443e3ba322ff52a7af32f487e8e509cc}\label{classScreen_a443e3ba322ff52a7af32f487e8e509cc} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries check\+Signal1} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Show signal1 on-\/off. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a49044b9160fc70cbb99f5ad86251a0af}\label{classScreen_a49044b9160fc70cbb99f5ad86251a0af} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries check\+Signal2} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Show signal2 on-\/off. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_ac0c926f2fbe9a0fcd36c221aff8067c4}\label{classScreen_ac0c926f2fbe9a0fcd36c221aff8067c4} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries check\+Signal3} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Show signal3 on-\/off. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a861805ac35a16a842a53186b943d3f57}\label{classScreen_a861805ac35a16a842a53186b943d3f57} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries check\+Signal4} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Show signal4 on-\/off. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a2800d2f53adda4e3d377bed07152ab04}\label{classScreen_a2800d2f53adda4e3d377bed07152ab04} 
+Gtk\+Adjustment \texorpdfstring{$\ast$}{*} {\bfseries adjustment1} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a5720ae5598c00a8116a44977458ebc99}\label{classScreen_a5720ae5598c00a8116a44977458ebc99} 
+Gtk\+Adjustment \texorpdfstring{$\ast$}{*} {\bfseries adjustment2} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a7279055b0514f85698825f56bcdd0d6e}\label{classScreen_a7279055b0514f85698825f56bcdd0d6e} 
+Gtk\+Adjustment \texorpdfstring{$\ast$}{*} {\bfseries adjustment3} \{nullptr\}
+\item 
+\Hypertarget{classScreen_ad752d2c3071c781e2606a7e92fd0c167}\label{classScreen_ad752d2c3071c781e2606a7e92fd0c167} 
+Gtk\+Adjustment \texorpdfstring{$\ast$}{*} {\bfseries adjustment4} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a1ef363fd930f524dc646f59c9da24772}\label{classScreen_a1ef363fd930f524dc646f59c9da24772} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries spin\+Offset1} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Change offset to signal1. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a539336e8e974a6ca2f41b1938df1d9cc}\label{classScreen_a539336e8e974a6ca2f41b1938df1d9cc} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries spin\+Offset2} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Change offset to signal2. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a38faa2a8addc0bf1cbea95ba7a60d285}\label{classScreen_a38faa2a8addc0bf1cbea95ba7a60d285} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries spin\+Offset3} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Change offset to signal3. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a2541bb92127d6c7f9146fd00c61121b5}\label{classScreen_a2541bb92127d6c7f9146fd00c61121b5} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries spin\+Offset4} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Change offset to signal4. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_abef4e519ea5d2b01d1a94152a6674f07}\label{classScreen_abef4e519ea5d2b01d1a94152a6674f07} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries separator2} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a6968c247ba52249f784e7c9ee7222eb6}\label{classScreen_a6968c247ba52249f784e7c9ee7222eb6} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries label\+Freq} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Label for the frequency. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_ab4c2d4c97ac8fa50a7bc149cf640adf1}\label{classScreen_ab4c2d4c97ac8fa50a7bc149cf640adf1} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries box\+Freq} \{nullptr\}
+\item 
+\Hypertarget{classScreen_ad54b089b323ccafca9e51627f25ec39a}\label{classScreen_ad54b089b323ccafca9e51627f25ec39a} 
+Gtk\+Adjustment \texorpdfstring{$\ast$}{*} {\bfseries adjustment\+Freq} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a3cb399be6f1f98f93905ca90436bdec3}\label{classScreen_a3cb399be6f1f98f93905ca90436bdec3} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries spin\+Freq} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Change of the frequency. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a7cba84008029f3d684f204818cab6ade}\label{classScreen_a7cba84008029f3d684f204818cab6ade} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries combo\+Freq} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Range in frequency. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_af39027900ab5576791f171be7643fd6a}\label{classScreen_af39027900ab5576791f171be7643fd6a} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries separator3} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a2cfc3cc502be51556cb7cfebad04e0e3}\label{classScreen_a2cfc3cc502be51556cb7cfebad04e0e3} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries label\+Test\+Signal} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a638a43aefca64e67d9d6a0fde79b81c5}\label{classScreen_a638a43aefca64e67d9d6a0fde79b81c5} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries check\+Test\+Signal} \{nullptr\}
+\item 
+\Hypertarget{classScreen_ae85aabf31c89cb36d1d570b17a7ee233}\label{classScreen_ae85aabf31c89cb36d1d570b17a7ee233} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries label\+Port} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Label that indicates the serial port. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a4237d2ce33e49cdd0ca30143f39dfe24}\label{classScreen_a4237d2ce33e49cdd0ca30143f39dfe24} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries box\+Port} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a14e852d11aceb502235d1db972452bf2}\label{classScreen_a14e852d11aceb502235d1db972452bf2} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries drop\+Port} \{nullptr\}
+\item 
+\Hypertarget{classScreen_a564339e56427314983489945cb4f7f1b}\label{classScreen_a564339e56427314983489945cb4f7f1b} 
+Gtk\+Widget \texorpdfstring{$\ast$}{*} {\bfseries button\+Port} \{nullptr\}
+\begin{DoxyCompactList}\small\item\em Open or close the serial port. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_ac13f9bc46eb94ed0ba15e7e4c08de218}\label{classScreen_ac13f9bc46eb94ed0ba15e7e4c08de218} 
+\mbox{\hyperlink{structGridVoltage}{Grid\+Voltage}} {\bfseries grid\+Voltage}
+\begin{DoxyCompactList}\small\item\em Grid voltage. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a56907379d8cd1fb1cda80db031df2f11}\label{classScreen_a56907379d8cd1fb1cda80db031df2f11} 
+\mbox{\hyperlink{structGridSpectrum}{Grid\+Spectrum}} {\bfseries grid\+Spectrum}
+\begin{DoxyCompactList}\small\item\em Grid Spectrum. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a7550244f7e326648ef5695830ff3ab16}\label{classScreen_a7550244f7e326648ef5695830ff3ab16} 
+GLuint {\bfseries id\+Shader\+Volt} \{0\}
+\item 
+\Hypertarget{classScreen_afbc06afca082d7f0dddb869e5ade5c7c}\label{classScreen_afbc06afca082d7f0dddb869e5ade5c7c} 
+GLuint {\bfseries id\+Shader\+Spec} \{0\}
+\begin{DoxyCompactList}\small\item\em Id shaders . \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a32106d24338c275364c1228db47da6ed}\label{classScreen_a32106d24338c275364c1228db47da6ed} 
+bool {\bfseries state\+Start\+Stop\+\_\+} \{false\}
+\begin{DoxyCompactList}\small\item\em State that indicates when to update the signals or not. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a6e70369f92e09dd1adfcb524d7639230}\label{classScreen_a6e70369f92e09dd1adfcb524d7639230} 
+bool {\bfseries state\+Signal1\+\_\+} \{false\}
+\item 
+\Hypertarget{classScreen_ad095748beb9e73bf0652e4838e857156}\label{classScreen_ad095748beb9e73bf0652e4838e857156} 
+bool {\bfseries state\+Signal2\+\_\+} \{false\}
+\item 
+\Hypertarget{classScreen_ac660b8494e05704533702c27fa7681f4}\label{classScreen_ac660b8494e05704533702c27fa7681f4} 
+bool {\bfseries state\+Signal3\+\_\+} \{false\}
+\item 
+\Hypertarget{classScreen_a3b44703a7ef4fb9c8bb26d905ebd7971}\label{classScreen_a3b44703a7ef4fb9c8bb26d905ebd7971} 
+bool {\bfseries state\+Signal4\+\_\+} \{false\}
+\begin{DoxyCompactList}\small\item\em State that indicates when the signals should or should not be displayed. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a2375bb27875ce41fedc93c3df0c67b57}\label{classScreen_a2375bb27875ce41fedc93c3df0c67b57} 
+float {\bfseries volt\+Div\+\_\+} \{1.\+0f\}
+\begin{DoxyCompactList}\small\item\em current value needed to calculate the sampling rate. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_a088f362c6a5b175137d16ea4a69b7f99}\label{classScreen_a088f362c6a5b175137d16ea4a69b7f99} 
+float {\bfseries offset1\+\_\+} \{0.\+0f\}
+\item 
+\Hypertarget{classScreen_a1dbb32393c5456f2d743934aa5f5e3eb}\label{classScreen_a1dbb32393c5456f2d743934aa5f5e3eb} 
+float {\bfseries offset2\+\_\+} \{0.\+0f\}
+\item 
+\Hypertarget{classScreen_a7eeef6f8714fe5422c3c3a62bbe41681}\label{classScreen_a7eeef6f8714fe5422c3c3a62bbe41681} 
+float {\bfseries offset3\+\_\+} \{0.\+0f\}
+\item 
+\Hypertarget{classScreen_a5cf336d7bbf9824a868b8b2271a0ba5c}\label{classScreen_a5cf336d7bbf9824a868b8b2271a0ba5c} 
+float {\bfseries offset4\+\_\+} \{0.\+0f\}
+\begin{DoxyCompactList}\small\item\em Voltage\textquotesingle{}s offsets. \end{DoxyCompactList}\item 
+\Hypertarget{classScreen_acc0acac4224e3c396b29bd52bf19a61d}\label{classScreen_acc0acac4224e3c396b29bd52bf19a61d} 
+unsigned int {\bfseries frequency\+\_\+} \{100\}
+\item 
+\Hypertarget{classScreen_afe7bada97f911e1cdf74beab775679eb}\label{classScreen_afe7bada97f911e1cdf74beab775679eb} 
+unsigned int {\bfseries multiplier\+\_\+} \{1\}
+\begin{DoxyCompactList}\small\item\em Frequency. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}\label{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72} 
+\index{Screen@{Screen}!Screen@{Screen}}
+\index{Screen@{Screen}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{Screen()}{Screen()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Screen\+::\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyNote}{Note}
+Constructor. 
+\end{DoxyNote}
+\Hypertarget{classScreen_a4243bc17596af96415b09ac48205676d}\label{classScreen_a4243bc17596af96415b09ac48205676d} 
+\index{Screen@{Screen}!````~Screen@{\texorpdfstring{$\sim$}{\string~}Screen}}
+\index{````~Screen@{\texorpdfstring{$\sim$}{\string~}Screen}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Screen()}{\string~Screen()}}
+{\footnotesize\ttfamily Screen\+::\texorpdfstring{$\sim$}{\string~}\+Screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyNote}{Note}
+Destructor. 
+\end{DoxyNote}
+\Hypertarget{classScreen_a05bc973241a238f8af89e89e76b5f048}\label{classScreen_a05bc973241a238f8af89e89e76b5f048} 
+\index{Screen@{Screen}!Screen@{Screen}}
+\index{Screen@{Screen}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{Screen()}{Screen()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Screen\+::\+Screen (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classScreen}{Screen}} \&}]{screen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Copy constructor disabled. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classScreen_ae07f13603ad28cec596fd418f3a78b92}\label{classScreen_ae07f13603ad28cec596fd418f3a78b92} 
+\index{Screen@{Screen}!createVAO@{createVAO}}
+\index{createVAO@{createVAO}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{createVAO()}{createVAO()}}
+{\footnotesize\ttfamily bool Screen\+::create\+VAO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&}]{signal\+Object }\end{DoxyParamCaption})}
+
+
+
+Creates the VAOs to the signals. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signal\+Object} & Array of the signal. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error. 
+\end{DoxyReturn}
+\Hypertarget{classScreen_a8c2e84a5caf2ad71918e4722aac9f5f5}\label{classScreen_a8c2e84a5caf2ad71918e4722aac9f5f5} 
+\index{Screen@{Screen}!deleteVAO@{deleteVAO}}
+\index{deleteVAO@{deleteVAO}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{deleteVAO()}{deleteVAO()}}
+{\footnotesize\ttfamily bool Screen\+::delete\+VAO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&}]{signal\+Object }\end{DoxyParamCaption})}
+
+
+
+Deletes the signal\textquotesingle{}s VAOs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signal\+Object} & Array of the signal. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error. 
+\end{DoxyReturn}
+\Hypertarget{classScreen_aaa172b986078126dcb2e8e6e5d968727}\label{classScreen_aaa172b986078126dcb2e8e6e5d968727} 
+\index{Screen@{Screen}!drawVAO@{drawVAO}}
+\index{drawVAO@{drawVAO}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{drawVAO()}{drawVAO()}}
+{\footnotesize\ttfamily bool Screen\+::draw\+VAO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&}]{signal\+Object }\end{DoxyParamCaption}) const}
+
+
+
+Draws the signal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em signal\+Object} & Array of the signal. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error. 
+\end{DoxyReturn}
+\Hypertarget{classScreen_afcdae092b2be9937782b10f7cd25b84d}\label{classScreen_afcdae092b2be9937782b10f7cd25b84d} 
+\index{Screen@{Screen}!operator=@{operator=}}
+\index{operator=@{operator=}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classScreen}{Screen}} \& Screen\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classScreen}{Screen}}}]{screen }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Operator assignment disabled. 
+\end{DoxyNote}
+\Hypertarget{classScreen_a450f492f5c4ebb5066d6e6d2a44f577e}\label{classScreen_a450f492f5c4ebb5066d6e6d2a44f577e} 
+\index{Screen@{Screen}!show@{show}}
+\index{show@{show}!Screen@{Screen}}
+\doxysubsubsection{\texorpdfstring{show()}{show()}}
+{\footnotesize\ttfamily int Screen\+::show (\begin{DoxyParamCaption}\item[{int \&}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Creates the graphics and shows. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Argument count. \\
+\hline
+{\em argv} & Argument vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/gui/\mbox{\hyperlink{screen_8hpp}{screen.\+hpp}}\end{DoxyCompactItemize}

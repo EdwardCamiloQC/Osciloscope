@@ -1,0 +1,37 @@
+\doxysection{signal\+Generator.\+hpp}
+\hypertarget{signalGenerator_8hpp_source}{}\label{signalGenerator_8hpp_source}\index{src/sys/peripherals/signalGenerator.hpp@{src/sys/peripherals/signalGenerator.hpp}}
+\mbox{\hyperlink{signalGenerator_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_SIGNAL\_GENERATOR\_HPP\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_SIGNAL\_GENERATOR\_HPP\_}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#include\ <\mbox{\hyperlink{capturer_8hpp}{sys/peripherals/capturer.hpp}}>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{comment}{//Forward\ declaration}}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVoltageSignal}{VoltageSignal}};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSignalGenerator}{SignalGenerator}}:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classCapturer}{Capturer}}\{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Attributes}}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ frequency\ \{1\};\ }
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Methods}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalGenerator_a5fc94adceb58edfd5e288da59acaf651}{SignalGenerator}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalGenerator_a8f7d652a5a0fbda3e1855262df8ee0fc}{SignalGenerator}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSignalGenerator}{SignalGenerator}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalGenerator}{SignalGenerator}}\&\ \mbox{\hyperlink{classSignalGenerator_af87b27242e5c555cd12b2c282d566f14}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSignalGenerator}{SignalGenerator}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalGenerator_a12d8beb0a96904ba4609c4afa469c00b}{\string~SignalGenerator}}();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSignalGenerator_a79e83aa7cb9d4271db58a8be751307c1}{readValues}}(\mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt1,\ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt2,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt3,\ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt4,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ nValues)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSignalGenerator_ac94019c860b401c2f6d988f6e26902aa}{setSampleFrequency}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ freq)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

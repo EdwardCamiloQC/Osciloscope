@@ -1,0 +1,24 @@
+\doxysection{capturer.\+hpp}
+\hypertarget{capturer_8hpp_source}{}\label{capturer_8hpp_source}\index{src/sys/peripherals/capturer.hpp@{src/sys/peripherals/capturer.hpp}}
+\mbox{\hyperlink{capturer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_CAPTURER\_H\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_CAPTURER\_H\_}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{comment}{//Forward\ declaration}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVoltageSignal}{VoltageSignal}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCapturer}{Capturer}}\{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14}{\string~Capturer}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3}{readValues}}(\mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt1,\ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt2,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt3,\ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ *volt4,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ nValues)\ =\ 0;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCapturer_abd8f055e8554d33421309ff5b4f81e26}{setSampleFrequency}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ freq)\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \};}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

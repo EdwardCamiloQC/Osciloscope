@@ -1,0 +1,86 @@
+\doxysection{Capturer Class Reference}
+\hypertarget{classCapturer}{}\label{classCapturer}\index{Capturer@{Capturer}}
+
+
+Inheritance diagram for Capturer\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{classCapturer__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14}{\texorpdfstring{$\sim$}{\string~}\+Capturer}} ()=default
+\item 
+virtual void \mbox{\hyperlink{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3}{read\+Values}} (\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt1, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt2, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt3, \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}volt4, unsigned int n\+Values)=0
+\begin{DoxyCompactList}\small\item\em Reads the values that it arrives. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classCapturer_abd8f055e8554d33421309ff5b4f81e26}{set\+Sample\+Frequency}} (unsigned int freq)=0
+\begin{DoxyCompactList}\small\item\em Sets the sampling rate to acquire the data for the external hardware. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14}\label{classCapturer_a9530cbcfbd801eebebc311e04fdf2f14} 
+\index{Capturer@{Capturer}!````~Capturer@{\texorpdfstring{$\sim$}{\string~}Capturer}}
+\index{````~Capturer@{\texorpdfstring{$\sim$}{\string~}Capturer}!Capturer@{Capturer}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Capturer()}{\string~Capturer()}}
+{\footnotesize\ttfamily virtual Capturer\+::\texorpdfstring{$\sim$}{\string~}\+Capturer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+\begin{DoxyNote}{Note}
+This is a virtual method (destructor). 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3}\label{classCapturer_a256236a6a4bc4a2dd9a88ce32c0cf6d3} 
+\index{Capturer@{Capturer}!readValues@{readValues}}
+\index{readValues@{readValues}!Capturer@{Capturer}}
+\doxysubsubsection{\texorpdfstring{readValues()}{readValues()}}
+{\footnotesize\ttfamily virtual void Capturer\+::read\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt1,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt2,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt3,  }\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \texorpdfstring{$\ast$}{*}}]{volt4,  }\item[{unsigned int}]{n\+Values }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Reads the values that it arrives. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em volt1} & Reference to the voltage one. \\
+\hline
+{\em volt2} & Reference to the voltage two. \\
+\hline
+{\em volt3} & Reference to the voltage three. \\
+\hline
+{\em volt4} & Reference to the voltage four. \\
+\hline
+{\em n\+Values} & Number of data to read. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classComSerial_a4f2d44204a3261adb298ed1d711309b4}{Com\+Serial}}, and \mbox{\hyperlink{classSignalGenerator_a79e83aa7cb9d4271db58a8be751307c1}{Signal\+Generator}}.
+
+\Hypertarget{classCapturer_abd8f055e8554d33421309ff5b4f81e26}\label{classCapturer_abd8f055e8554d33421309ff5b4f81e26} 
+\index{Capturer@{Capturer}!setSampleFrequency@{setSampleFrequency}}
+\index{setSampleFrequency@{setSampleFrequency}!Capturer@{Capturer}}
+\doxysubsubsection{\texorpdfstring{setSampleFrequency()}{setSampleFrequency()}}
+{\footnotesize\ttfamily virtual void Capturer\+::set\+Sample\+Frequency (\begin{DoxyParamCaption}\item[{unsigned int}]{freq }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Sets the sampling rate to acquire the data for the external hardware. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em freq} & Frequency. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \mbox{\hyperlink{classComSerial_a3a9ed0f9d862017e0c927bdc056dcc28}{Com\+Serial}}, and \mbox{\hyperlink{classSignalGenerator_ac94019c860b401c2f6d988f6e26902aa}{Signal\+Generator}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/peripherals/\mbox{\hyperlink{capturer_8hpp}{capturer.\+hpp}}\end{DoxyCompactItemize}

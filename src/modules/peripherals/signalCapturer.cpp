@@ -10,26 +10,21 @@
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-SignalCapturer::SignalCapturer(Capturer *theCapturer)
+SignalCapturer::SignalCapturer(){
+}
+
+SignalCapturer::SignalCapturer(Capturer *theCapturer = nullptr)
     :capturer(theCapturer){
 }
 
 SignalCapturer::~SignalCapturer(){
-    if(catcher.joinable()){
-        catcher.join();
-    }
 }
 
-void SignalCapturer::start(unsigned int nValues){
-    catcher = std::thread(&SignalCapturer::loopCatchVoltages, this, nValues);
+void SignalCapturer::set_timeDiv(double tDiv){
+    capturer->setSampleFrequency(static_cast<unsigned int>(tDiv));
 }
 
-void SignalCapturer::setTimeDiv(double tDiv){
-    timeDiv = tDiv;
-    capturer->setSampleFrequency(static_cast<unsigned int>(timeDiv));
-}
-
-void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
+void SignalCapturer::select_capturer(std::unique_ptr<Capturer> &&theCapturer){
     capturer = std::move(theCapturer);
 }
 
@@ -38,33 +33,10 @@ void SignalCapturer::selectCapturer(std::unique_ptr<Capturer> &&theCapturer){
 // PRIVATE METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-void SignalCapturer::loopCatchVoltages(unsigned int nValues){
-    Oscilloscope *osc = Oscilloscope::getInstance();
-    while(osc->stateOnOff_.load(std::memory_order_acquire)){
-        if(osc->stateStartStop_.load(std::memory_order_acquire)){
-            {
-                std::lock_guard<std::mutex> lock(osc->mutex_);
-                if(capturer){
-                    //shift the voltages
-                    osc->voltage1_.shiftVoltage(nValues);
-                    osc->voltage2_.shiftVoltage(nValues);
-                    osc->voltage3_.shiftVoltage(nValues);
-                    osc->voltage4_.shiftVoltage(nValues);
-                    capturer->readValues(&(osc->voltage1_),
-                                        &(osc->voltage2_),
-                                        &(osc->voltage3_),
-                                        &(osc->voltage4_),
-                                        nValues);
-                    osc->voltage1_.calculateSpectrum();
-                    osc->voltage2_.calculateSpectrum();
-                    osc->voltage3_.calculateSpectrum();
-                    osc->voltage4_.calculateSpectrum();
-                    osc->screen_.draw_signals();
-                }else{
-                std::cerr << "without concrete capturer" << std::endl;
-                }
-            }
-        }
-        std::this_thread::sleep_for(std::chrono::nanoseconds(static_cast<unsigned int>(8* timeDiv* 1000000* nValues/osc->voltage1_.length)));
+void SignalCapturer::catch_voltages(VoltageSignal* volt1, VoltageSignal* volt2, VoltageSignal* volt3, VoltageSignal* volt4, unsigned int nValues){
+    if(capturer){
+        capturer->readValues(volt1, volt2, volt3, volt4, nValues);
+    }else{
+        std::cerr << "without concrete capturer" << std::endl;
     }
 }

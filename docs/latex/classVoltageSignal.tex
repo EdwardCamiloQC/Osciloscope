@@ -1,0 +1,152 @@
+\doxysection{Voltage\+Signal Class Reference}
+\hypertarget{classVoltageSignal}{}\label{classVoltageSignal}\index{VoltageSignal@{VoltageSignal}}
+
+
+Inheritance diagram for Voltage\+Signal\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=163pt]{classVoltageSignal__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Voltage\+Signal\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{classVoltageSignal__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVoltageSignal_a9b928a0c3175165b2538c91b555719b8}{Voltage\+Signal}} (unsigned int len, SIGNAL\+\_\+\+COLOR color)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\Hypertarget{classVoltageSignal_abaa46b005f1186f606f972740c542b50}\label{classVoltageSignal_abaa46b005f1186f606f972740c542b50} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Voltage\+Signal} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classVoltageSignal_ab5df7ba69264e55a04af95b3b9672cbe}{Voltage\+Signal}} (const \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \&)=delete
+\item 
+\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \& \mbox{\hyperlink{classVoltageSignal_a2738658319ed93a2bac5d906095b7681}{operator=}} (\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \&)=delete
+\item 
+void \mbox{\hyperlink{classVoltageSignal_a758e9f42a818e7ba47b3f517e4244a24}{apply\+Offset}} (const float \&offset, const float \&voldiv)
+\begin{DoxyCompactList}\small\item\em Applies the offset to the voltage. \end{DoxyCompactList}\item 
+\Hypertarget{classVoltageSignal_a7207e04c87a40035d7ceead5d52c1cc2}\label{classVoltageSignal_a7207e04c87a40035d7ceead5d52c1cc2} 
+void {\bfseries calculate\+Spectrum} ()
+\begin{DoxyCompactList}\small\item\em Calculates the spectrum corresponding. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVoltageSignal_a0cf38702f5b1cc38b90f9d9bed999809}{shift\+Voltage}} (unsigned int n)
+\begin{DoxyCompactList}\small\item\em Shifts the voltage n positions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSignalObject}{Signal\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Signal\+Object} (unsigned int len, SIGNAL\+\_\+\+COLOR color)
+\item 
+{\bfseries Signal\+Object} (const \mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&)=delete
+\item 
+\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \& {\bfseries operator=} (\mbox{\hyperlink{classSignalObject}{Signal\+Object}} \&)=delete
+\item 
+void {\bfseries update\+Vertex} (const float \texorpdfstring{$\ast$}{*}signal, float offset, float volt\+Div)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVoltageSignal_a30c64f64a9e5b5581fe3d790b16d7bc5}\label{classVoltageSignal_a30c64f64a9e5b5581fe3d790b16d7bc5} 
+float \texorpdfstring{$\ast$}{*} {\bfseries voltage}
+\begin{DoxyCompactList}\small\item\em Voltage. The point to the signal. \end{DoxyCompactList}\item 
+\Hypertarget{classVoltageSignal_abbed1a4c7b1791946996df795e2ae418}\label{classVoltageSignal_abbed1a4c7b1791946996df795e2ae418} 
+\mbox{\hyperlink{classSpectrumSignal}{Spectrum\+Signal}} {\bfseries spectrum\+Signal}
+\begin{DoxyCompactList}\small\item\em Spectrum associated. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classSignalObject}{Signal\+Object}}}
+\begin{DoxyCompactItemize}
+\item 
+float \texorpdfstring{$\ast$}{*} {\bfseries abscissas}
+\item 
+float \texorpdfstring{$\ast$}{*} {\bfseries vertex}
+\item 
+float \texorpdfstring{$\ast$}{*} {\bfseries color\+Vertex}
+\item 
+GLuint {\bfseries vao}
+\item 
+GLuint {\bfseries vbo} \mbox{[}2\mbox{]}
+\item 
+unsigned int {\bfseries length}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVoltageSignal_a9b928a0c3175165b2538c91b555719b8}\label{classVoltageSignal_a9b928a0c3175165b2538c91b555719b8} 
+\index{VoltageSignal@{VoltageSignal}!VoltageSignal@{VoltageSignal}}
+\index{VoltageSignal@{VoltageSignal}!VoltageSignal@{VoltageSignal}}
+\doxysubsubsection{\texorpdfstring{VoltageSignal()}{VoltageSignal()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Voltage\+Signal\+::\+Voltage\+Signal (\begin{DoxyParamCaption}\item[{unsigned int}]{len,  }\item[{SIGNAL\+\_\+\+COLOR}]{color }\end{DoxyParamCaption})}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em len} & Length of the voltage signal data. \\
+\hline
+{\em color} & Color of the voltage signal data. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVoltageSignal_ab5df7ba69264e55a04af95b3b9672cbe}\label{classVoltageSignal_ab5df7ba69264e55a04af95b3b9672cbe} 
+\index{VoltageSignal@{VoltageSignal}!VoltageSignal@{VoltageSignal}}
+\index{VoltageSignal@{VoltageSignal}!VoltageSignal@{VoltageSignal}}
+\doxysubsubsection{\texorpdfstring{VoltageSignal()}{VoltageSignal()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Voltage\+Signal\+::\+Voltage\+Signal (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Copy constructor disabled. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVoltageSignal_a758e9f42a818e7ba47b3f517e4244a24}\label{classVoltageSignal_a758e9f42a818e7ba47b3f517e4244a24} 
+\index{VoltageSignal@{VoltageSignal}!applyOffset@{applyOffset}}
+\index{applyOffset@{applyOffset}!VoltageSignal@{VoltageSignal}}
+\doxysubsubsection{\texorpdfstring{applyOffset()}{applyOffset()}}
+{\footnotesize\ttfamily void Voltage\+Signal\+::apply\+Offset (\begin{DoxyParamCaption}\item[{const float \&}]{offset,  }\item[{const float \&}]{voldiv }\end{DoxyParamCaption})}
+
+
+
+Applies the offset to the voltage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em offset} & Offset value. \\
+\hline
+{\em voldiv} & volt/div. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVoltageSignal_a2738658319ed93a2bac5d906095b7681}\label{classVoltageSignal_a2738658319ed93a2bac5d906095b7681} 
+\index{VoltageSignal@{VoltageSignal}!operator=@{operator=}}
+\index{operator=@{operator=}!VoltageSignal@{VoltageSignal}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \& Voltage\+Signal\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Operator assignment disabled. 
+\end{DoxyNote}
+\Hypertarget{classVoltageSignal_a0cf38702f5b1cc38b90f9d9bed999809}\label{classVoltageSignal_a0cf38702f5b1cc38b90f9d9bed999809} 
+\index{VoltageSignal@{VoltageSignal}!shiftVoltage@{shiftVoltage}}
+\index{shiftVoltage@{shiftVoltage}!VoltageSignal@{VoltageSignal}}
+\doxysubsubsection{\texorpdfstring{shiftVoltage()}{shiftVoltage()}}
+{\footnotesize\ttfamily void Voltage\+Signal\+::shift\+Voltage (\begin{DoxyParamCaption}\item[{unsigned int}]{n }\end{DoxyParamCaption})}
+
+
+
+Shifts the voltage n positions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Positions to shift. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/libraries/signal/\mbox{\hyperlink{voltageSignal_8hpp}{voltage\+Signal.\+hpp}}\end{DoxyCompactItemize}

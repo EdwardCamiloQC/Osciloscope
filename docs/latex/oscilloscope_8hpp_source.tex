@@ -1,0 +1,47 @@
+\doxysection{oscilloscope.\+hpp}
+\hypertarget{oscilloscope_8hpp_source}{}\label{oscilloscope_8hpp_source}\index{src/sys/oscilloscope.hpp@{src/sys/oscilloscope.hpp}}
+\mbox{\hyperlink{oscilloscope_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ \_OSCILLOSCOPE\_H\_}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_OSCILLOSCOPE\_H\_}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#include\ <mutex>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ \#include\ <\mbox{\hyperlink{voltageSignal_8hpp}{libraries/signal/voltageSignal.hpp}}>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \#include\ <\mbox{\hyperlink{screen_8hpp}{sys/gui/screen.hpp}}>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\ \ \ \ \#include\ <\mbox{\hyperlink{signalCapturer_8hpp}{sys/peripherals/signalCapturer.hpp}}>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classOscilloscope}{Oscilloscope}}\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Attributes}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classOscilloscope}{Oscilloscope}}*\ instance\_;\ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::mutex\ mutex\_;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classOscilloscope_ab4d9443121f9d4cca4f27a66593297f0}{stateOnOff\_}};\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ \mbox{\hyperlink{classOscilloscope_adae41ce18313cc8c94f40c69a35ec60e}{voltage1}};\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ \mbox{\hyperlink{classOscilloscope_af3d263441e70c5aa061d50efd5f1b037}{voltage2}};\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ \mbox{\hyperlink{classOscilloscope_add4e04211cf282efff9e85fa487740ed}{voltage3}};\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVoltageSignal}{VoltageSignal}}\ \mbox{\hyperlink{classOscilloscope_ae096e69d8fb61e37a33a7d7b9f1c019c}{voltage4}};\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classScreen}{Screen}}\ \mbox{\hyperlink{classOscilloscope_a70e736d0459611252517dc0fd753cb77}{screen}};\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalCapturer}{SignalCapturer}}\ \mbox{\hyperlink{classOscilloscope_aa2b85fd792bf84e6307e4f8317dd988f}{signalCapturer}};\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classOscilloscope}{Oscilloscope}}();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classOscilloscope}{\string~Oscilloscope}}();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classOscilloscope_a92f3de5d6f2e47a695216532a914af89}{Oscilloscope}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classOscilloscope}{Oscilloscope}}\&\ oscilloscope)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classOscilloscope}{Oscilloscope}}\&\ \mbox{\hyperlink{classOscilloscope_ad04a2cd3fe0cc0cea914c09877528786}{operator=}}(\mbox{\hyperlink{classOscilloscope}{Oscilloscope}}\ oscilloscope)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classOscilloscope}{Oscilloscope}}*\ \mbox{\hyperlink{classOscilloscope_a821123ce5ce4507653fbead26b3ae5b1}{getInstance}}();}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classOscilloscope_a0256a2115f11a8511e515719748fc82e}{destroyInstance}}();}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classOscilloscope_ac1709701844c881655043ea34b449112}{run}}(\textcolor{keywordtype}{int}\&\ argc,\ \textcolor{keywordtype}{char}**\&\ argv);}
+\DoxyCodeLine{00067\ \ \ \ \ \};}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

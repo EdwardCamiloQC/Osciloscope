@@ -1,0 +1,111 @@
+\doxysection{Grid\+Voltage Struct Reference}
+\hypertarget{structGridVoltage}{}\label{structGridVoltage}\index{GridVoltage@{GridVoltage}}
+
+
+The structure that contains the grid shape where the voltage signals will be printed.  
+
+
+
+
+{\ttfamily \#include $<$screen.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structGridVoltage_ab0e2dc836e7611cfb01fcac65d51122b}\label{structGridVoltage_ab0e2dc836e7611cfb01fcac65d51122b} 
+void {\bfseries create\+Grid} ()
+\begin{DoxyCompactList}\small\item\em Creates the signals grid. \end{DoxyCompactList}\item 
+\Hypertarget{structGridVoltage_aa88763b56c2275fbaaefc08fa1ffc6a0}\label{structGridVoltage_aa88763b56c2275fbaaefc08fa1ffc6a0} 
+void {\bfseries delete\+Grid} ()
+\begin{DoxyCompactList}\small\item\em Deletes the signals grid. \end{DoxyCompactList}\item 
+\Hypertarget{structGridVoltage_a023dd504c06152ec141bbc2e623a8678}\label{structGridVoltage_a023dd504c06152ec141bbc2e623a8678} 
+void {\bfseries draw} ()
+\begin{DoxyCompactList}\small\item\em Draws the signals grid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structGridVoltage_a7cda9a7680ca57f4f559df1f603c7fc6}\label{structGridVoltage_a7cda9a7680ca57f4f559df1f603c7fc6} 
+unsigned int {\bfseries vao}
+\item 
+\Hypertarget{structGridVoltage_a48671f2c644347a923af81fa13418e19}\label{structGridVoltage_a48671f2c644347a923af81fa13418e19} 
+unsigned int {\bfseries vbo} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em Vertex Array Object and Vertex Buffers Objects. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{structGridVoltage_a6c9dc962fdf229e9ec4b5775db990400}{vertex}} \mbox{[}56\mbox{]}
+\begin{DoxyCompactList}\small\item\em Vertices belonging to the signals grid. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{structGridVoltage_a30fe588f504c96b9a2de91aac452cc2c}{color}} \mbox{[}84\mbox{]}
+\begin{DoxyCompactList}\small\item\em Grid color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The structure that contains the grid shape where the voltage signals will be printed. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structGridVoltage_a30fe588f504c96b9a2de91aac452cc2c}\label{structGridVoltage_a30fe588f504c96b9a2de91aac452cc2c} 
+\index{GridVoltage@{GridVoltage}!color@{color}}
+\index{color@{color}!GridVoltage@{GridVoltage}}
+\doxysubsubsection{\texorpdfstring{color}{color}}
+{\footnotesize\ttfamily float Grid\+Voltage\+::color\mbox{[}84\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Grid color. 
+
+\Hypertarget{structGridVoltage_a6c9dc962fdf229e9ec4b5775db990400}\label{structGridVoltage_a6c9dc962fdf229e9ec4b5775db990400} 
+\index{GridVoltage@{GridVoltage}!vertex@{vertex}}
+\index{vertex@{vertex}!GridVoltage@{GridVoltage}}
+\doxysubsubsection{\texorpdfstring{vertex}{vertex}}
+{\footnotesize\ttfamily float Grid\+Voltage\+::vertex\mbox{[}56\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.25f,\ +1.0f,\ -\/0.25f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.50f,\ +1.0f,\ -\/0.50f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/0.75f,\ +1.0f,\ -\/0.75f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.00f,\ +1.0f,\ +0.00f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.25f,\ +1.0f,\ +0.25f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.50f,\ +1.0f,\ +0.50f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ +0.75f,\ +1.0f,\ +0.75f,\ -\/1.0f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.25f,\ +1.0f,\ -\/0.25f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.50f,\ +1.0f,\ -\/0.50f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.75f,\ +1.0f,\ -\/0.75f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.00f,\ +1.0f,\ +0.00f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.25f,\ +1.0f,\ +0.25f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.50f,\ +1.0f,\ +0.50f,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.75f,\ +1.0f,\ +0.75f}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Vertices belonging to the signals grid. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/gui/\mbox{\hyperlink{screen_8hpp}{screen.\+hpp}}\end{DoxyCompactItemize}

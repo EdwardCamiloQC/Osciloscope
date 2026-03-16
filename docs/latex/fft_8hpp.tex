@@ -1,0 +1,249 @@
+\doxysection{src/libraries/signal/fft.hpp File Reference}
+\hypertarget{fft_8hpp}{}\label{fft_8hpp}\index{src/libraries/signal/fft.hpp@{src/libraries/signal/fft.hpp}}
+{\ttfamily \#include $<$complex$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for fft.\+hpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{fft_8hpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void \mbox{\hyperlink{fft_8hpp_a7d6c2e7478421459c81b4b6ff8ed2477}{odd\+Values}} (const T1 \texorpdfstring{$\ast$}{*}values, unsigned int len, T2 \texorpdfstring{$\ast$}{*}odd)
+\begin{DoxyCompactList}\small\item\em Separates the odd data in a array. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void \mbox{\hyperlink{fft_8hpp_ad2b4c0338beafa5179c64cfef2a9af73}{even\+Values}} (const T1 \texorpdfstring{$\ast$}{*}values, unsigned int len, T2 \texorpdfstring{$\ast$}{*}even)
+\begin{DoxyCompactList}\small\item\em Separates the even data in a array. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void \mbox{\hyperlink{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}{calculate\+FFT}} (const T1 \texorpdfstring{$\ast$}{*}signal, unsigned int length, std\+::complex$<$ T2 $>$ \texorpdfstring{$\ast$}{*}transform)
+\begin{DoxyCompactList}\small\item\em Calculates the fast fourier transform. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{fft_8hpp_a2cf5357288abd4a347e18ba925883a20}{calculate\+Module}} (const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}transform, unsigned int n, T \texorpdfstring{$\ast$}{*}module)
+\begin{DoxyCompactList}\small\item\em Calculates the module of the transform. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{fft_8hpp_add4a91385ea10838b66342413c6e0244}{calculate\+Argument}} (const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}transform, unsigned int n, T \texorpdfstring{$\ast$}{*}argument)
+\begin{DoxyCompactList}\small\item\em Calculates the argument of the transform. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{fft_8hpp_a10a8f66011de8fb5f515aa6da4029c9a}{normalize\+Signal}} (T \texorpdfstring{$\ast$}{*}transform, unsigned int n)
+\begin{DoxyCompactList}\small\item\em This function normalizes the signal. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T1 , typename T2 $>$ }\\void \mbox{\hyperlink{fft_8hpp_a3a2ff5430d6a20b49735450704687747}{fft}} (const T1 \texorpdfstring{$\ast$}{*}signal, unsigned int n, T2 \texorpdfstring{$\ast$}{*}transform, bool normalize)
+\begin{DoxyCompactList}\small\item\em Algorithm fft. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{fft_8hpp_abd338a94b1933824694978cdf286d326}{see\+Transform}} (const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}transform, unsigned int n)
+\begin{DoxyCompactList}\small\item\em Shows the transform. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Edward Camilo 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+v1.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+enero 2026 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{fft_8hpp_add4a91385ea10838b66342413c6e0244}\label{fft_8hpp_add4a91385ea10838b66342413c6e0244} 
+\index{fft.hpp@{fft.hpp}!calculateArgument@{calculateArgument}}
+\index{calculateArgument@{calculateArgument}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{calculateArgument()}{calculateArgument()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void calculate\+Argument (\begin{DoxyParamCaption}\item[{const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}}]{transform,  }\item[{unsigned int}]{n,  }\item[{T \texorpdfstring{$\ast$}{*}}]{argument }\end{DoxyParamCaption})}
+
+
+
+Calculates the argument of the transform. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em trasnform} & The fourier trasnform. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Data length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em argument} & The array where the result will be store. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}\label{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f} 
+\index{fft.hpp@{fft.hpp}!calculateFFT@{calculateFFT}}
+\index{calculateFFT@{calculateFFT}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{calculateFFT()}{calculateFFT()}}
+{\footnotesize\ttfamily template$<$typename T1 , typename T2 $>$ \\
+void calculate\+FFT (\begin{DoxyParamCaption}\item[{const T1 \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{unsigned int}]{length,  }\item[{std\+::complex$<$ T2 $>$ \texorpdfstring{$\ast$}{*}}]{transform }\end{DoxyParamCaption})}
+
+
+
+Calculates the fast fourier transform. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em signal} & Signal to evaluate. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em length} & Signal length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em transform} & Signal where collect the result. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{fft_8hpp_a2cf5357288abd4a347e18ba925883a20}\label{fft_8hpp_a2cf5357288abd4a347e18ba925883a20} 
+\index{fft.hpp@{fft.hpp}!calculateModule@{calculateModule}}
+\index{calculateModule@{calculateModule}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{calculateModule()}{calculateModule()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void calculate\+Module (\begin{DoxyParamCaption}\item[{const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}}]{transform,  }\item[{unsigned int}]{n,  }\item[{T \texorpdfstring{$\ast$}{*}}]{module }\end{DoxyParamCaption})}
+
+
+
+Calculates the module of the transform. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em transform} & The fourier transform. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Data length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em module} & Module calculated. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{fft_8hpp_ad2b4c0338beafa5179c64cfef2a9af73}\label{fft_8hpp_ad2b4c0338beafa5179c64cfef2a9af73} 
+\index{fft.hpp@{fft.hpp}!evenValues@{evenValues}}
+\index{evenValues@{evenValues}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{evenValues()}{evenValues()}}
+{\footnotesize\ttfamily template$<$typename T1 , typename T2 $>$ \\
+void even\+Values (\begin{DoxyParamCaption}\item[{const T1 \texorpdfstring{$\ast$}{*}}]{values,  }\item[{unsigned int}]{len,  }\item[{T2 \texorpdfstring{$\ast$}{*}}]{even }\end{DoxyParamCaption})}
+
+
+
+Separates the even data in a array. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em values} & Values to analyze. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em len} & Data T1 length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em even} & Array where stores the even data. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{fft_8hpp_a3a2ff5430d6a20b49735450704687747}\label{fft_8hpp_a3a2ff5430d6a20b49735450704687747} 
+\index{fft.hpp@{fft.hpp}!fft@{fft}}
+\index{fft@{fft}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{fft()}{fft()}}
+{\footnotesize\ttfamily template$<$typename T1 , typename T2 $>$ \\
+void fft (\begin{DoxyParamCaption}\item[{const T1 \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{unsigned int}]{n,  }\item[{T2 \texorpdfstring{$\ast$}{*}}]{transform,  }\item[{bool}]{normalize }\end{DoxyParamCaption})}
+
+
+
+Algorithm fft. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em signal} & Signal to transform. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Data length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em trasnform} & Array to the transform. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em normalize} & 1 yes, 0 no. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fft_8hpp_a10a8f66011de8fb5f515aa6da4029c9a}\label{fft_8hpp_a10a8f66011de8fb5f515aa6da4029c9a} 
+\index{fft.hpp@{fft.hpp}!normalizeSignal@{normalizeSignal}}
+\index{normalizeSignal@{normalizeSignal}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{normalizeSignal()}{normalizeSignal()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void normalize\+Signal (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{transform,  }\item[{unsigned int}]{n }\end{DoxyParamCaption})}
+
+
+
+This function normalizes the signal. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em tansform} & Transform to normalize. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Data length. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{fft_8hpp_a7d6c2e7478421459c81b4b6ff8ed2477}\label{fft_8hpp_a7d6c2e7478421459c81b4b6ff8ed2477} 
+\index{fft.hpp@{fft.hpp}!oddValues@{oddValues}}
+\index{oddValues@{oddValues}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{oddValues()}{oddValues()}}
+{\footnotesize\ttfamily template$<$typename T1 , typename T2 $>$ \\
+void odd\+Values (\begin{DoxyParamCaption}\item[{const T1 \texorpdfstring{$\ast$}{*}}]{values,  }\item[{unsigned int}]{len,  }\item[{T2 \texorpdfstring{$\ast$}{*}}]{odd }\end{DoxyParamCaption})}
+
+
+
+Separates the odd data in a array. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em values} & Values to analyze. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em len} & Data T1 length. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em odd} & Array where stores the odd data. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{fft_8hpp_abd338a94b1933824694978cdf286d326}\label{fft_8hpp_abd338a94b1933824694978cdf286d326} 
+\index{fft.hpp@{fft.hpp}!seeTransform@{seeTransform}}
+\index{seeTransform@{seeTransform}!fft.hpp@{fft.hpp}}
+\doxysubsubsection{\texorpdfstring{seeTransform()}{seeTransform()}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void see\+Transform (\begin{DoxyParamCaption}\item[{const std\+::complex$<$ T $>$ \texorpdfstring{$\ast$}{*}}]{transform,  }\item[{unsigned int}]{n }\end{DoxyParamCaption})}
+
+
+
+Shows the transform. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em transform} & The transform. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em n} & Data length. \\
+\hline
+\end{DoxyParams}

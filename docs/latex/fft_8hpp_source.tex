@@ -1,0 +1,112 @@
+\doxysection{fft.\+hpp}
+\hypertarget{fft_8hpp_source}{}\label{fft_8hpp_source}\index{src/libraries/signal/fft.hpp@{src/libraries/signal/fft.hpp}}
+\mbox{\hyperlink{fft_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ \_FFT\_H\_}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_FFT\_H\_}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ \ \ \#include\ <complex>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#include\ <iostream>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ \#include\ <stdio.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_a7d6c2e7478421459c81b4b6ff8ed2477}{oddValues}}(\textcolor{keyword}{const}\ T1*\ values,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ len,\ T2*\ odd)\{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!(len\%2))\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i=0;\ i<(len/2);\ i++)\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *odd\ =\ *values;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(i!=(len/2-\/1))\{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values+=2;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ odd++;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values-\/=(i*2);}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ odd-\/=i;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_ad2b4c0338beafa5179c64cfef2a9af73}{evenValues}}(\textcolor{keyword}{const}\ T1*\ values,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ len,\ T2*\ even)\{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!(len\%2))\{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ values++;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i=0;\ i<(len/2);\ i++)\{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *even\ =\ *values;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(i!=(len/2-\/1))\{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values+=2;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ even++;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ values-\/=(i*2+1);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ even-\/=i;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}{calculateFFT}}(\textcolor{keyword}{const}\ T1*\ signal,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ length,\ std::complex<T2>*\ transform)\{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(length>1)\{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ std::complex<float>\ par[int(length/2)],\ impar[int(length/2)];}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ std::complex<float>\ oddTransform[int(length/2)],\ evenTransform[int(length/2)];}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_a7d6c2e7478421459c81b4b6ff8ed2477}{oddValues}}(signal,\ length,\ par);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_ad2b4c0338beafa5179c64cfef2a9af73}{evenValues}}(signal,\ length,\ impar);}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}{calculateFFT}}(par,\ \textcolor{keyword}{sizeof}(par)/\textcolor{keyword}{sizeof}(std::complex<float>),\ oddTransform);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}{calculateFFT}}(impar,\ \textcolor{keyword}{sizeof}(impar)/\textcolor{keyword}{sizeof}(std::complex<float>),\ evenTransform);}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ k=0;\ k<length;\ k++)\{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(k<length/2)\{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform[k]\ =\ oddTransform[k]\ +\ evenTransform[k]\ *\ std::polar<float>(1.0,-\/2.0*M\_PI*k/length);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform[k+length/2]\ =\ oddTransform[k]\ -\/\ evenTransform[k]\ *\ std::polar<float>(1.0,-\/2.0*M\_PI*k/length);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{if}(length==1)\{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ *transform\ =\ *signal;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_a2cf5357288abd4a347e18ba925883a20}{calculateModule}}(\textcolor{keyword}{const}\ std::complex<T>*\ transform,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n,\ T*\ module)\{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ k=0;\ k<n;\ k++)\{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{module}[k]\ =\ std::abs(transform[k]);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_add4a91385ea10838b66342413c6e0244}{calculateArgument}}(\textcolor{keyword}{const}\ std::complex<T>*\ transform,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n,\ T*\ argument)\{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ k=0;\ k<n;\ k++)\{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ argument[k]\ =\ std::arg(transform[k]);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_a10a8f66011de8fb5f515aa6da4029c9a}{normalizeSignal}}(T\ *transform,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n)\{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ i++)\{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(std::abs(transform[i])\ !=\ 0.0)\{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ transform[i]\ =\ transform[i]/std::abs(transform[i]);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T1,\ \textcolor{keyword}{typename}\ T2>}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_a3a2ff5430d6a20b49735450704687747}{fft}}(\textcolor{keyword}{const}\ T1*\ signal,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n,\ T2*\ transform,\ \textcolor{keywordtype}{bool}\ normalize)\{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ log2n\ =\ log(n)/log(2);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ nInt\ =\ log2n\ -\/\ floor(log2n);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(nInt==0.0)\{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_a7cbb98f65334d755762a34b09e1d417f}{calculateFFT}}(signal,\ n,\ transform);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(normalize)\{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{fft_8hpp_a10a8f66011de8fb5f515aa6da4029c9a}{normalizeSignal}}(transform,\ n);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}La\ longitud\ debe\ ser\ 2\string^n\(\backslash\)n"{}};}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00136\ \ \ \ \ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{fft_8hpp_abd338a94b1933824694978cdf286d326}{seeTransform}}(\textcolor{keyword}{const}\ std::complex<T>*\ transform,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ n)\{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ k=0;\ k<n;\ k++)\{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ transform[k];}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

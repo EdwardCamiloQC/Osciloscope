@@ -1,0 +1,39 @@
+\doxysection{signal\+Object.\+hpp}
+\hypertarget{signalObject_8hpp_source}{}\label{signalObject_8hpp_source}\index{src/libraries/signal/signalObject.hpp@{src/libraries/signal/signalObject.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_SIGNAL\_OBJECT\_H\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_SIGNAL\_OBJECT\_H\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\ \ \ \ \#include\ <epoxy/gl.h>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keyword}{enum\ class}\ SIGNAL\_COLOR\{}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ RED,}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ GREEN,}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ BLUE,}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ YELLOW,}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ ORANGE}
+\DoxyCodeLine{00012\ \ \ \ \ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSignalObject}{SignalObject}}\{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Methods}}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalObject}{SignalObject}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ len,\ SIGNAL\_COLOR\ color);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalObject}{SignalObject}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSignalObject}{SignalObject}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalObject}{SignalObject}}\&\ operator=(\mbox{\hyperlink{classSignalObject}{SignalObject}}\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSignalObject}{\string~SignalObject}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ updateVertex(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}*\ signal,\ \textcolor{keywordtype}{float}\ offset,\ \textcolor{keywordtype}{float}\ voltDiv);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ organizeAbscissas();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ assignColor(SIGNAL\_COLOR);}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Attributes}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ *abscissas;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ *vertex;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ *colorVertex;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ GLuint\ vao,\ vbo[2];}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ length;}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -14,6 +14,7 @@
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //==================================================
     class Capturer;
+    class VoltageSignal;
 
     //==================================================
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,6 +31,10 @@
         //~~~~~~~~~~
         //==========
         public:
+            /**
+             */
+            SignalCapturer();
+            
             /** \brief Relates the capturer.
                 \param theCapturer: Agregation with the capturer.
              */
@@ -39,25 +44,20 @@
              */
             ~SignalCapturer();
 
-            /** \brief Data capture begins.
-                \param nValues: Amount of data points that the signal must shift.
-             */
-            void start(unsigned int nValues);
-
             /** \brief Sends the sample rate.
                 \param valueFreq: value of the frequency without the multiplier.
              */
-            void setTimeDiv(double tDiv);
+            void set_timeDiv(double tDiv);
 
             /** \brief Selects between the capturers.
                 \param theCapturer: The capturer to use.
              */
-            void selectCapturer(std::unique_ptr<Capturer> &&capturer);
-        private:
+            void select_capturer(std::unique_ptr<Capturer> &&capturer);
+            
             /** \brief Capture loop.
                 \param nValues: Number of data points to capture.
              */
-            void loopCatchVoltages(unsigned int nValues);
+            void catch_voltages(VoltageSignal* volt1, VoltageSignal* volt2, VoltageSignal* volt3, VoltageSignal* volt4, unsigned int nValues);
 
         //==========
         //~~~~~~~~~~
@@ -65,8 +65,6 @@
         //~~~~~~~~~~
         //==========
         public:
-            std::thread catcher; ///< Thread that catchs the data.
             std::unique_ptr<Capturer> capturer; ///< Instance to the especific capturer.
-            double timeDiv {1.0};
     };
 #endif

@@ -1,0 +1,127 @@
+\doxysection{Oscilloscope Class Reference}
+\hypertarget{classOscilloscope}{}\label{classOscilloscope}\index{Oscilloscope@{Oscilloscope}}
+
+
+The \doxylink{classOscilloscope}{Oscilloscope} class displays four signals that arrive from the serial port. So there, are only one instance of this class.  
+
+
+
+
+{\ttfamily \#include $<$oscilloscope.\+hpp$>$}
+
+
+
+Collaboration diagram for Oscilloscope\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classOscilloscope__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classOscilloscope_a92f3de5d6f2e47a695216532a914af89}{Oscilloscope}} (const \mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \&oscilloscope)=delete
+\item 
+\mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \& \mbox{\hyperlink{classOscilloscope_ad04a2cd3fe0cc0cea914c09877528786}{operator=}} (\mbox{\hyperlink{classOscilloscope}{Oscilloscope}} oscilloscope)=delete
+\item 
+int \mbox{\hyperlink{classOscilloscope_ac1709701844c881655043ea34b449112}{run}} (int \&argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\&argv)
+\begin{DoxyCompactList}\small\item\em Runs the program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classOscilloscope_a821123ce5ce4507653fbead26b3ae5b1}{get\+Instance}} ()
+\begin{DoxyCompactList}\small\item\em Gets the instance. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_a0256a2115f11a8511e515719748fc82e}\label{classOscilloscope_a0256a2115f11a8511e515719748fc82e} 
+static void {\bfseries destroy\+Instance} ()
+\begin{DoxyCompactList}\small\item\em Destroys the instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classOscilloscope_ab4d9443121f9d4cca4f27a66593297f0}\label{classOscilloscope_ab4d9443121f9d4cca4f27a66593297f0} 
+bool {\bfseries state\+On\+Off\+\_\+}
+\begin{DoxyCompactList}\small\item\em State that indicates whether the application is running. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_adae41ce18313cc8c94f40c69a35ec60e}\label{classOscilloscope_adae41ce18313cc8c94f40c69a35ec60e} 
+\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} {\bfseries voltage1}
+\begin{DoxyCompactList}\small\item\em Voltage one. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_af3d263441e70c5aa061d50efd5f1b037}\label{classOscilloscope_af3d263441e70c5aa061d50efd5f1b037} 
+\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} {\bfseries voltage2}
+\begin{DoxyCompactList}\small\item\em Voltage two. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_add4e04211cf282efff9e85fa487740ed}\label{classOscilloscope_add4e04211cf282efff9e85fa487740ed} 
+\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} {\bfseries voltage3}
+\begin{DoxyCompactList}\small\item\em Voltage three. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_ae096e69d8fb61e37a33a7d7b9f1c019c}\label{classOscilloscope_ae096e69d8fb61e37a33a7d7b9f1c019c} 
+\mbox{\hyperlink{classVoltageSignal}{Voltage\+Signal}} {\bfseries voltage4}
+\begin{DoxyCompactList}\small\item\em Voltage four. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_a70e736d0459611252517dc0fd753cb77}\label{classOscilloscope_a70e736d0459611252517dc0fd753cb77} 
+\mbox{\hyperlink{classScreen}{Screen}} {\bfseries screen}
+\begin{DoxyCompactList}\small\item\em \doxylink{classScreen}{Screen} where shows the signals and configures some parameters. \end{DoxyCompactList}\item 
+\Hypertarget{classOscilloscope_aa2b85fd792bf84e6307e4f8317dd988f}\label{classOscilloscope_aa2b85fd792bf84e6307e4f8317dd988f} 
+\mbox{\hyperlink{classSignalCapturer}{Signal\+Capturer}} {\bfseries signal\+Capturer}
+\begin{DoxyCompactList}\small\item\em This is the capturer that stores the data signals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \doxylink{classOscilloscope}{Oscilloscope} class displays four signals that arrive from the serial port. So there, are only one instance of this class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classOscilloscope_a92f3de5d6f2e47a695216532a914af89}\label{classOscilloscope_a92f3de5d6f2e47a695216532a914af89} 
+\index{Oscilloscope@{Oscilloscope}!Oscilloscope@{Oscilloscope}}
+\index{Oscilloscope@{Oscilloscope}!Oscilloscope@{Oscilloscope}}
+\doxysubsubsection{\texorpdfstring{Oscilloscope()}{Oscilloscope()}}
+{\footnotesize\ttfamily Oscilloscope\+::\+Oscilloscope (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \&}]{oscilloscope }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Copy-\/constructor disabled. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classOscilloscope_a821123ce5ce4507653fbead26b3ae5b1}\label{classOscilloscope_a821123ce5ce4507653fbead26b3ae5b1} 
+\index{Oscilloscope@{Oscilloscope}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Oscilloscope@{Oscilloscope}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \texorpdfstring{$\ast$}{*} Oscilloscope\+::get\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the instance. 
+
+\begin{DoxyReturn}{Returns}
+Oscilloscope\texorpdfstring{$\ast$}{*}\+: Returns the already created instance. 
+\end{DoxyReturn}
+\Hypertarget{classOscilloscope_ad04a2cd3fe0cc0cea914c09877528786}\label{classOscilloscope_ad04a2cd3fe0cc0cea914c09877528786} 
+\index{Oscilloscope@{Oscilloscope}!operator=@{operator=}}
+\index{operator=@{operator=}!Oscilloscope@{Oscilloscope}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classOscilloscope}{Oscilloscope}} \& Oscilloscope\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classOscilloscope}{Oscilloscope}}}]{oscilloscope }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\begin{DoxyNote}{Note}
+Assignment operator disabled. 
+\end{DoxyNote}
+\Hypertarget{classOscilloscope_ac1709701844c881655043ea34b449112}\label{classOscilloscope_ac1709701844c881655043ea34b449112} 
+\index{Oscilloscope@{Oscilloscope}!run@{run}}
+\index{run@{run}!Oscilloscope@{Oscilloscope}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily int Oscilloscope\+::run (\begin{DoxyParamCaption}\item[{int \&}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}\&}]{argv }\end{DoxyParamCaption})}
+
+
+
+Runs the program. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Gets the argument count. \\
+\hline
+{\em argv} & Gets the argument vector. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the any error with a int value. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sys/\mbox{\hyperlink{oscilloscope_8hpp}{oscilloscope.\+hpp}}\end{DoxyCompactItemize}

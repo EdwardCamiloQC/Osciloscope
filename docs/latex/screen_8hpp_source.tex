@@ -1,0 +1,167 @@
+\doxysection{screen.\+hpp}
+\hypertarget{screen_8hpp_source}{}\label{screen_8hpp_source}\index{src/sys/gui/screen.hpp@{src/sys/gui/screen.hpp}}
+\mbox{\hyperlink{screen_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#ifndef\ \_SCREEN\_H\_}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ \ \ \#define\ \_SCREEN\_H\_}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ \ \ \#include\ <gtk/gtk.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ \#include\ <epoxy/gl.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//Forward\ declaration}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSignalObject}{SignalObject}};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structGridVoltage}{GridVoltage}}\{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vao,\ \mbox{\hyperlink{structGridVoltage_a48671f2c644347a923af81fa13418e19}{vbo}}[2];\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structGridVoltage_a6c9dc962fdf229e9ec4b5775db990400}{vertex}}[56]=\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x1\ \ \ y1\ \ \ \ \ x2\ \ \ \ \ y2}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.25f,\ +1.0f,\ -\/0.25f,\ -\/1.0f,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.50f,\ +1.0f,\ -\/0.50f,\ -\/1.0f,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.75f,\ +1.0f,\ -\/0.75f,\ -\/1.0f,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ +0.00f,\ +1.0f,\ +0.00f,\ -\/1.0f,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ +0.25f,\ +1.0f,\ +0.25f,\ -\/1.0f,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ +0.50f,\ +1.0f,\ +0.50f,\ -\/1.0f,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ +0.75f,\ +1.0f,\ +0.75f,\ -\/1.0f,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x1\ \ \ y1\ \ \ \ x2\ \ \ \ \ y2}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.25f,\ +1.0f,\ -\/0.25f,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.50f,\ +1.0f,\ -\/0.50f,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/0.75f,\ +1.0f,\ -\/0.75f,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.00f,\ +1.0f,\ +0.00f,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.25f,\ +1.0f,\ +0.25f,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.50f,\ +1.0f,\ +0.50f,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ +0.75f,\ +1.0f,\ +0.75f}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \};\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structGridVoltage_a30fe588f504c96b9a2de91aac452cc2c}{color}}[84]=\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//R\ \ \ \ \ G\ \ \ \ \ \ \ B\ \ \ \ \ \ \ R\ \ \ \ \ \ \ G\ \ \ \ \ \ \ B}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//R\ \ \ \ \ G\ \ \ \ \ \ \ B\ \ \ \ \ \ \ R\ \ \ \ \ \ \ G\ \ \ \ \ \ \ B}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \};\ }
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridVoltage_ab0e2dc836e7611cfb01fcac65d51122b}{createGrid}}();}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridVoltage_aa88763b56c2275fbaaefc08fa1ffc6a0}{deleteGrid}}();}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridVoltage_a023dd504c06152ec141bbc2e623a8678}{draw}}();}
+\DoxyCodeLine{00068\ \ \ \ \ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structGridSpectrum}{GridSpectrum}}\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ vao,\ \mbox{\hyperlink{structGridSpectrum_a413181afe21fd668c5854dc989f917fd}{vbo}}[2];\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structGridSpectrum_a4ea358bd252f0b5dfc13d8f3fcec1d37}{vertex}}[32]=\{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x1\ \ \ \ y1\ \ \ \ \ \ x2\ \ \ \ \ \ y2}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.25f,\ +1.0f,\ -\/0.25f,\ -\/1.0f,}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.50f,\ +1.0f,\ -\/0.50f,\ -\/1.0f,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ -\/0.75f,\ +1.0f,\ -\/0.75f,\ -\/1.0f,}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ +0.00f,\ +1.0f,\ +0.00f,\ -\/1.0f,}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ +0.25f,\ +1.0f,\ +0.25f,\ -\/1.0f,}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ +0.50f,\ +1.0f,\ +0.50f,\ -\/1.0f,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ +0.75f,\ +1.0f,\ +0.75f,\ -\/1.0f,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//x1\ \ \ \ y1\ \ \ \ \ \ x2\ \ \ \ \ \ y2}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ -\/1.0f,\ -\/1.0f,\ \ \ 1.0f,\ \ -\/1.0f}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \};\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structGridSpectrum_ae41d94f2cdbeffb5655473178aa567f6}{color}}[48]=\{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//R\ \ \ \ \ G\ \ \ \ \ \ \ B\ \ \ \ \ \ \ R\ \ \ \ \ \ \ G\ \ \ \ \ \ \ B}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,\ \ \ 0.4f,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//R\ \ \ \ \ G\ \ \ \ \ \ \ B\ \ \ \ \ \ \ R\ \ \ \ \ \ \ G\ \ \ \ \ \ \ B}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f,\ \ \ 0.0f}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \};\ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridSpectrum_abc2883d7f98209246c4804a7ae785e7e}{createGrid}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridSpectrum_acab61c6809e57c41c98aa88e1be8019f}{deleteGrid}}();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structGridSpectrum_ada060b863a8ee2941983d978b5b25a55}{draw}}();}
+\DoxyCodeLine{00111\ \ \ \ \ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classScreen}{Screen}}\{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Attributes}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ GtkApplication\ *appGtk\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_acfb5a3f516af9adf6c06a427c0066014}{window}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_ad874ce1c3f9fc3ab3736c5d875e16bcb}{boxPanels}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a638a85e93f916f00964c6be735ed561d}{boxView}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a8a849a3749bef9159f91b710ab350e66}{glAreaVoltage}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *glAreaSpectrum\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a6fa70dcf1b2bfa3f45932ecafe234dd7}{boxControl}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ GtkCssProvider\ *\mbox{\hyperlink{classScreen_a82f6034b6aba3920eca0f9592821fa91}{provider}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *led\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ GtkStyleContext\ *context\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a98ae50b5fac95594f64c642d2257213c}{buttonStartStop}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *separator1\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a23658548bd7e2c09df158aa7f8546706}{labelVoltDiv}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a5caa9029005feee57a8a3c1400bbda27}{comboVoltDiv}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a202f39aa24c47cc3cc49f98231f8175f}{gridSignals}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a443e3ba322ff52a7af32f487e8e509cc}{checkSignal1}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a49044b9160fc70cbb99f5ad86251a0af}{checkSignal2}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_ac0c926f2fbe9a0fcd36c221aff8067c4}{checkSignal3}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a861805ac35a16a842a53186b943d3f57}{checkSignal4}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ GtkAdjustment\ *adjustment1\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ GtkAdjustment\ *adjustment2\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ GtkAdjustment\ *adjustment3\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ GtkAdjustment\ *adjustment4\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a1ef363fd930f524dc646f59c9da24772}{spinOffset1}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a539336e8e974a6ca2f41b1938df1d9cc}{spinOffset2}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a38faa2a8addc0bf1cbea95ba7a60d285}{spinOffset3}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a2541bb92127d6c7f9146fd00c61121b5}{spinOffset4}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *separator2\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a6968c247ba52249f784e7c9ee7222eb6}{labelFreq}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *boxFreq\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ GtkAdjustment\ *adjustmentFreq\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a3cb399be6f1f98f93905ca90436bdec3}{spinFreq}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a7cba84008029f3d684f204818cab6ade}{comboFreq}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *separator3\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *labelTestSignal\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *checkTestSignal\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_ae85aabf31c89cb36d1d570b17a7ee233}{labelPort}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *boxPort\ \{\textcolor{keyword}{nullptr}\};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a14e852d11aceb502235d1db972452bf2}{dropPort}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ GtkWidget\ *\mbox{\hyperlink{classScreen_a564339e56427314983489945cb4f7f1b}{buttonPort}}\ \{\textcolor{keyword}{nullptr}\};\ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structGridVoltage}{GridVoltage}}\ \mbox{\hyperlink{classScreen_ac13f9bc46eb94ed0ba15e7e4c08de218}{gridVoltage}};\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structGridSpectrum}{GridSpectrum}}\ \mbox{\hyperlink{classScreen_a56907379d8cd1fb1cda80db031df2f11}{gridSpectrum}};\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ GLuint\ idShaderVolt\ \{0\},\ \mbox{\hyperlink{classScreen_afbc06afca082d7f0dddb869e5ade5c7c}{idShaderSpec}}\ \{0\};\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classScreen_a32106d24338c275364c1228db47da6ed}{stateStartStop\_}}\ \{\textcolor{keyword}{false}\};\ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ stateSignal1\_\{\textcolor{keyword}{false}\},\ stateSignal2\_\{\textcolor{keyword}{false}\},\ stateSignal3\_\{\textcolor{keyword}{false}\},\ \mbox{\hyperlink{classScreen_a3b44703a7ef4fb9c8bb26d905ebd7971}{stateSignal4\_}}\{\textcolor{keyword}{false}\};\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{classScreen_a2375bb27875ce41fedc93c3df0c67b57}{voltDiv\_}}\ \{1.0f\};\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ offset1\_\{0.0f\},\ offset2\_\{0.0f\},\ offset3\_\{0.0f\},\ \mbox{\hyperlink{classScreen_a5cf336d7bbf9824a868b8b2271a0ba5c}{offset4\_}}\{0.0f\};\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ frequency\_\ \{100\},\ \mbox{\hyperlink{classScreen_afe7bada97f911e1cdf74beab775679eb}{multiplier\_}}\ \{1\};\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classScreen_ae7576476fc6e6a6eaa66389fdc41fe72}{Screen}}();}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classScreen_a4243bc17596af96415b09ac48205676d}{\string~Screen}}();}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classScreen_a05bc973241a238f8af89e89e76b5f048}{Screen}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classScreen}{Screen}}\&\ screen)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classScreen}{Screen}}\&\ \mbox{\hyperlink{classScreen_afcdae092b2be9937782b10f7cd25b84d}{operator=}}(\mbox{\hyperlink{classScreen}{Screen}}\ screen)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classScreen_a450f492f5c4ebb5066d6e6d2a44f577e}{show}}(\textcolor{keywordtype}{int}\ \&argc,\ \textcolor{keywordtype}{char}**\ argv);}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classScreen_ae07f13603ad28cec596fd418f3a78b92}{createVAO}}(\mbox{\hyperlink{classSignalObject}{SignalObject}}\ \&signalObject);}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classScreen_a8c2e84a5caf2ad71918e4722aac9f5f5}{deleteVAO}}(\mbox{\hyperlink{classSignalObject}{SignalObject}}\ \&signalObject);}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classScreen_aaa172b986078126dcb2e8e6e5d968727}{drawVAO}}(\mbox{\hyperlink{classSignalObject}{SignalObject}}\ \&signalObject)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00210\ \ \ \ \ \};}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
