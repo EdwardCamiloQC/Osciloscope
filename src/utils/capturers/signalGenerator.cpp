@@ -17,32 +17,32 @@ SignalGenerator::SignalGenerator(){
 SignalGenerator::~SignalGenerator(){
 }
 
-void SignalGenerator::readValues([[maybe_unused]]VoltageSignal *volt1, [[maybe_unused]]VoltageSignal *volt2, [[maybe_unused]]VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
+void SignalGenerator::read_values([[maybe_unused]]VoltageSignal *volt1, [[maybe_unused]]VoltageSignal *volt2, [[maybe_unused]]VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
     unsigned int f = 1000;
-    double deltaT = 8.0 / (f * volt4->length);
+    double deltaT = 8.0 / (f * volt4->length_);
     double t = 0.0;
-    for(unsigned int i = volt1->length - nValues; i < volt1->length; i++){
+    for(unsigned int i = volt1->length_ - nValues; i < volt1->length_; i++){
         volt4->pivotVoltage_pt_[i] = static_cast<float>(sin(2.0*PI*f*t));
         t += deltaT;
     }
 }
 
-void SignalGenerator::setSampleFrequency(unsigned int freq){
+void SignalGenerator::set_sample_frequency(unsigned int freq){
     frequency = freq;
 }
 
-int SignalGenerator::openPort([[maybe_unused]]const char* port){
+int SignalGenerator::open_port([[maybe_unused]]const char* port){
     return 0;
 }
 
-int SignalGenerator::closePort(){
+int SignalGenerator::close_port(){
     return 0;
 }
 
-bool SignalGenerator::getFlagSerial(){
+bool SignalGenerator::get_flag_serial(){
     return 0;
 }
 
-TypeIdCapturer SignalGenerator::getId(){
+IdCapturer_t SignalGenerator::get_Id(){
     return GENERATE_SIGNAL_ID;
 }

@@ -177,15 +177,15 @@ int Oscilloscope::run(int &argc, char**& argv){
 //==================================================
 Oscilloscope::Oscilloscope(){
     appGtk_pt_ = gtk_application_new("com.oscilloscope", G_APPLICATION_DEFAULT_FLAGS);
-    signalCapturer_.select_capturer(std::make_unique<ComSerial>());
+    signalCapturer_.select_capturer(std::make_unique<SerialPort>());
     routePort_.reserve(50);
     routePort_.clear();
-    createContextUdev();
+    create_context_udev();
     g_signal_connect(appGtk_pt_, "activate", G_CALLBACK(construct_window_callback), this);
 }
 
 Oscilloscope::~Oscilloscope(){
-    deleteContextUdev();
+    delete_context_udev();
     if(appGtk_pt_){
         g_object_unref(appGtk_pt_);
     }
@@ -514,10 +514,10 @@ gboolean Oscilloscope::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]
     //aqui ajusta los voltajes
 
     if(stateStartStop_){
-        voltage1_.spectrumSignal_.updateVertex();
-        voltage2_.spectrumSignal_.updateVertex();
-        voltage3_.spectrumSignal_.updateVertex();
-        voltage4_.spectrumSignal_.updateVertex();
+        voltage1_.spectrumSignal_.update_vertex();
+        voltage2_.spectrumSignal_.update_vertex();
+        voltage3_.spectrumSignal_.update_vertex();
+        voltage4_.spectrumSignal_.update_vertex();
     }
     if(idShaderSpec_ != 0){
         glUseProgram(idShaderSpec_);
@@ -649,7 +649,7 @@ void Oscilloscope::check_test_signal_callback(GtkCheckButton *widget, [[maybe_un
         gtk_text_buffer_get_end_iter(bufferConsole_pt_, &end);
         gtk_text_buffer_insert_with_tags_by_name(bufferConsole_pt_, &end, "Puerto serial cerrado\n", -1, "close", NULL);
     }else{
-        signalCapturer_.select_capturer(std::make_unique<ComSerial>());
+        signalCapturer_.select_capturer(std::make_unique<SerialPort>());
     }
 }
 
@@ -668,18 +668,18 @@ void Oscilloscope::drop_port_callback(GtkDropDown *widget, [[maybe_unused]]gpoin
 }
 
 void Oscilloscope::button_port_callback(GtkWidget *widget, [[maybe_unused]]gpointer userData){
-    if(signalCapturer_.capturer->getId() == SERIAL_PORT_ID){
-        if(signalCapturer_.capturer->getFlagSerial()){
-            signalCapturer_.capturer->closePort();
-            if(!(signalCapturer_.capturer->getFlagSerial())){
+    if(signalCapturer_.capturer_->get_Id() == SERIAL_PORT_ID){
+        if(signalCapturer_.capturer_->get_flag_serial()){
+            signalCapturer_.capturer_->close_port();
+            if(!(signalCapturer_.capturer_->get_flag_serial())){
                 gtk_button_set_label(GTK_BUTTON(widget), "Open");
                 GtkTextIter end;
                 gtk_text_buffer_get_end_iter(bufferConsole_pt_, &end);
                 gtk_text_buffer_insert_with_tags_by_name(bufferConsole_pt_, &end, "Puerto serial cerrado\n", -1, "close", NULL);
             }
         }else{
-            signalCapturer_.capturer->openPort(routePort_.c_str());
-            if(signalCapturer_.capturer->getFlagSerial()){
+            signalCapturer_.capturer_->open_port(routePort_.c_str());
+            if(signalCapturer_.capturer_->get_flag_serial()){
                 gtk_button_set_label(GTK_BUTTON(widget), "Close");
                 GtkTextIter end;
                 gtk_text_buffer_get_end_iter(bufferConsole_pt_, &end);
@@ -701,11 +701,11 @@ gboolean Oscilloscope::udev_monitor_inspection([[maybe_unused]]gint fd, [[maybe_
     if(action && devnode){
         if(strcmp(action, "add") == 0){
             gchar *copy = g_strdup(devnode);
-            updateDropPort(true, copy);
+            update_drop_port(true, copy);
             g_free(copy);
         }else if(strcmp(action, "remove") == 0){
             gchar *copy = g_strdup(devnode);
-            updateDropPort(false, copy);
+            update_drop_port(false, copy);
             g_free(copy);
         }
     }
@@ -722,7 +722,7 @@ gboolean Oscilloscope::catch_voltages(gpointer userData){
     voltage2_.shift_voltage(shiftNvalues_);
     voltage3_.shift_voltage(shiftNvalues_);
     voltage4_.shift_voltage(shiftNvalues_);
-    signalCapturer_.catch_voltages(&voltage1_, &voltage2_, &voltage3_, &voltage4_, shiftNvalues_);
+    signalCapturer_.capturer_->read_values(&voltage1_, &voltage2_, &voltage3_, &voltage4_, shiftNvalues_);
     voltage1_.calculate_spectrum();
     voltage2_.calculate_spectrum();
     voltage3_.calculate_spectrum();
@@ -761,7 +761,7 @@ gboolean Oscilloscope::draw_signals([[maybe_unused]]gpointer userData){
     return G_SOURCE_CONTINUE;
 }
 
-int Oscilloscope::createContextUdev(){
+int Oscilloscope::create_context_udev(){
     //crear contexto udev
 	udev_pt_ = udev_new();
 	if(!udev_pt_){
@@ -796,7 +796,7 @@ int Oscilloscope::createContextUdev(){
     return EXIT_SUCCESS;
 }
 
-int Oscilloscope::deleteContextUdev(){
+int Oscilloscope::delete_context_udev(){
     if(monitor_pt_){
         udev_monitor_unref(monitor_pt_);
     }
@@ -808,21 +808,21 @@ int Oscilloscope::deleteContextUdev(){
 }
 
 bool Oscilloscope::createVAO(SignalObject &signalObject){
-    glGenVertexArrays(1, &signalObject.vao);
-    glGenBuffers(2, signalObject.vbo);
+    glGenVertexArrays(1, &signalObject.vao_);
+    glGenBuffers(2, signalObject.vbo_);
 
-    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, 2*signalObject.length*sizeof(float), nullptr, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo_[0]);
+    glBufferData(GL_ARRAY_BUFFER, 2*signalObject.length_*sizeof(float), nullptr, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, 3*signalObject.length*sizeof(float), signalObject.colorVertex, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo_[1]);
+    glBufferData(GL_ARRAY_BUFFER, 3*signalObject.length_*sizeof(float), signalObject.colorVertex_, GL_STATIC_DRAW);
 
-    glBindVertexArray(signalObject.vao);
+    glBindVertexArray(signalObject.vao_);
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo_[0]);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo[1]);
+    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo_[1]);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -840,8 +840,8 @@ bool Oscilloscope::createVAO(SignalObject &signalObject){
 }
 
 bool Oscilloscope:: deleteVAO(SignalObject &signalObject){
-    glDeleteVertexArrays(1, &signalObject.vao);
-    glDeleteBuffers(2, signalObject.vbo);
+    glDeleteVertexArrays(1, &signalObject.vao_);
+    glDeleteBuffers(2, signalObject.vbo_);
 
     GLenum error = glGetError();
     if(error != GL_NO_ERROR){
@@ -853,15 +853,15 @@ bool Oscilloscope:: deleteVAO(SignalObject &signalObject){
 }
 
 bool Oscilloscope:: drawVAO(SignalObject &signalObject){
-    glBindVertexArray(signalObject.vao);
-    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, 2*signalObject.length*sizeof(float), signalObject.vertex);
+    glBindVertexArray(signalObject.vao_);
+    glBindBuffer(GL_ARRAY_BUFFER, signalObject.vbo_[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, 2*signalObject.length_*sizeof(float), signalObject.vertex_);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
     glLineWidth(2);
-    glBindVertexArray(signalObject.vao);
-    glDrawArrays(GL_LINE_STRIP, 0, signalObject.length);
+    glBindVertexArray(signalObject.vao_);
+    glDrawArrays(GL_LINE_STRIP, 0, signalObject.length_);
     glBindVertexArray(0);
 
     GLenum error = glGetError();
@@ -876,7 +876,7 @@ bool Oscilloscope:: drawVAO(SignalObject &signalObject){
     return false;
 }
 
-void Oscilloscope::updateDropPort(const bool add, const char *text){
+void Oscilloscope::update_drop_port(const bool add, const char *text){
     GtkDropDown *dropPort = GTK_DROP_DOWN(dropPort_pt_);
     GListModel *model = gtk_drop_down_get_model(dropPort);
 

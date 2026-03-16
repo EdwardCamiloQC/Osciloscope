@@ -21,13 +21,13 @@
              */
             SpectrumSignal(unsigned int len, SIGNAL_COLOR color);
 
-            /** \brief Destructor.
-             */
-            ~SpectrumSignal();
-
             /** \note Copy constructor disabled.
              */
             SpectrumSignal(const SpectrumSignal&)=delete;
+
+            /** \brief Destructor.
+             */
+            ~SpectrumSignal();
 
             /** \note Operator assignment disabled.
              */
@@ -36,14 +36,14 @@
             /** \brief Calcules the spectrum of a function.
                 \param signal: Function to analyze.
              */
-            void calculateSpectrum(const float *signal);
+            void calculate_spectrum(const float *signal);
 
             /** \brief Updates the vertives.
              */
-            void updateVertex(void);
+            void update_vertex(void);
         // Attributes
         private:
-            float *moduleSpectrum; ///< Module of a spectrum.
-            std::complex<float> *spectrum; ///< Spectrum.
+            float *moduleSpectrum_pt_; ///< Module of a spectrum.
+            std::complex<float> *spectrum_pt_; ///< Spectrum.
     };
 #endif

@@ -18,10 +18,13 @@
     // TYPES DECLARATIONS
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //==================================================
-    typedef enum{
+    /** \typedef IdCapturer_t
+        \enum
+     */
+     typedef enum{
         SERIAL_PORT_ID,
         GENERATE_SIGNAL_ID
-    }TypeIdCapturer;
+     }IdCapturer_t;
 
     //==================================================
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,32 +36,18 @@
      */
     class Capturer{
         public:
-            /** \note This is a virtual method (destructor).
-             */
             virtual ~Capturer() = default;
 
-            /** \brief Reads the values that it arrives.
-                \param volt1: Reference to the voltage one.
-                \param volt2: Reference to the voltage two.
-                \param volt3: Reference to the voltage three.
-                \param volt4: Reference to the voltage four.
-                \param nValues: Number of data to read.
-             */
-            virtual void readValues(VoltageSignal *volt1, VoltageSignal *volt2,
-                                    VoltageSignal *volt3, VoltageSignal *volt4,
-                                    unsigned int nValues) = 0;
+            virtual void read_values(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int mValues) = 0;
 
-            /** \brief Sets the sampling rate to acquire the data for the external hardware.
-                \param freq: Frequency.
-             */
-            virtual void setSampleFrequency(unsigned int freq) = 0;
+            virtual void set_sample_frequency(unsigned int freq) = 0;
 
-            virtual int openPort(const char *port) = 0;
+            virtual int open_port(const char *port) = 0;
 
-            virtual int closePort() = 0;
+            virtual int close_port() = 0;
 
-            virtual bool getFlagSerial() = 0;
+            virtual bool get_flag_serial() = 0;
 
-            virtual TypeIdCapturer getId() = 0;
+            virtual IdCapturer_t get_Id() = 0;
     };
 #endif

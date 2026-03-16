@@ -12,7 +12,7 @@ VoltageSignal::VoltageSignal(unsigned int len, SIGNAL_COLOR color)
 {
     voltagePing_pt_ = new float[len];
     voltagePong_pt_ = new float[len];
-    voltageToZero();
+    voltage_to_zero();
     flagPingPong_ = false;
     pivotVoltage_pt_ = voltagePing_pt_;
 }
@@ -27,15 +27,15 @@ void VoltageSignal::apply_offset(const float &offset, const float &voldiv){
     /*for(unsigned int i = 0; i < length; i++){
         voltage[i] += offset;
     }*/
-    updateVertex(pivotVoltage_pt_, offset, voldiv);
+    update_vertex(pivotVoltage_pt_, offset, voldiv);
 }
 
 void VoltageSignal::calculate_spectrum(){
-    spectrumSignal_.calculateSpectrum(pivotVoltage_pt_);
+    spectrumSignal_.calculate_spectrum(pivotVoltage_pt_);
 }
 
 void VoltageSignal::shift_voltage(unsigned int m){
-    for(unsigned int i = 0; i < length-m; i++){
+    for(unsigned int i = 0; i < length_-m; i++){
         pivotVoltage_pt_[i] = pivotVoltage_pt_[i+m];
     }
 }
@@ -52,8 +52,8 @@ void VoltageSignal::pivot_ping_pong_voltages(){
 //----------
 //      PRIVATE METHODS
 //----------
-void VoltageSignal::voltageToZero(){
-    for(unsigned int i = 0; i < length; i++){
+void VoltageSignal::voltage_to_zero(){
+    for(unsigned int i = 0; i < length_; i++){
         voltagePing_pt_[i] = 0.0f;
         voltagePong_pt_[i] = 0.0f;
     }

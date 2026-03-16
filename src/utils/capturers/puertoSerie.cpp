@@ -9,14 +9,14 @@
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-ComSerial::ComSerial(){
+SerialPort::SerialPort(){
 }
 
-ComSerial::~ComSerial(){
-    closePort();
+SerialPort::~SerialPort(){
+    close_port();
 }
 
-int ComSerial::openPort(const char* port){
+int SerialPort::open_port(const char* port){
     if(!(port)){
         return EXIT_FAILURE;
     }
@@ -41,7 +41,7 @@ int ComSerial::openPort(const char* port){
     return EXIT_SUCCESS;
 }
 
-int ComSerial::closePort(){
+int SerialPort::close_port(){
     if(mySerial_.IsOpen()){
         try{
             mySerial_.Close();
@@ -57,15 +57,15 @@ int ComSerial::closePort(){
     return EXIT_SUCCESS;
 }
 
-bool ComSerial::getFlagSerial(){
+bool SerialPort::get_flag_serial(){
     return mySerial_.IsOpen();
 }
 
-TypeIdCapturer ComSerial::getId(){
+IdCapturer_t SerialPort::get_Id(){
     return SERIAL_PORT_ID;
 }
 
-void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
+void SerialPort::read_values(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSignal *volt3, VoltageSignal *volt4, unsigned int nValues){
     if(mySerial_.IsOpen()){
         char inputValues[32]; //32bytes: 4 canales, dos bytes por dato y nValues capturados.
         unsigned int offsetIndx = 0;
@@ -84,7 +84,7 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
         }
 
         unsigned int indexAux = 0;
-        for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
+        for(unsigned int i = volt1->length_-nValues; i < volt1->length_; i++){
             volt1->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux    ] | ((inputValues[indexAux + 1])<<8))*5.0f/4095.0f;
             volt2->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux + 2] | ((inputValues[indexAux + 3])<<8))*5.0f/4095.0f;
             volt3->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux + 4] | ((inputValues[indexAux + 5])<<8))*5.0f/4095.0f;
@@ -92,7 +92,7 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
             indexAux += 8; //4 canales 2 bytes por dato.
         }
     }else{
-        for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
+        for(unsigned int i = volt1->length_-nValues; i < volt1->length_; i++){
             volt1->pivotVoltage_pt_[i] = 0.0f;
             volt2->pivotVoltage_pt_[i] = 0.0f;
             volt3->pivotVoltage_pt_[i] = 0.0f;
@@ -101,7 +101,7 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
     }
 }
 
-void ComSerial::setSampleFrequency(unsigned int freq){
+void SerialPort::set_sample_frequency(unsigned int freq){
     char sendFreq[50];
     if(mySerial_.IsOpen()){
         sprintf(sendFreq, "%u\n", freq);
@@ -114,7 +114,7 @@ void ComSerial::setSampleFrequency(unsigned int freq){
 // PRIVATE METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-bool ComSerial::startWith(std::string line, const char* text){
+bool SerialPort::start_with(std::string line, const char* text){
     std::string aux = text;
     size_t textLen = aux.length();
     if(line.size() < textLen){

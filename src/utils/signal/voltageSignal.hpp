@@ -63,7 +63,7 @@
         private:
             /** \brief Resets to zero to the signal.
              */
-             void voltageToZero();
+             void voltage_to_zero();
 
         private:
             float            *voltagePing_pt_;  ///< Voltage ping.

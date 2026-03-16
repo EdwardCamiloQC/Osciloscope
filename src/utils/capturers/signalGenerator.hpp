@@ -54,7 +54,7 @@
                 \param nValues: Data length to scrolling and storing.
                 \override
              */
-            void readValues(VoltageSignal *volt1, VoltageSignal *volt2,
+            void read_values(VoltageSignal *volt1, VoltageSignal *volt2,
                             VoltageSignal *volt3, VoltageSignal *volt4,
                             unsigned int nValues) override;
 
@@ -62,24 +62,24 @@
                 \param freq: Frequency.
                 \override
              */
-            void setSampleFrequency(unsigned int freq) override;
+            void set_sample_frequency(unsigned int freq) override;
 
             /** \note This function does nothing.
              */
-            int openPort(const char* port) override;
+            int open_port(const char* port) override;
 
             /** \note This function does nothing.
              */
-            int closePort() override;
+            int close_port() override;
 
             /** \note This function does nothing.
              */
-            bool getFlagSerial() override;
+            bool get_flag_serial() override;
 
             /** \brief Get id capturer.
                 \return Id.
              */
-            TypeIdCapturer getId() override;
+            IdCapturer_t get_Id() override;
         
         //==========
         //~~~~~~~~~~

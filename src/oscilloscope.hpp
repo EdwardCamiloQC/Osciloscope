@@ -134,6 +134,7 @@
         \class Oscilloscope.
      */
      class Oscilloscope{
+        //========== METHODS ==========
         public:
             /** \note Copy-constructor disabled.
              */
@@ -350,12 +351,12 @@
             /** \brief Creates the contex to Udev.
                 \return Status.
              */
-             int createContextUdev();
+             int create_context_udev();
 
             /** \brief Deletes the udev contex.
                 \return Status.
              */
-             int deleteContextUdev();
+             int delete_context_udev();
 
             /** \brief Creates the VAOs to the signals.
                 \param signalObject: Array of the signal.
@@ -379,46 +380,47 @@
                 \param add:
                 \param text:
              */
-             static void updateDropPort(const bool add, const char *text); 
+             static void update_drop_port(const bool add, const char *text); 
         
+        //========== ATTRIBUTES ==========
         private:
             static constexpr unsigned long LENGTH_VOLT_SIGNAL {128};
             static constexpr unsigned int  M_VALUES_TO_SHIFT  {4};
-            static Oscilloscope        *instance_pt_;
-            static GtkApplication      *appGtk_pt_;
-            static GtkWidget           *glAreaVoltage_pt_;
-            static GtkWidget           *glAreaSpectrum_pt_;
-            static GtkWidget           *dropPort_pt_;
-            static GtkWidget           *buttonPort_pt_;
-            static GtkTextBuffer       *bufferConsole_pt_;
-            static GtkStringList       *deviceListPort_pt_;
-            static struct udev         *udev_pt_;
-            static struct udev_monitor *monitor_pt_;
-            static SignalCapturer      signalCapturer_;
-            static VoltageSignal       voltage1_;
-            static VoltageSignal       voltage2_;
-            static VoltageSignal       voltage3_;
-            static VoltageSignal       voltage4_;
-            static std::string         routePort_;
-            static GridVoltage         gridVoltage_;
-            static GridSpectrum        gridSpectrum_;
-            static GLuint              idShaderVolt_;
-            static GLuint              idShaderSpec_;
-            static bool                stateStartStop_;
-            static bool                stateSignal1_;
-            static bool                stateSignal2_;
-            static bool                stateSignal3_;
-            static bool                stateSignal4_;
-            static float               voltDiv_;
-            static float               offset1_;
-            static float               offset2_;
-            static float               offset3_;
-            static float               offset4_;
-            static double              timeDiv_;
-            static guint               udevSourceID_;
-            static guint               drawTimeOutID_;
-            static unsigned int        shiftNvalues_;
+            static Oscilloscope            *instance_pt_;
+            static GtkApplication          *appGtk_pt_;
+            static GtkWidget               *glAreaVoltage_pt_;
+            static GtkWidget               *glAreaSpectrum_pt_;
+            static GtkWidget               *dropPort_pt_;
+            static GtkWidget               *buttonPort_pt_;
+            static GtkTextBuffer           *bufferConsole_pt_;
+            static GtkStringList           *deviceListPort_pt_;
+            static struct udev             *udev_pt_;
+            static struct udev_monitor     *monitor_pt_;
+            static SignalCapturer          signalCapturer_;
+            static VoltageSignal           voltage1_;
+            static VoltageSignal           voltage2_;
+            static VoltageSignal           voltage3_;
+            static VoltageSignal           voltage4_;
+            static std::string             routePort_;
+            static GridVoltage             gridVoltage_;
+            static GridSpectrum            gridSpectrum_;
+            static GLuint                  idShaderVolt_;
+            static GLuint                  idShaderSpec_;
+            static bool                    stateStartStop_;
+            static bool                    stateSignal1_;
+            static bool                    stateSignal2_;
+            static bool                    stateSignal3_;
+            static bool                    stateSignal4_;
+            static float                   voltDiv_;
+            static float                   offset1_;
+            static float                   offset2_;
+            static float                   offset3_;
+            static float                   offset4_;
+            static double                  timeDiv_;
+            static guint                   udevSourceID_;
+            static guint                   drawTimeOutID_;
+            static unsigned int            shiftNvalues_;
         public:
-            static std::mutex              mutex_; ///<
+            static std::mutex              mutex_;
      };
 #endif
