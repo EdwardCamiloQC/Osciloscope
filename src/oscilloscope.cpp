@@ -419,10 +419,10 @@ gboolean Oscilloscope::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    voltage1_.applyOffset(offset1_, voltDiv_);
-    voltage2_.applyOffset(offset2_, voltDiv_);
-    voltage3_.applyOffset(offset3_, voltDiv_);
-    voltage4_.applyOffset(offset4_, voltDiv_);
+    voltage1_.apply_offset(offset1_, voltDiv_);
+    voltage2_.apply_offset(offset2_, voltDiv_);
+    voltage3_.apply_offset(offset3_, voltDiv_);
+    voltage4_.apply_offset(offset4_, voltDiv_);
 
     if(idShaderVolt_ != 0){
         glUseProgram(idShaderVolt_);
@@ -479,10 +479,10 @@ void Oscilloscope::realize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gp
     gridSpectrum_.createGrid();
 
     //Aqui crea los espectros
-    createVAO(voltage1_.spectrumSignal);
-    createVAO(voltage2_.spectrumSignal);
-    createVAO(voltage3_.spectrumSignal);
-    createVAO(voltage4_.spectrumSignal);
+    createVAO(voltage1_.spectrumSignal_);
+    createVAO(voltage2_.spectrumSignal_);
+    createVAO(voltage3_.spectrumSignal_);
+    createVAO(voltage4_.spectrumSignal_);
 }
 
 void Oscilloscope::unrealize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpointer userData){
@@ -493,10 +493,10 @@ void Oscilloscope::unrealize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]
 
     gridSpectrum_.deleteGrid();
     //Aqui Elimina los spectros
-    deleteVAO(voltage1_.spectrumSignal);
-    deleteVAO(voltage2_.spectrumSignal);
-    deleteVAO(voltage3_.spectrumSignal);
-    deleteVAO(voltage4_.spectrumSignal);
+    deleteVAO(voltage1_.spectrumSignal_);
+    deleteVAO(voltage2_.spectrumSignal_);
+    deleteVAO(voltage3_.spectrumSignal_);
+    deleteVAO(voltage4_.spectrumSignal_);
 
     glDeleteProgram(idShaderSpec_);
 }
@@ -514,10 +514,10 @@ gboolean Oscilloscope::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]
     //aqui ajusta los voltajes
 
     if(stateStartStop_){
-        voltage1_.spectrumSignal.updateVertex();
-        voltage2_.spectrumSignal.updateVertex();
-        voltage3_.spectrumSignal.updateVertex();
-        voltage4_.spectrumSignal.updateVertex();
+        voltage1_.spectrumSignal_.updateVertex();
+        voltage2_.spectrumSignal_.updateVertex();
+        voltage3_.spectrumSignal_.updateVertex();
+        voltage4_.spectrumSignal_.updateVertex();
     }
     if(idShaderSpec_ != 0){
         glUseProgram(idShaderSpec_);
@@ -525,16 +525,16 @@ gboolean Oscilloscope::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]
         gridSpectrum_.draw();
         //aqui dibuja
         if(stateSignal1_){
-            drawVAO(voltage1_.spectrumSignal);
+            drawVAO(voltage1_.spectrumSignal_);
         }
         if(stateSignal2_){
-            drawVAO(voltage2_.spectrumSignal);
+            drawVAO(voltage2_.spectrumSignal_);
         }
         if(stateSignal3_){
-            drawVAO(voltage3_.spectrumSignal);
+            drawVAO(voltage3_.spectrumSignal_);
         }
         if(stateSignal4_){
-            drawVAO(voltage4_.spectrumSignal);
+            drawVAO(voltage4_.spectrumSignal_);
         }
     }
 
@@ -561,6 +561,10 @@ void Oscilloscope::startStop_callback(GtkWidget *widget, [[maybe_unused]]gpointe
         gtk_button_set_label(GTK_BUTTON(widget), "Start");
         gtk_widget_remove_css_class(widget, "led-on");
         gtk_widget_add_css_class(widget, "led-off");
+        voltage1_.pivot_ping_pong_voltages();
+        voltage2_.pivot_ping_pong_voltages();
+        voltage3_.pivot_ping_pong_voltages();
+        voltage4_.pivot_ping_pong_voltages();
     }
 }
 
@@ -712,17 +716,31 @@ gboolean Oscilloscope::udev_monitor_inspection([[maybe_unused]]gint fd, [[maybe_
 }
 
 gboolean Oscilloscope::catch_voltages(gpointer userData){
+    gboolean state = 0;
     //shift the voltages
-    voltage1_.shiftVoltage(shiftNvalues_);
-    voltage2_.shiftVoltage(shiftNvalues_);
-    voltage3_.shiftVoltage(shiftNvalues_);
-    voltage4_.shiftVoltage(shiftNvalues_);
+    voltage1_.shift_voltage(shiftNvalues_);
+    voltage2_.shift_voltage(shiftNvalues_);
+    voltage3_.shift_voltage(shiftNvalues_);
+    voltage4_.shift_voltage(shiftNvalues_);
     signalCapturer_.catch_voltages(&voltage1_, &voltage2_, &voltage3_, &voltage4_, shiftNvalues_);
-    voltage1_.calculateSpectrum();
-    voltage2_.calculateSpectrum();
-    voltage3_.calculateSpectrum();
-    voltage4_.calculateSpectrum();
-    return draw_signals(userData);
+    voltage1_.calculate_spectrum();
+    voltage2_.calculate_spectrum();
+    voltage3_.calculate_spectrum();
+    voltage4_.calculate_spectrum();
+    if(stateStartStop_){
+        state = draw_signals(userData);
+    }else{
+        voltage1_.pivot_ping_pong_voltages();
+        voltage2_.pivot_ping_pong_voltages();
+        voltage3_.pivot_ping_pong_voltages();
+        voltage4_.pivot_ping_pong_voltages();
+        state = draw_signals(userData);
+        voltage1_.pivot_ping_pong_voltages();
+        voltage2_.pivot_ping_pong_voltages();
+        voltage3_.pivot_ping_pong_voltages();
+        voltage4_.pivot_ping_pong_voltages();
+    }
+    return state;
 }
 
 gboolean Oscilloscope::draw_signals([[maybe_unused]]gpointer userData){

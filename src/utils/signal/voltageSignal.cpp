@@ -4,28 +4,48 @@
 //      PUBLIC METHODS
 //----------
 VoltageSignal::VoltageSignal(unsigned int len, SIGNAL_COLOR color)
-    : SignalObject(len, color), voltage(nullptr), spectrumSignal(len, color){
-    voltage = new float[len];
+    : SignalObject(len, color), 
+    voltagePing_pt_(nullptr), 
+    voltagePong_pt_(nullptr),
+    pivotVoltage_pt_(nullptr),
+    spectrumSignal_(len, color)
+{
+    voltagePing_pt_ = new float[len];
+    voltagePong_pt_ = new float[len];
+    voltageToZero();
+    flagPingPong_ = false;
+    pivotVoltage_pt_ = voltagePing_pt_;
 }
 
 VoltageSignal::~VoltageSignal(){
-    delete[] voltage;
+    delete[] voltagePing_pt_;
+    delete[] voltagePong_pt_;
+    pivotVoltage_pt_ = nullptr;
 }
 
-void VoltageSignal::applyOffset(const float &offset, const float &voldiv){
+void VoltageSignal::apply_offset(const float &offset, const float &voldiv){
     /*for(unsigned int i = 0; i < length; i++){
         voltage[i] += offset;
     }*/
-    updateVertex(voltage, offset, voldiv);
+    updateVertex(pivotVoltage_pt_, offset, voldiv);
 }
 
-void VoltageSignal::calculateSpectrum(){
-    spectrumSignal.calculateSpectrum(voltage);
+void VoltageSignal::calculate_spectrum(){
+    spectrumSignal_.calculateSpectrum(pivotVoltage_pt_);
 }
 
-void VoltageSignal::shiftVoltage(unsigned int n){
-    for(unsigned int i = 0; i < length-n; i++){
-        voltage[i] = voltage[i+n];
+void VoltageSignal::shift_voltage(unsigned int m){
+    for(unsigned int i = 0; i < length-m; i++){
+        pivotVoltage_pt_[i] = pivotVoltage_pt_[i+m];
+    }
+}
+
+void VoltageSignal::pivot_ping_pong_voltages(){
+    flagPingPong_ = !flagPingPong_;
+    if(flagPingPong_){
+        pivotVoltage_pt_ = voltagePong_pt_;
+    }else{
+        pivotVoltage_pt_ = voltagePing_pt_;
     }
 }
 
@@ -34,6 +54,7 @@ void VoltageSignal::shiftVoltage(unsigned int n){
 //----------
 void VoltageSignal::voltageToZero(){
     for(unsigned int i = 0; i < length; i++){
-        voltage[i] = 0.0f;
+        voltagePing_pt_[i] = 0.0f;
+        voltagePong_pt_[i] = 0.0f;
     }
 }

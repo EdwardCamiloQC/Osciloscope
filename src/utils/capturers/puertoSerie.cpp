@@ -85,18 +85,18 @@ void ComSerial::readValues(VoltageSignal *volt1, VoltageSignal *volt2, VoltageSi
 
         unsigned int indexAux = 0;
         for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
-            volt1->voltage[i] = static_cast<float>(inputValues[indexAux    ] | ((inputValues[indexAux + 1])<<8))*5.0f/4095.0f;
-            volt2->voltage[i] = static_cast<float>(inputValues[indexAux + 2] | ((inputValues[indexAux + 3])<<8))*5.0f/4095.0f;
-            volt3->voltage[i] = static_cast<float>(inputValues[indexAux + 4] | ((inputValues[indexAux + 5])<<8))*5.0f/4095.0f;
-            volt4->voltage[i] = static_cast<float>(inputValues[indexAux + 6] | ((inputValues[indexAux + 7])<<8))*5.0f/4095.0f;
+            volt1->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux    ] | ((inputValues[indexAux + 1])<<8))*5.0f/4095.0f;
+            volt2->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux + 2] | ((inputValues[indexAux + 3])<<8))*5.0f/4095.0f;
+            volt3->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux + 4] | ((inputValues[indexAux + 5])<<8))*5.0f/4095.0f;
+            volt4->pivotVoltage_pt_[i] = static_cast<float>(inputValues[indexAux + 6] | ((inputValues[indexAux + 7])<<8))*5.0f/4095.0f;
             indexAux += 8; //4 canales 2 bytes por dato.
         }
     }else{
         for(unsigned int i = volt1->length-nValues; i < volt1->length; i++){
-            volt1->voltage[i] = 0.0f;
-            volt2->voltage[i] = 0.0f;
-            volt3->voltage[i] = 0.0f;
-            volt4->voltage[i] = 0.0f;
+            volt1->pivotVoltage_pt_[i] = 0.0f;
+            volt2->pivotVoltage_pt_[i] = 0.0f;
+            volt3->pivotVoltage_pt_[i] = 0.0f;
+            volt4->pivotVoltage_pt_[i] = 0.0f;
         }
     }
 }

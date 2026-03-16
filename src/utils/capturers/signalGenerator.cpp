@@ -22,7 +22,7 @@ void SignalGenerator::readValues([[maybe_unused]]VoltageSignal *volt1, [[maybe_u
     double deltaT = 8.0 / (f * volt4->length);
     double t = 0.0;
     for(unsigned int i = volt1->length - nValues; i < volt1->length; i++){
-        volt4->voltage[i] = static_cast<float>(sin(2.0*PI*f*t));
+        volt4->pivotVoltage_pt_[i] = static_cast<float>(sin(2.0*PI*f*t));
         t += deltaT;
     }
 }
