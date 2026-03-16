@@ -93,7 +93,7 @@ dkms.conf
 .history
 .ionide
 
-build
+build/*
 lsan.supp
 logs/*
 

@@ -198,6 +198,7 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
         GtkWidget *boxView = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
         gtk_widget_set_hexpand(boxView, true);
         gtk_widget_set_vexpand(boxView, true);
+        gtk_box_set_spacing(GTK_BOX(boxView), 5);
             glAreaVoltage_pt_ = gtk_gl_area_new();
             gtk_widget_set_size_request(glAreaVoltage_pt_, -1, 700);
 
@@ -212,7 +213,7 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
             gtk_text_view_set_monospace(GTK_TEXT_VIEW(appConsole), true);
             GtkWidget *windowScrool = gtk_scrolled_window_new();
             gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(windowScrool), appConsole);
-            gtk_widget_set_size_request(windowScrool, -1, 100);
+            gtk_widget_set_size_request(windowScrool, -1, 150);
 
             GtkTextTag *tag_error = gtk_text_tag_new("error");
             g_object_set(tag_error, "foreground", "red", NULL);
@@ -228,6 +229,7 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
 
         GtkWidget *boxControl = gtk_box_new(GTK_ORIENTATION_VERTICAL, 1);
         gtk_widget_set_vexpand(boxControl, true);
+        gtk_box_set_spacing(GTK_BOX(boxControl), 40);
             GtkCssProvider *provider = gtk_css_provider_new();
             GFile *fileStyles = g_file_new_for_path("./src/styles/styleButtonStartStop.css"); 
             gtk_css_provider_load_from_file(provider, fileStyles);
@@ -238,7 +240,6 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
             gtk_widget_add_css_class(buttonStartStop, "led-off");
 
             GtkWidget *separator1 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-            gtk_widget_set_vexpand(separator1, true);
 
             const char *optionsVolDiv[] = {
                 "0.1v/div",
@@ -279,7 +280,6 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
                 gtk_grid_attach(GTK_GRID(gridSignals), spinOffset4, 1, 3, 1, 1);
 
             GtkWidget *separator2 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-            gtk_widget_set_vexpand(separator2, true);
 
             GtkWidget *boxFreq = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
             GtkAdjustment *adjustmentFreq = gtk_adjustment_new(1.0, 0.001, 100.0, 0.001, 1.0, 0.0);
@@ -288,7 +288,6 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
             GtkWidget *checkTestSignal = gtk_check_button_new_with_label("Test signal");
 
             GtkWidget *separator3 = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
-            gtk_widget_set_vexpand(separator3, true);
 
             GtkWidget *labelPort = gtk_label_new("Port");
             GtkWidget *boxPort = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
