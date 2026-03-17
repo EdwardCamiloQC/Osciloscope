@@ -355,8 +355,6 @@ void Oscilloscope::construct_window_callback(GtkApplication* app, gpointer userD
         udevSourceID_ = g_unix_fd_add(udev_fd, G_IO_IN, udev_monitor_inspection, nullptr);
     }
 
-    stateStartStop_ = true;
-
     drawTimeOutID_ = g_timeout_add(static_cast<guint>(8*10*shiftNvalues_/LENGTH_VOLT_SIGNAL), catch_voltages, userData);
 }
 
