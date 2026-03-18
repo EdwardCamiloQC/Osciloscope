@@ -143,6 +143,11 @@ clean:
 	rm ./$(BUILD_DIR)/*
 	clear
 
+.PHONY: rebuild
+rebuild:
+	make clean
+	make
+
 .PHONY:runTest
 runTest:
 	clear

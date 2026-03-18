@@ -18,6 +18,13 @@
             "problemMatcher": []
         },
         {
+            "label": "Reconstruir",
+            "type": "shell",
+            "command": "make",
+            "args": ["rebuild"],
+            "problemMatcher": []
+        },
+        {
             "label": "Ejecutar test",
             "type": "shell",
             "command": "make",
