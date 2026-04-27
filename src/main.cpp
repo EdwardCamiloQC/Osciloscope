@@ -1,6 +1,8 @@
-#include <oscilloscope.hpp>
+#include <application/oscilloscope.hpp>
+
+using namespace OSCILLOSCOPE;
 
 int main(int argc, char**argv){
-    Oscilloscope *myOscilloscope = Oscilloscope::get_instance();
-    return myOscilloscope->run(argc, argv);
+    Oscilloscope *oscilloscope = Oscilloscope::get_instance();
+    return oscilloscope->run(argc, argv);
 }
