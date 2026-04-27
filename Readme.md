@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <img src="./AppOsc.png">
+    <img src="./resources/images/AppOsc.png">
 </p>
 
 https://www.youtube.com/playlist?list=PLEoHO-IssPPAtG2c3IKp_-9pR1gyZFhW2
@@ -17,5 +17,5 @@ Simply send packets with 32 bytes alternate 2 bytes for each signal value... thi
 If you want to use it, download it from the link below.
 
 <p align="center">
-    <img src="./logo.png">
+    <img src="./resources/logos/logo.png">
 </p>
