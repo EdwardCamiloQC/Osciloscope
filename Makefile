@@ -48,7 +48,7 @@ VPATH =	$(SRC_DIR):\
 #==================================================
 PROJECT = $(notdir $(shell pwd))
 
-RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT)
+RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
 
 COMPILER ?= g++
 DEBUGER ?= gdb
