@@ -7,8 +7,24 @@
             "label": "Compilar",
             "type": "shell",
             "command": "make",
-            "args": [],
+            "args": [
+                "BUILD=release"
+            ],
             "group": {"kind":"build", "isDefault": true}
+        },
+        {
+            "label": "Compilar (ASAN)",
+            "type": "shell",
+            "command": "make",
+            "args": ["INSPECTOR=asan"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Compilar (VALGRIND)",
+            "type": "shell",
+            "command": "make",
+            "args": ["INSPECTOR=valgrind"],
+            "problemMatcher": []
         },
         {
             "label": "Limpiar",
@@ -18,33 +34,32 @@
             "problemMatcher": []
         },
         {
-            "label": "Reconstruir",
+            "label": "Ejecutar test (ASAN)",
             "type": "shell",
             "command": "make",
-            "args": ["rebuild"],
+            "args": [
+                "runTest",
+                "INSPECTOR=asan"
+            ],
             "problemMatcher": []
         },
         {
-            "label": "Ejecutar test",
+            "label": "Ejecutar test (VALGRIND)",
             "type": "shell",
             "command": "make",
-            "args": ["runTest"],
+            "args": [
+                "runTest",
+                "INSPECTOR=valgrind"
+            ],
             "problemMatcher": []
         },
         {
-            "label": "Ejecuta con valgrim",
-            "type": "shell",
-            "command": "make",
-            "args": ["runWithValgrind"],
-            "problemMatcher": []
-        },
-        {
-            "label": "Ejecutar deployment",
+            "label": "Ejecutar Deployment",
             "type": "shell",
             "dependsOrder": "sequence",
-            "dependsOn": ["Compilar con mi Make"],
+            "dependsOn": ["Compilar"],
             "command": "make",
-            "args": ["runProject"],
+            "args": ["runDeployment"],
             "problemMatcher": []
         },
     ]
