@@ -1,7 +1,7 @@
 #==================================================
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # COLORS
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 NORMAL = '\e[0m'
 BLACK = '\e[0,30m'
@@ -22,47 +22,82 @@ LIGHT_CYAN = '\e[1;36m'
 WHITE = '\e[1;37m'
 
 #==================================================
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # PATHS
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 BUILD_DIR = build
 SRC_DIR = ./src
 
 VPATH =	$(SRC_DIR):\
-		$(SRC_DIR)/modules/gui:\
-		$(SRC_DIR)/modules/peripherals:\
-		$(SRC_DIR)/utils/signal:\
-		$(SRC_DIR)/utils/capturers:\
-		$(SRC_DIR)/shaders
+		$(SRC_DIR)/application/:\
+		$(SRC_DIR)/adapters/:\
+		$(SRC_DIR)/entities/grids/:\
+		$(SRC_DIR)/entities/signals/:\
+		$(SRC_DIR)/entities/VAOs/:\
+		$(SRC_DIR)/infrastructure/serialPort/:\
+		$(SRC_DIR)/infrastructure/shaderCompiler/:\
+		$(SRC_DIR)/infrastructure/gui/:\
+		$(SRC_DIR)/common/math/:\
+		$(SRC_DIR)/common/dataStructures/:
 
 #==================================================
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # VARIABLES
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 PROJECT = $(notdir $(shell pwd))
-SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
-SOURCES += $(wildcard $(SRC_DIR)/modules/*/*.cpp)
-SOURCES += $(wildcard $(SRC_DIR)/utils/*/*.cpp)
-SOURCES += $(wildcard $(SRC_DIR)/shaders/*.cpp)
-OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
+
+RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT)
 
 COMPILER ?= g++
 DEBUGER ?= gdb
 BUILD ?= debug
+INSPECTOR ?= asan
 
 GTK ?= gtk4
 
 #==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# INSPECTOR
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
+ifeq ($(INSPECTOR), asan)
+	RUN_EXECUTABLE = LSAN_OPTIONS=suppressions=lsan.supp ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
+else ifeq ($(INSPECTOR), valgrind)
+	RUN_EXECUTABLE = valgrind --leak-check=full ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
+endif
+
+#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# SOURCES
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#==================================================
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/application/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/adapters/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/entities/*/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/infrastructure/*/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/common/*/*.cpp)
+
+#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# OBJECTS
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#==================================================
+OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
+
+#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CFLAGS, LDFLAGS AND INCLUDES
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 CFLAGS = 	-c \
 			-fstack-protector-strong \
 			-D_FORTIFY_SOURCE=2 \
-			-std=c++17
+			-std=c++17 \
+			-MMD \
+			-MP
 
 FLAGS_LD =
 
@@ -72,11 +107,8 @@ INCLUDES =	-I$(SRC_DIR) \
 LIBRARIES =	-lepoxy \
 			-lserial \
 			-ludev \
-			-lX11 \
-#==================================================
-#==================================================
-#==================================================
-#==================================================
+			-lX11
+
 ifeq ($(BUILD), debug)
 	CFLAGS+= -Wall \
 		-Wextra \
@@ -84,11 +116,13 @@ ifeq ($(BUILD), debug)
 		-Werror \
 		-g \
 		-O0 \
-		-fsanitize=address,undefined \
 		-fno-omit-frame-pointer
-	FLAGS_LD +=	-fsanitize=address,undefined
+		ifeq ($(INSPECTOR), asan)
+			CFLAGS += -fsanitize=address,undefined
+			FLAGS_LD +=	-fsanitize=address,undefined
+		endif
 else ifeq ($(BUILD), release)
-	CFLAGS = -O2 \
+	CFLAGS += -O2 \
 		-pipe \
 		-fPIC \
 		-fvisibility=hidden \
@@ -100,8 +134,6 @@ else ifeq ($(BUILD), release)
 		-Wl,--as-needed \
 		-pie \
 		-Wl,-rpath,'$$ORIGIN/../lib'
-else
-	$(error "No se selecionó si es para desarrollo o despliegue")
 endif
 
 ifeq ($(GTK), gtk3)
@@ -112,18 +144,16 @@ else ifeq ($(GTK), gtk4)
 	LIBRARIES += $(shell pkg-config --libs gtk4)
 endif
 
-#FLAGS_LD +=		'pkg-config --cflags --libs libsystemd'
-
 #==================================================
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CONSTRUCTION
-#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 $(BUILD_DIR)/$(PROJECT): $(OBJECTS)
 	@echo -e "$(LIGHT_CYAN)---------- START LINKING-----------\$(NORMAL)"
 	$(COMPILER) -o $@ $^ $(FLAGS_LD) $(LIBRARIES)
 	@echo -e "$(GREEN)"
-	@cat logo.txt
+	@cat ./resources/logos/logo.txt
 	@echo -e "CONSTRUCTION SUCCESS $(NORMAL)"
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
@@ -131,37 +161,35 @@ $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
 	$(COMPILER) $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(BUILD_DIR):
-	mkdir $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)
 
 #==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# DEPENDENCIES
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
-# FUNCTIONS
+DEP_FILES = $(OBJECTS:.o=.d)
+-include $(DEP_FILES)
+
 #==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# TAGS
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 .PHONY: clean
 clean:
-	rm ./$(BUILD_DIR)/*
+	rm -rf $(BUILD_DIR)
 	clear
-
-.PHONY: rebuild
-rebuild:
-	make clean
-	make
 
 .PHONY:runTest
 runTest:
 	clear
-	LSAN_OPTIONS=suppressions=lsan.supp ./$(BUILD_DIR)/$(PROJECT) 2> ./logs/error.log
+	$(RUN_EXECUTABLE)
 
-.PHONY: runProject
-runProject:
+.PHONY: runDeployment
+runDeployment:
 	clear
 	./$(BUILD_DIR)/$(PROJECT)
-
-.PHONY: runWithValgrind
-runWithValgrind:
-	clear
-	valgrind --leak-check=full ./$(BUILD_DIR)/$(PROJECT)
 
 .PHONY: debugProject
 debugProject:
