@@ -8,19 +8,24 @@
 VoltageSignal::VoltageSignal(unsigned int len, SIGNAL_COLOR color)
     : SignalObject(len, color),
     ringBuffer_(2*len),
-    spectrumSignal_(len, color)
+    spectrumSignal_(len, color),
+    bufferVoltagePt_(nullptr)
 {
-    //
+    bufferVoltagePt_ = new float[length_];
 }
 
 VoltageSignal::~VoltageSignal(){
-    //
+    if(bufferVoltagePt_)
+        delete[] bufferVoltagePt_;
 }
 
-void VoltageSignal::apply_offset(const float &offset, const float &voldiv){
-    update_vertex(ringBuffer_.get_n_data(length_), offset, voldiv);
+void VoltageSignal::apply_offset(const float &offset, const float &voldiv, bool update){
+    if(update)
+        ringBuffer_.get_n_data(bufferVoltagePt_, length_);
+
+    update_vertex(bufferVoltagePt_, offset, voldiv);
 }
 
 void VoltageSignal::calculate_spectrum(){
-    spectrumSignal_.calculate_spectrum(ringBuffer_.get_n_data(length_));
+    spectrumSignal_.calculate_spectrum(bufferVoltagePt_);
 }

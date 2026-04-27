@@ -412,19 +412,19 @@ gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLC
                 std::lock_guard<std::mutex> lock(osc->mutex_);
 
                 if(stateSignal1_){
-                    osc->voltage1_.apply_offset(offset1_, voltDiv_);
+                    osc->voltage1_.apply_offset(offset1_, voltDiv_, stateStartStop_);
                     VAOS_OBJECTS::VaoObject::drawVAO(osc->voltage1_);
                 }
                 if(stateSignal2_){
-                    osc->voltage2_.apply_offset(offset2_, voltDiv_);
+                    osc->voltage2_.apply_offset(offset2_, voltDiv_, stateStartStop_);
                     VAOS_OBJECTS::VaoObject::drawVAO(osc->voltage2_);
                 }
                 if(stateSignal3_){
-                    osc->voltage3_.apply_offset(offset3_, voltDiv_);
+                    osc->voltage3_.apply_offset(offset3_, voltDiv_, stateStartStop_);
                     VAOS_OBJECTS::VaoObject::drawVAO(osc->voltage3_);
                 }
                 if(stateSignal4_){
-                    osc->voltage4_.apply_offset(offset4_, voltDiv_);
+                    osc->voltage4_.apply_offset(offset4_, voltDiv_, stateStartStop_);
                     VAOS_OBJECTS::VaoObject::drawVAO(osc->voltage4_);
                 }
             }

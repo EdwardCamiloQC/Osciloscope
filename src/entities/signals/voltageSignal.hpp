@@ -43,8 +43,9 @@ class VoltageSignal: public SignalObject{
         /** \brief Applies the offset to the voltage.
             \param offset: Offset value.
             \param voldiv: volt/div.
+            \param update: This parameter indicates if use data updated or no.
          */
-        void apply_offset(const float &offset, const float &voldiv);
+        void apply_offset(const float &offset, const float &voldiv, bool update);
 
         /** \brief Calculates the spectrum corresponding.
          */
@@ -53,4 +54,7 @@ class VoltageSignal: public SignalObject{
     public:
         ED::RingBuffer ringBuffer_;  ///< Ring buffer of voltage.
         SpectrumSignal spectrumSignal_; ///< Spectrum associated.
+
+    private:
+        float          *bufferVoltagePt_ {nullptr};
 };
