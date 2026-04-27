@@ -1,0 +1,48 @@
+.consoleTerminal > *{
+    font-size: medium;
+    font-style: italic;
+    padding: 10px;
+    border: 5px;
+    border-color: darkcyan;
+    border-style: groove;
+    border-radius: 20px;
+    background-color: #fdfcf7;
+
+    background-image:
+        /* Línea vertical roja (margen) */
+        linear-gradient(to right,
+            transparent 0px,
+            transparent 40px,
+            rgba(220, 80, 80, 0.6) 15px,
+            transparent 42px
+        ),
+
+        /* Líneas horizontales */
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 22px,
+            rgba(100, 140, 255, 0.35) 23px,
+            transparent 24px
+        );
+
+    background-size:
+        100% 100%,
+        100% 24px;
+}
+
+.consoleTerminal trough{
+    background-image: none;
+    background-color: transparent;
+}
+
+.consoleTerminal slider{
+    background-image: none;
+    background-color: chocolate;
+}
+
+overshoot{
+    background-image: none;
+    background: transparent;
+    border: 2px;
+}

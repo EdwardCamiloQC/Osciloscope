@@ -1,0 +1,75 @@
+.led-on{
+    color:black;
+    font-family: monospace;
+    font-size: larger;
+    padding: 10px;
+    border: 5px;
+    border-color: green;
+    border-style: solid;
+    border-radius:25px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+}
+
+.led-off{
+    color: black;
+    font-family: monospace;
+    font-size: larger;
+    padding: 10px;
+    border: 3px;
+    border-color: red;
+    border-style: solid;
+    border-radius:25px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+}
+
+.led-on:hover{
+    border-style: groove;
+    background-image: radial-gradient(ellipse at center, rgb(50, 50, 50), rgba(255, 255, 255, 0.6));
+}
+
+.led-off:hover{
+    border-style: groove;
+    background-image: radial-gradient(ellipse at center, rgb(50, 50, 50), rgba(255, 255, 255, 0.6));
+}
+
+.port-opened{
+    color: black;
+    min-width:50px;
+    min-height:50px;
+    font-family: monospace;
+    font-size: large;
+    padding: 10px;
+    border: 5px;
+    border-color: green;
+    border-style: solid;
+    border-radius: 25px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+    background-position: center;
+}
+
+.port-closed{
+    color: black;
+    min-width:50px;
+    min-height:50px;
+    font-family: monospace;
+    font-size: large;
+    padding: 10px;
+    border: 3px;
+    border-color: red;
+    border-style: solid;
+    border-radius: 25px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+    background-position: center;
+}
+
+.port-opened:hover{
+    border-color: cyan;
+    border-style: groove;
+    background-image: radial-gradient(ellipse at center, rgb(50, 50, 50), rgba(255, 255, 255, 0.6));
+}
+
+.port-closed:hover{
+    border-color: cyan;
+    border-style: groove;
+    background-image: radial-gradient(ellipse at center, rgb(50, 50, 50), rgba(255, 255, 255, 0.6));
+}

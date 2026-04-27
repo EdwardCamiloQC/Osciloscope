@@ -1,0 +1,53 @@
+
+/* Base del dropdown */
+dropdown {
+    padding: 10px;
+    border: 5px solid;
+    border-radius: 5px;
+    border-color: darkcyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(85, 85, 85), white, rgb(85, 85, 85));
+}
+
+/* Botón visible del dropdown */
+dropdown > button {
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    border-radius: 20px;
+    background-image: linear-gradient(to top, #e4d7b5, white);
+}
+
+/* Hover sobre el botón */
+dropdown > button:hover {
+    background-image: radial-gradient(ellipse at center, rgba(255, 140, 0, 0.412), white);
+}
+
+/* Lista desplegada */
+popover {
+    border: 2px solid cyan;
+    background-color: rgb(215, 153, 109);
+}
+
+/* Items dentro de la lista */
+listview row {
+    color: black;
+    padding: 5px;
+    background-image: linear-gradient(to top, #e4d7b5, white);
+}
+
+/* Hover en items */
+listview row:hover {
+    background-color: cyan;
+}
+
+/* Item seleccionado */
+listview row:selected {
+    background-color: cyan;
+}
+
+/* Scrollbar opcional */
+scrollbar slider {
+    border-radius: 3px;
+    background-color: indigo;
+}

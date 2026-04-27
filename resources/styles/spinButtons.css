@@ -1,0 +1,20 @@
+.changeValues{
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    padding: 5px;
+    border: 3px;
+    border-color: darkcyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+}
+
+.changeValues > button{
+    color: black;
+    padding: 5px;
+}
+
+.changeValues button:hover{
+    border-color: cyan;
+    background-color: darkcyan;
+}

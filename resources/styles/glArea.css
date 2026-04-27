@@ -1,0 +1,17 @@
+.gl-area1{
+    padding: 10px;
+    border: 5px;
+    border-color: darkcyan;
+    border-style: groove;
+    border-radius: 20px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+}
+
+.gl-area2{
+    padding: 10px;
+    border: 5px;
+    border-color: darkcyan;
+    border-style: groove;
+    border-radius: 20px;
+    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+}

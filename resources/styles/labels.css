@@ -1,0 +1,16 @@
+.titles{
+    color: white;
+    min-width:50px;
+    min-height:50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.indicators{
+    color: white;
+    min-width:50px;
+    min-height:50px;
+    font-family: monospace;
+    font-size: large;
+}

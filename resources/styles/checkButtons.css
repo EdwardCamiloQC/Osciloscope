@@ -1,0 +1,26 @@
+.check{
+    color: white;
+    font-weight: bold;
+}
+
+.check check{
+    padding: 5px;
+    background-image: radial-gradient(circle at center, red, transparent);
+}
+
+.check:hover{
+    background-color: darkcyan;
+}
+
+.check check:disabled{
+    background-color: chartreuse;
+}
+
+.check check:hover{
+    background-color: darkcyan;
+}
+
+.check check:checked{
+    border-color: black;
+    background-image: radial-gradient(circle at center, green, transparent);
+}
