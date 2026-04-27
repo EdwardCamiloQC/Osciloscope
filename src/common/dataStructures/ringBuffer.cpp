@@ -13,14 +13,11 @@ RingBuffer::RingBuffer(size_t len):
     ringBufferPt_(nullptr),
     endPt_(nullptr),
     indicatorPt_(nullptr),
-    dataReturn_(nullptr),
     length_(len)
 {
     ringBufferPt_ = new float[length_];
     endPt_ = &ringBufferPt_[length_ - 1];
     indicatorPt_ = ringBufferPt_;
-
-    dataReturn_ = new float[length_];
 
     reset();
 }
@@ -28,10 +25,6 @@ RingBuffer::RingBuffer(size_t len):
 RingBuffer::~RingBuffer(){
     if(ringBufferPt_)
         delete[] ringBufferPt_;
-    
-    if(dataReturn_){
-        delete[] dataReturn_;
-    }
 }
 
 void RingBuffer::reset(){
@@ -68,7 +61,7 @@ void RingBuffer::push_data(const float *data, size_t w){
     }
 }
 
-const float* RingBuffer::get_n_data(size_t n){
+void RingBuffer::get_n_data(float *bufStore, size_t n){
     if(n > length_)
         n = length_;
 
@@ -86,22 +79,20 @@ const float* RingBuffer::get_n_data(size_t n){
 
     if(n > secondPart){
         for(; iteratorPt >= ringBufferPt_; i--){
-            dataReturn_[i] = *iteratorPt;
+            bufStore[i] = *iteratorPt;
             iteratorPt--;
         }
         iteratorPt = endPt_;
         for(; i >= 0; i--){
-            dataReturn_[i] = *iteratorPt;
+            bufStore[i] = *iteratorPt;
             iteratorPt--;
         }
     }else{
         for(; i >= 0; i--){
-            dataReturn_[i] = *iteratorPt;
+            bufStore[i] = *iteratorPt;
             iteratorPt--;
         }
     }
-
-    return dataReturn_;
 }
 
 void RingBuffer::show_data() const{

@@ -57,10 +57,10 @@ namespace ED{
         void push_data(const float *data, size_t w);
 
         /** \brief Gets the array with the last n elements.
-         *  \param n: Number of elements to update in buffer to be delivered. 
-         *  \return Returns the reference to the first element.
+         *  \param bufStore: buffer where the data will be copy and stored.
+         *  \param n: Number of elements to update in buffer to be delivered.
          */
-        const float* get_n_data(size_t n);
+        void get_n_data(float *bufStore, size_t n);
 
         /** \brief Shows the all the ring buffer.
          */
@@ -75,7 +75,6 @@ namespace ED{
             float  *ringBufferPt_ {nullptr};
             float  *endPt_        {nullptr};
             float  *indicatorPt_   {nullptr};
-            float  *dataReturn_   {nullptr};
             size_t length_        {0};
     };
 }
