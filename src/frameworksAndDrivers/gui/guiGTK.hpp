@@ -105,7 +105,7 @@ namespace DRV_FRAMW{
             /** \brief
              *  \param
              */
-            void update_label_button_port(bool open);
+            void update_label_button_port(bool open) override final;
         private:
             /** \brief Constructs the window app.
                 \param app:
