@@ -28,16 +28,21 @@ WHITE = '\e[1;37m'
 #==================================================
 BUILD_DIR = build
 SRC_DIR = ./src
+MY_APP = ./myApp/bin
 
 VPATH =	$(SRC_DIR):\
+		$(SRC_DIR)/domain/signals/:\
+		$(SRC_DIR)/domain/VAOs/:\
 		$(SRC_DIR)/application/:\
-		$(SRC_DIR)/adapters/:\
-		$(SRC_DIR)/entities/grids/:\
-		$(SRC_DIR)/entities/signals/:\
-		$(SRC_DIR)/entities/VAOs/:\
-		$(SRC_DIR)/infrastructure/serialPort/:\
-		$(SRC_DIR)/infrastructure/shaderCompiler/:\
-		$(SRC_DIR)/infrastructure/gui/:\
+		$(SRC_DIR)/infrastructure/:\
+		$(SRC_DIR)/infrastructure/adapters/:\
+		$(SRC_DIR)/frameworksAndDrivers/deviceInspector/:\
+		$(SRC_DIR)/frameworksAndDrivers/gui/:\
+		$(SRC_DIR)/frameworksAndDrivers/gui/grids/:\
+		$(SRC_DIR)/frameworksAndDrivers/persistence/BBDD:\
+		$(SRC_DIR)/frameworksAndDrivers/persistence/systemFile:\
+		$(SRC_DIR)/frameworksAndDrivers/serialPort/:\
+		$(SRC_DIR)/frameworksAndDrivers/shaderCompiler/:\
 		$(SRC_DIR)/common/math/:\
 		$(SRC_DIR)/common/dataStructures/:
 
@@ -74,10 +79,12 @@ endif
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/domain/*/*.cpp)
 SOURCES += $(wildcard $(SRC_DIR)/application/*.cpp)
-SOURCES += $(wildcard $(SRC_DIR)/adapters/*.cpp)
-SOURCES += $(wildcard $(SRC_DIR)/entities/*/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/infrastructure/*.cpp)
 SOURCES += $(wildcard $(SRC_DIR)/infrastructure/*/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/frameworksAndDrivers/*/*.cpp)
+SOURCES += $(wildcard $(SRC_DIR)/frameworksAndDrivers/*/*/*.cpp)
 SOURCES += $(wildcard $(SRC_DIR)/common/*/*.cpp)
 
 #==================================================
@@ -189,7 +196,7 @@ runTest:
 .PHONY: runDeployment
 runDeployment:
 	clear
-	./$(BUILD_DIR)/$(PROJECT)
+	./$(MY_APP)/bin/$(PROJECT)
 
 .PHONY: debugProject
 debugProject:

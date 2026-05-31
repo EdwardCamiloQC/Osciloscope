@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compilar",
+            "label": "Compile",
             "type": "shell",
             "command": "make",
             "args": [
@@ -13,28 +13,28 @@
             "group": {"kind":"build", "isDefault": true}
         },
         {
-            "label": "Compilar (ASAN)",
+            "label": "Compile (ASAN)",
             "type": "shell",
             "command": "make",
             "args": ["INSPECTOR=asan"],
             "problemMatcher": []
         },
         {
-            "label": "Compilar (VALGRIND)",
+            "label": "Compile (VALGRIND)",
             "type": "shell",
             "command": "make",
             "args": ["INSPECTOR=valgrind"],
             "problemMatcher": []
         },
         {
-            "label": "Limpiar",
+            "label": "Clean",
             "type": "shell",
             "command": "make",
             "args": ["clean"],
             "problemMatcher": []
         },
         {
-            "label": "Ejecutar test (ASAN)",
+            "label": "Run (ASAN)",
             "type": "shell",
             "command": "make",
             "args": [
@@ -44,7 +44,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Ejecutar test (VALGRIND)",
+            "label": "Run (VALGRIND)",
             "type": "shell",
             "command": "make",
             "args": [
@@ -54,10 +54,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Ejecutar Deployment",
+            "label": "Run Deployment",
             "type": "shell",
             "dependsOrder": "sequence",
-            "dependsOn": ["Compilar"],
+            "dependsOn": ["Compile"],
             "command": "make",
             "args": ["runDeployment"],
             "problemMatcher": []

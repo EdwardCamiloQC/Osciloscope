@@ -1,8 +1,6 @@
-#include <application/oscilloscope.hpp>
-
-using namespace OSCILLOSCOPE;
+#include "infrastructure/oscilloscope.hpp"
 
 int main(int argc, char**argv){
-    Oscilloscope *oscilloscope = Oscilloscope::get_instance();
-    return oscilloscope->run(argc, argv);
+    INFRA::Oscilloscope oscilloscope;
+    return oscilloscope.run(argc, argv);
 }

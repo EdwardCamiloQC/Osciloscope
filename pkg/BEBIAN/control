@@ -1,0 +1,5 @@
+Package: myAppOsc
+Version: 2.0
+Architecture: amd64
+Maintainer Edward Camilo
+Description: Oscilloscope implemented for Linux.

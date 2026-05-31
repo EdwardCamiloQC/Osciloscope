@@ -1,6 +1,6 @@
 .window{
     /*background-image: url("../../fondoWindow3.png");*/
     background-image: radial-gradient(ellipse at center 50%, transparent, black),
-        linear-gradient(to top, white, darkcyan);
+        linear-gradient(to top, rgb(96, 96, 96), rgb(213, 0, 0));/*darkcyan*/
     background-position: center;
 }
