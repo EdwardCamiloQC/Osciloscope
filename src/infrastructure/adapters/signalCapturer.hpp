@@ -75,7 +75,7 @@ namespace INFRA{
             /**
              * 
              */
-            void associate_screen(APP::IScreen* screenPtr);
+            void associate_screen(APP::IScreen* screenPtr) override final;
 
             /** \brief
              *  \param voltsPtr:
