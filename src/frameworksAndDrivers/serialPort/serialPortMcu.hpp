@@ -1,7 +1,7 @@
 /** \file puertoSerie.hpp
  *  \brief Declaration of the ComSerial class that uses the SerialStream library.
  *  \author Edward Camilo
- *  \version 1.1 beta
+ *  \version v2.0
  *  \date May 2026
  */
 #pragma once
@@ -22,30 +22,13 @@ namespace DRV_FRAMW{
         // METHODS
         //====================
         public:
-            /** \brief Constructor that receive the voltage references that it will update.
+            /** \brief Gets the instance.
+             *  \return SerialPortAnyMcu object.
              */
-            [[nodiscard]] SerialPortAnyMcu();
+            static SerialPortAnyMcu& get_instance();
 
-            /** \note Copy-Constructor disabled.
-             */
-            SerialPortAnyMcu(const SerialPortAnyMcu &other) = delete;
-
-            /** \note Move-Constructor disabled.
-             *  \param other: SerialPortAnyMcu object.
-             */
-            SerialPortAnyMcu(SerialPortAnyMcu &&other) = delete;
-
-            /** \brief Destructor. Closes the port if it is open.
-             */
-            ~SerialPortAnyMcu();
-
-            /** \note Assignment operator disabled.
-             */
-            SerialPortAnyMcu& operator =(const SerialPortAnyMcu&) = delete;
-            SerialPortAnyMcu& operator =(SerialPortAnyMcu &&other) = delete;
-
-            /**
-             * 
+            /** \brief Associates the Screen.
+             *  \param screenPtr: Reference to the Screen.
              */
             void associate_screen(APP::IScreen* screenPtr) override final;
 
@@ -78,20 +61,43 @@ namespace DRV_FRAMW{
              */
             bool get_flag_serial() override final;
 
+            /** \brief Gets the Id correspond with SerialPort option 1.
+             *  \return Id.
+             */
             APP::IdCapturer_t get_Id() override final;
-
         private:
+            /** \brief Constructor that receive the voltage references that it will update.
+             */
+            SerialPortAnyMcu();
+
+            /** \note Copy-Constructor disabled.
+             */
+            SerialPortAnyMcu(const SerialPortAnyMcu &other) = delete;
+
+            /** \note Move-Constructor disabled.
+             *  \param other: SerialPortAnyMcu object.
+             */
+            SerialPortAnyMcu(SerialPortAnyMcu &&other) = delete;
+
+            /** \brief Destructor. Closes the port if it is open.
+             */
+            ~SerialPortAnyMcu();
+
+            /** \note Assignment operator disabled.
+             */
+            SerialPortAnyMcu& operator =(const SerialPortAnyMcu&) = delete;
+            SerialPortAnyMcu& operator =(SerialPortAnyMcu &&other) = delete;
+
             /** \brief Checks if the line captured into the stream, start by certain characters.
                 \param line: String that obtains the line of the capture data by the stream.
                 \param text: Starting characters.
              */
             bool start_with(std::string line, const char* text);
-
         //====================
         // ATTRIBUTES
         //====================
         private:
-            APP::IScreen*           screenPtr_ {nullptr};
-            LibSerial::SerialStream mySerial_;  ///< SerialStream associte with a port
+            APP::IScreen*                    screenPtr_ {nullptr};
+            LibSerial::SerialStream          mySerial_;
     };
 }

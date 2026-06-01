@@ -20,6 +20,11 @@ namespace DOMN{
 /** \namespace INFRA.
  */
 namespace INFRA{
+    enum class Capturer_t{
+        PSOC,
+        ANY_MCU
+    };
+
     /** \brief It collects the data that receive its.
         \class SignalCapturer.
      */
@@ -28,14 +33,9 @@ namespace INFRA{
         // METHODS
         //====================
         public:
-            /** \note Principal Constructor disabled.
+            /** \brief Principal-Constructor.
              */
-            SignalCapturer() = delete;
-
-            /** \brief Relates the capturer.
-                \param theCapturer: Agregation with the capturer selected.
-             */
-            [[nodiscard]] explicit SignalCapturer(std::unique_ptr<APP::ICapturer> capturer);
+            [[nodiscard]] SignalCapturer();
 
             /** \note Copy-Constructor disabled.
              *  \param other: SignalCapturer object.
@@ -61,7 +61,7 @@ namespace INFRA{
             /** \brief Selects between the capturers.
                 \param theCapturer: The capturer to use.
              */
-            void select_capturer(std::unique_ptr<APP::ICapturer> &&capturer);
+            void select_capturer(Capturer_t capturer);
 
             /** \brief Runs the thread.
              *  \param userData: Pointer to user data.
@@ -111,12 +111,12 @@ namespace INFRA{
         // ATTRIBUTES
         //====================
         private:
-            APP::IScreen*                   screenPtr_ {nullptr};
-            DOMN::VoltageSignal*            voltages_ {nullptr};
-            std::unique_ptr<APP::ICapturer> capturerPtr_; ///< Instance to the especific capturer.
-            std::thread                     catcher_;
+            APP::IScreen*         screenPtr_ {nullptr};
+            DOMN::VoltageSignal*  voltages_ {nullptr};
+            APP::ICapturer&       capturer_;
+            std::thread           catcher_;
         public:
-            std::atomic<bool>               stateCatcher_;
-            std::mutex                      mutexCatcher_;
+            std::atomic<bool>     stateCatcher_;
+            std::mutex            mutexCatcher_;
     };
 }

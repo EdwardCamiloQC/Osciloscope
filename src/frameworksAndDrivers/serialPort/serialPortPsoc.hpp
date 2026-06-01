@@ -1,6 +1,6 @@
 /** \file serialPort.hpp
  *  \author Edward Camilo
- *  \version v1.0
+ *  \version v2.0
  *  \date April 2026
  */
 #pragma once
@@ -18,7 +18,48 @@ namespace DRV_FRAMW{
         // METHODS
         //====================
         public:
-            /** \brief Constructor.
+            /** \brief Obtains the instance.
+             *  \return SerialPortPsoc object.
+             */
+            static SerialPortPsoc& get_instance();
+
+            /** \brief Associates the Screen.
+             *  \param screenPtr: Pointer to the screen.
+             */
+            void associate_screen(APP::IScreen* screenPtr) override final;
+
+            /** \brief Open serial port.
+             *  \param portName: Port name.
+             *  \return State serial port.
+             */
+            int open_port(const char* portName) override final;
+
+            /** \brief Close serial port.
+             *  \return State serial port.
+             */
+            int close_port() override final;
+
+            /** \brief Reads the data in file TTY.
+             *  \param userData: Pointer using to save the data.
+             */
+            void catch_data(void* userData) override final;
+
+            /** \brief Sends data.
+             *  \param userData: Data to send.
+             */
+            void set_data(void* userData) override final;
+
+            /** \brief State of the serial port.
+             *  \return State serial port.
+             */
+            bool get_flag_serial() override final;
+
+            /** \brief Id to correspond to PSOC.
+             *  \return Id.
+             */
+            APP::IdCapturer_t get_Id() override final;
+        private:
+            /** \brief Principal-Constructor.
              */
             [[nodiscard]] SerialPortPsoc();
 
@@ -42,41 +83,6 @@ namespace DRV_FRAMW{
              */
             SerialPortPsoc& operator =(const SerialPortPsoc &other) = delete;
             SerialPortPsoc& operator =(SerialPortPsoc &&other) = delete;
-
-            /**
-             * 
-             */
-            void associate_screen(APP::IScreen* screenPtr) override final;
-
-            /** \brief
-             *  \param portName: 
-             */
-            int open_port(const char* portName) override final;
-
-            /** \brief
-             */
-            int close_port() override final;
-
-            /** \brief
-             *  \param userData:
-             */
-            void catch_data(void* userData) override final;
-
-            /** \brief
-             *  \param userData:
-             */
-            void set_data(void* userData) override final;
-
-            /** \brief
-             *  \return
-             */
-            bool get_flag_serial() override final;
-
-            /** \brief
-             *  \return
-             */
-            APP::IdCapturer_t get_Id() override final;
-
         //====================
         // ATTRIBUTES
         //====================

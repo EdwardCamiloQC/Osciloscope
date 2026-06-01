@@ -14,15 +14,9 @@ using namespace DRV_FRAMW;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-SerialPortPsoc::SerialPortPsoc(){
-    state_ = false;
-}
-
-SerialPortPsoc::~SerialPortPsoc(){
-    if(fd_ > 0){
-        close_port();
-        state_ = false;
-    }
+SerialPortPsoc& SerialPortPsoc::get_instance(){
+    static SerialPortPsoc instance;
+    return instance;
 }
 
 void SerialPortPsoc::associate_screen(APP::IScreen* screenPtr){
@@ -57,6 +51,9 @@ int SerialPortPsoc::open_port(const char* portName){
     }
 
     state_ = true;
+    assert(screenPtr_ != nullptr);
+    screenPtr_->set_message("Puerto serial abierto.\n", 4);
+    screenPtr_->update_port_state(true);
 
     return EXIT_SUCCESS;
 }
@@ -64,6 +61,9 @@ int SerialPortPsoc::open_port(const char* portName){
 int SerialPortPsoc::close_port(){
     tcflush(fd_, TCIOFLUSH);
     state_ = false;
+    assert(screenPtr_ != nullptr);
+    screenPtr_->set_message("Puerto serial cerrado.\n", 5);
+    screenPtr_->update_port_state(false);
     return close(fd_);
 }
 
@@ -131,5 +131,22 @@ bool SerialPortPsoc::get_flag_serial(){
 }
 
 APP::IdCapturer_t SerialPortPsoc::get_Id(){
-    return APP::IdCapturer_t::SERIAL_PORT2_ID;
+    return APP::IdCapturer_t::SERIAL_PORT_PSOC_ID;
 }
+
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// PRIVATE METHODS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================
+SerialPortPsoc::SerialPortPsoc(){
+    state_ = false;
+}
+
+SerialPortPsoc::~SerialPortPsoc(){
+    if(fd_ > 0){
+        close_port();
+        state_ = false;
+    }
+}
+

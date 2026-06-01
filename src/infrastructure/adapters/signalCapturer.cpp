@@ -1,6 +1,8 @@
 #include "infrastructure/adapters/signalCapturer.hpp"
 #include "application/ICapturer.hpp"
 #include "application/IScreen.hpp"
+#include "frameworksAndDrivers/serialPort/serialPortPsoc.hpp"
+#include "frameworksAndDrivers/serialPort/serialPortMcu.hpp"
 
 using namespace INFRA;
 
@@ -9,9 +11,9 @@ using namespace INFRA;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-SignalCapturer::SignalCapturer(std::unique_ptr<APP::ICapturer> capturer) 
+SignalCapturer::SignalCapturer() 
     : voltages_(nullptr),
-    capturerPtr_(std::move(capturer))
+    capturer_(DRV_FRAMW::SerialPortPsoc::get_instance())
 {
     stateCatcher_.store(false, std::memory_order_release);
 }
@@ -20,8 +22,19 @@ SignalCapturer::~SignalCapturer(){
     stop_reading();
 }
 
-void SignalCapturer::select_capturer(std::unique_ptr<APP::ICapturer> &&capturer){
-    capturerPtr_ = std::move(capturer);
+void SignalCapturer::select_capturer(Capturer_t capturer){
+    switch(capturer){
+        case Capturer_t::PSOC:
+            if(capturer_.get_Id() == APP::IdCapturer_t::SERIAL_PORT_ANY_ID)
+                capturer_.close_port();
+            capturer_ = DRV_FRAMW::SerialPortPsoc::get_instance();
+            break;
+        case Capturer_t::ANY_MCU:
+            if(capturer_.get_Id() == APP::IdCapturer_t::SERIAL_PORT_PSOC_ID)
+                capturer_.close_port();
+            capturer_ = DRV_FRAMW::SerialPortAnyMcu::get_instance();
+            break;
+    }
 }
 
 void SignalCapturer::start_reading(){
@@ -34,8 +47,7 @@ void SignalCapturer::start_reading(){
 void SignalCapturer::stop_reading(){
     stateCatcher_.store(false, std::memory_order_release);
 
-    if(capturerPtr_)
-        capturerPtr_->close_port();
+    capturer_.close_port();
 
     if(catcher_.joinable())
         catcher_.join();
@@ -43,7 +55,7 @@ void SignalCapturer::stop_reading(){
 
 void SignalCapturer::associate_screen(APP::IScreen* screenPtr){
     screenPtr_ = screenPtr;
-    capturerPtr_->associate_screen(screenPtr);
+    capturer_.associate_screen(screenPtr);
 }
 
 void SignalCapturer::associate_voltages(DOMN::VoltageSignal* voltsPtr){
@@ -51,8 +63,7 @@ void SignalCapturer::associate_voltages(DOMN::VoltageSignal* voltsPtr){
 }
 
 void SignalCapturer::set_time_div(double timeDiv){
-    if(capturerPtr_)
-        capturerPtr_->set_data(&timeDiv);
+    capturer_.set_data(&timeDiv);
 }
 
 std::mutex& SignalCapturer::get_mutex(){
@@ -60,16 +71,10 @@ std::mutex& SignalCapturer::get_mutex(){
 }
 
 void SignalCapturer::open_close_port(const char* portName){
-    if(capturerPtr_){
-        if(capturerPtr_->get_flag_serial()){
-            capturerPtr_->close_port();
-            if(screenPtr_)
-                screenPtr_->update_port_state(false);
-        }else{
-            capturerPtr_->open_port(portName);
-            if(screenPtr_)
-                screenPtr_->update_port_state(true);
-        }
+    if(capturer_.get_flag_serial()){
+        capturer_.close_port();
+    }else{
+        capturer_.open_port(portName);
     }
 }
 
@@ -86,8 +91,7 @@ void SignalCapturer::catch_loop(){
     clock_gettime(CLOCK_MONOTONIC, &next);
 
     while(stateCatcher_.load(std::memory_order_acquire)){
-        if(capturerPtr_)
-            capturerPtr_->catch_data(this);
+        capturer_.catch_data(this);
 
         if(screenPtr_ != nullptr){
             add_ns(next, screenPtr_->get_period_time_ns());

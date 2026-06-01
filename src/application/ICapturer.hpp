@@ -14,8 +14,8 @@ namespace APP{
         \class
     */
     enum class IdCapturer_t{
-        SERIAL_PORT_ID,
-        SERIAL_PORT2_ID,
+        SERIAL_PORT_PSOC_ID,
+        SERIAL_PORT_ANY_ID,
         GENERATE_SIGNAL_ID
     };
 

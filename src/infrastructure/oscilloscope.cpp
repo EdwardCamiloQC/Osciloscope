@@ -1,7 +1,6 @@
 #include <assert.h>
 #include "infrastructure/oscilloscope.hpp"
 #include "adapters/signalCapturer.hpp"
-#include "frameworksAndDrivers/serialPort/serialPortPsoc.hpp"
 #include "frameworksAndDrivers/deviceInspector/devInspector.hpp"
 #include "frameworksAndDrivers/persistence/systemFile/docGenerator.hpp"
 #include "adapters/screen.hpp"
@@ -15,7 +14,7 @@ using namespace INFRA;
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 Oscilloscope::Oscilloscope():
-    signalCapturerPtr_(std::make_unique<INFRA::SignalCapturer>(std::make_unique<DRV_FRAMW::SerialPortPsoc>())),
+    signalCapturerPtr_(std::make_unique<INFRA::SignalCapturer>()),
     devInspectorPtr_(std::make_unique<DRV_FRAMW::DevInspector>()),
     docGeneratorPtr_(std::make_unique<DRV_FRAMW::DocGenerator>()),
     screenPtr_(std::make_unique<INFRA::Screen>(std::make_unique<DRV_FRAMW::GuiGtk>(), 800, 500))

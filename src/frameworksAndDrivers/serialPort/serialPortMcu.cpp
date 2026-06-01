@@ -12,11 +12,9 @@ using namespace DRV_FRAMW;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-SerialPortAnyMcu::SerialPortAnyMcu(){
-}
-
-SerialPortAnyMcu::~SerialPortAnyMcu(){
-    close_port();
+SerialPortAnyMcu& SerialPortAnyMcu::get_instance(){
+    static SerialPortAnyMcu instance;
+    return instance;
 }
 
 void SerialPortAnyMcu::associate_screen(APP::IScreen* screenPtr){
@@ -25,6 +23,8 @@ void SerialPortAnyMcu::associate_screen(APP::IScreen* screenPtr){
 
 int SerialPortAnyMcu::open_port(const char* port){
     if(!(port)){
+        if(screenPtr_ != nullptr)
+            screenPtr_->set_message("No hay nombre de puerto serie para abrir.\n", 2);
         return EXIT_FAILURE;
     }
     if(!mySerial_.IsOpen()){
@@ -36,17 +36,22 @@ int SerialPortAnyMcu::open_port(const char* port){
                 mySerial_.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
                 mySerial_.SetParity(LibSerial::Parity::PARITY_NONE);
                 mySerial_.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
-                screenPtr_->set_message("Serial Abierto: ", 1);
-                screenPtr_->set_message(port, 1);
-                screenPtr_->set_message("\n", 1);
+                if(screenPtr_ != nullptr){
+                    screenPtr_->set_message("Serial Abierto: ", 4);
+                    screenPtr_->set_message(port, 4);
+                    screenPtr_->set_message("\n", 4);
+                    screenPtr_->update_port_state(true);
+                }
                 return EXIT_SUCCESS;
             }
         }
         catch(std::exception& e){
-            screenPtr_->set_message("Error al abrir serial: ", 2);
-            screenPtr_->set_message(port, 2);
-            screenPtr_->set_message(e.what(), 2);
-            screenPtr_->set_message("\n", 2);
+            if(screenPtr_ != nullptr){
+                screenPtr_->set_message("Error al abrir serial: ", 2);
+                screenPtr_->set_message(port, 2);
+                screenPtr_->set_message(e.what(), 2);
+                screenPtr_->set_message("\n", 2);
+            }
             return EXIT_FAILURE;
         }
     }
@@ -58,7 +63,10 @@ int SerialPortAnyMcu::close_port(){
         try{
             mySerial_.Close();
             if(!mySerial_.IsOpen()){
-                screenPtr_->set_message("Serial Cerrado\n", 1);
+                if(screenPtr_ != nullptr){
+                    screenPtr_->set_message("Serial Cerrado\n", 5);
+                    screenPtr_->update_port_state(false);
+                }
                 return EXIT_SUCCESS;
             }
         }catch(std::exception& e){
@@ -143,7 +151,7 @@ bool SerialPortAnyMcu::get_flag_serial(){
 }
 
 APP::IdCapturer_t SerialPortAnyMcu::get_Id(){
-    return APP::IdCapturer_t::SERIAL_PORT_ID;
+    return APP::IdCapturer_t::SERIAL_PORT_ANY_ID;
 }
 
 //==================================================
@@ -151,6 +159,13 @@ APP::IdCapturer_t SerialPortAnyMcu::get_Id(){
 // PRIVATE METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
+SerialPortAnyMcu::SerialPortAnyMcu(){
+}
+
+SerialPortAnyMcu::~SerialPortAnyMcu(){
+    close_port();
+}
+
 bool SerialPortAnyMcu::start_with(std::string line, const char* text){
     std::string aux = text;
     size_t textLen = aux.length();
