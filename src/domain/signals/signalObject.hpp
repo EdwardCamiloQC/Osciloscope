@@ -31,9 +31,9 @@ namespace DOMN{
             SignalObject& operator=(SignalObject&) = delete;
             ~SignalObject();
             void update_vertex(const float* signal, float offset, float voltDiv);
-            void assign_color(SIGNAL_COLOR);
         private:
             void organize_abscissas();
+            void assign_color(SIGNAL_COLOR);
         //====================
         // ATTRIBUTES
         //====================

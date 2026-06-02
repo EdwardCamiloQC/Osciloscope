@@ -29,6 +29,19 @@ void SignalObject::update_vertex(const float* signal, float offset, float voltDi
         vertex_[2*i+1] = 0.25f*(signal[i]+offset)/voltDiv;
     }
 }
+//==================================================
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// PRIVATE METHODS
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//==================================================s
+void SignalObject::organize_abscissas(){
+    abscissas_[0] = -1.0f;
+    vertex_[0] = abscissas_[0];
+    for(unsigned int i = 1; i < length_; i++){
+        abscissas_[i] = abscissas_[i-1] + static_cast<float>(2.0f/(length_-1.0f));
+        vertex_[2*i] = abscissas_[i];
+    }
+}
 
 void SignalObject::assign_color(SIGNAL_COLOR color){
     float r = 1.0f, g = 0.0f, b = 0.0f;
@@ -62,18 +75,5 @@ void SignalObject::assign_color(SIGNAL_COLOR color){
         colorVertex_[i] = r;
         colorVertex_[i+1] = g;
         colorVertex_[i+2] = b;
-    }
-}
-//==================================================
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// PRIVATE METHODS
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//==================================================s
-void SignalObject::organize_abscissas(){
-    abscissas_[0] = -1.0f;
-    vertex_[0] = abscissas_[0];
-    for(unsigned int i = 1; i < length_; i++){
-        abscissas_[i] = abscissas_[i-1] + static_cast<float>(2.0f/(length_-1.0f));
-        vertex_[2*i] = abscissas_[i];
     }
 }
