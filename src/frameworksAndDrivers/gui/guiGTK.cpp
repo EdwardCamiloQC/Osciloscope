@@ -528,8 +528,8 @@ gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLC
                     {
                         std::lock_guard<std::mutex> lock(signalCapturerPtr_->get_mutex());
 
-                        voltagesPtr_[0].apply_offset(offsets_[i], voltDiv_, stateStartStop_);
-                        DOMN::VaoObject::drawVAO(voltagesPtr_[0]);
+                        voltagesPtr_[i].apply_offset(offsets_[i], voltDiv_, stateStartStop_);
+                        DOMN::VaoObject::drawVAO(voltagesPtr_[i]);
                     }
                 }
             }
