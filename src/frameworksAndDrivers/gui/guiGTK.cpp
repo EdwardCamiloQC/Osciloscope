@@ -22,13 +22,9 @@ using namespace DRV_FRAMW;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-GuiGtk::GuiGtk(){
-    appGtkPtr_ = gtk_application_new("com.ed.oscilloscope", G_APPLICATION_DEFAULT_FLAGS);
-}
-
-GuiGtk::~GuiGtk(){
-    if(appGtkPtr_)
-        g_object_unref(appGtkPtr_);
+GuiGtk& GuiGtk::get_instance(){
+    static GuiGtk instance;
+    return instance;
 }
 
 void GuiGtk::associate_signal_capturer(APP::ISignalCapturer* sigCapPtr){
@@ -156,10 +152,12 @@ void GuiGtk::display_message_static(const char* msg, int type){
 void GuiGtk::update_label_button_port(bool open){
     if(open){
         gtk_button_set_label(GTK_BUTTON(buttonPortPtr_), "Close");
-        display_message("Puerto Serial abierto\n", 4);
+        //gtk_widget_remove_css_class(buttonPortPtr_, "led-off");
+        //gtk_widget_add_css_class(buttonPortPtr_, "led-on");
     }else{
         gtk_button_set_label(GTK_BUTTON(buttonPortPtr_), "Open");
-        display_message("Puerto Serial cerrado\n", 5);
+        //gtk_widget_remove_css_class(buttonPortPtr_, "led-off");
+        //gtk_widget_add_css_class(buttonPortPtr_, "led-on");
     }
 }
 //==================================================
@@ -167,6 +165,15 @@ void GuiGtk::update_label_button_port(bool open){
 // PRIVATE METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
+GuiGtk::GuiGtk(){
+    appGtkPtr_ = gtk_application_new("com.ed.oscilloscope", G_APPLICATION_DEFAULT_FLAGS);
+}
+
+GuiGtk::~GuiGtk(){
+    if(appGtkPtr_)
+        g_object_unref(appGtkPtr_);
+}
+
 void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData){
     GtkCssProvider *providerCssWindowPt = gtk_css_provider_new();
     GtkCssProvider *providerCssGlAreasPt = gtk_css_provider_new();

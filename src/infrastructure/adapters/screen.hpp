@@ -32,7 +32,7 @@ namespace INFRA{
             /** \brief Principal Constructor by default.
              *  \param gui: Specific graphic user interface.
              */
-            [[nodiscard]] explicit Screen(std::unique_ptr<APP::IGui> &&gui, unsigned int width, unsigned int heigth);
+            [[nodiscard]] explicit Screen(unsigned int width, unsigned int heigth);
 
             /** \note Copy-constructor disabled.
              *  \param other: Screen object.
@@ -55,28 +55,23 @@ namespace INFRA{
             Screen& operator =(const Screen &other) = delete;
             Screen& operator =(Screen &&other) = delete;
 
-            /**
-             * 
-             */
-            void select_gui(std::unique_ptr<APP::IGui> &&gui);
-
-            /** \brief
-             *  \param
+            /** \brief Associates the signal capturer with the Gui.
+             *  \param signalCapturerPtr: Reference to the Signal Capturer.
              */
             void associate_signal_capturer(APP::ISignalCapturer* signalCapturerPtr)override final;
 
-            /**
-             * 
+            /** \brief Associates the device inspector with the Gui.
+             *  \param devInspPtr: Reference to the Dev Inspector.
              */
             void associate_dev_inspector(APP::IDevInspector* devInspPtr) override final;
 
-            /**
-             * 
+            /** \brief Associates the doc generator with the Gui.
+             *  \param docGenPtr: Reference to the Doc Generator.
              */
             void associate_doc_generator(APP::IDocGenerator* docGenPtr) override final;
 
-            /**
-             * 
+            /** \brief Associates the voltages with the Gui.
+             *  \param voltsPtr: Reference to the voltages.
              */
             void associate_voltages(DOMN::VoltageSignal* voltsPtr) override final;
 
@@ -92,36 +87,37 @@ namespace INFRA{
              */
             int turn_off() override final;
 
-            /** \brief
-             *  \param
+            /** \brief Add the device to show it in the Gui.
+             *  \param devName: Name of the device.
              */
             void add_device(const char* devName) override final;
 
-            /** \brief
-             *  \param
+            /** \brief Remove the device in the Gui.
+             *  \param devName: Name of the device.
              */
             void remove_device(const char* devName) override final;
 
-            /**
-             * 
+            /** \brief Updates the Button that shows the stateof the serial port.
+             *  \param state: Open or close.
              */
             void update_port_state(bool state) override final;
 
-            /**
-             * 
+            /** \brief Obtains the value of the time period to capture data.
+             *  \return Time period.
              */
             long get_period_time_ns() override final;
 
-            /**
-             * 
+            /** \brief Shows in the GUI the message.
+             *  \param msg: Message.
+             *  \param type: 0->in 1->standard 2->error 3->warning 4->open 5->close
              */
             void set_message(const char* msg, int type) const override final;
         //====================
         // ATRIBUTES
         //====================
         private:
-            std::unique_ptr<APP::IGui> guiPtr_;
-            unsigned int               width_;
-            unsigned int               heigth_;
+            APP::IGui&    gui_;
+            unsigned int  width_;
+            unsigned int  heigth_;
     };
 }

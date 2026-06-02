@@ -4,7 +4,6 @@
 #include "frameworksAndDrivers/deviceInspector/devInspector.hpp"
 #include "frameworksAndDrivers/persistence/systemFile/docGenerator.hpp"
 #include "adapters/screen.hpp"
-#include "frameworksAndDrivers/gui/guiGTK.hpp"
 
 using namespace INFRA;
 
@@ -17,7 +16,7 @@ Oscilloscope::Oscilloscope():
     signalCapturerPtr_(std::make_unique<INFRA::SignalCapturer>()),
     devInspectorPtr_(std::make_unique<DRV_FRAMW::DevInspector>()),
     docGeneratorPtr_(std::make_unique<DRV_FRAMW::DocGenerator>()),
-    screenPtr_(std::make_unique<INFRA::Screen>(std::make_unique<DRV_FRAMW::GuiGtk>(), 800, 500))
+    screenPtr_(std::make_unique<INFRA::Screen>(800, 500))
 {
     assert(
         voltages_ != nullptr &&

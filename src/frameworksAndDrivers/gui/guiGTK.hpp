@@ -29,6 +29,60 @@ namespace DRV_FRAMW{
         // METHODS
         //====================
         public:
+            /** \brief Returns the instance.
+             *  \return GuiGtk object.
+             */
+            static GuiGtk& get_instance();
+
+            /** \brief Associates one signal capturer to the GUI.
+             *  \param sigCapPtr: Pointer reference to SignalCapturer.
+             */
+            void associate_signal_capturer(APP::ISignalCapturer* sigCapPtr) override final;
+
+            /** \brief Assocciates one device inspector.
+             *  \param devInspPtr: Reference to one device inspector.
+             */
+            void associate_dev_inspector(APP::IDevInspector* devInspPtr) override final;
+
+            /** \brief Associates once doc generator.
+             *  \param docGenPtr: Reference to one doc generator.
+             */
+            void associate_doc_generator(APP::IDocGenerator* docGenPtr) override final;
+
+            /** \brief Associates the voltages.
+             *  \param voltsPtr: Reference to the Signal voltages.
+             */
+            void associate_voltages(DOMN::VoltageSignal* voltsPtr) override final;
+
+            /** \brief Initializes the GUI and also the SignalCapturer and DeviceInspector.
+             *  \param argc: Argument count.
+             *  \param argv: Argument vector.
+             *  \return Status.
+             */
+            int init(int &argc, char **&argv) override final;
+
+            /** \brief Updates the drop down list.
+                \param add: Flag to represent add or remove.
+                \param text: Name of the port.
+             */
+            void update_drop_port(const bool add, const char *text) override final;
+
+            /** \brief Return the time period to capture data.
+             *  \return Time period.
+             */
+            long get_period_time_cap_ns() override final;
+
+            /** \brief Show in GUI the message that arrive.
+             *  \param msg: Message.
+             *  \param type: 0->in 1->normal 2->error 3->warning 4->open 5->close.
+             */
+            void display_message(const char* msg, int type) const override final;
+
+            /** \brief Changes the label in button that correspond to the serial port.
+             *  \param open: Flag to represent if the serial port was openned or closed.
+             */
+            void update_label_button_port(bool open) override final;
+        private:
             /** \brief Constructor.
              */
             [[nodiscard]] GuiGtk();
@@ -54,59 +108,12 @@ namespace DRV_FRAMW{
             GuiGtk& operator =(const GuiGtk &other) = delete;
             GuiGtk& operator =(GuiGtk &&other) = delete;
 
-            /**
-             * 
-             */
-            void associate_signal_capturer(APP::ISignalCapturer* sigCapPtr) override final;
-
-            /**
-             * 
-             */
-            void associate_dev_inspector(APP::IDevInspector* devInspPtr) override final;
-
-            /**
-             * 
-             */
-            void associate_doc_generator(APP::IDocGenerator* docGenPtr) override final;
-
-            /**
-             * 
-             */
-            void associate_voltages(DOMN::VoltageSignal* voltsPtr) override final;
-
-            /** \brief
-             *  \param argc:
-             *  \param argv:
-             *  \return Status.
-             */
-            int init(int &argc, char **&argv) override final;
-
-            /** \brief Updates the drop down list.
-                \param add:
-                \param text:
-             */
-            void update_drop_port(const bool add, const char *text) override final;
-
-            /**
-             * 
-             */
-            long get_period_time_cap_ns() override final;
-
-            /**
-             * 
-             */
-            void display_message(const char* msg, int type) const override final;
-
-            /**
-             * 
+            /** \brief Show in GUI the message send proper of this class.
+             *  \param msg: Message.
+             *  \param type: 0->in 1->normal 2->error 3->warning 4->open 5->close.
              */
             static void display_message_static(const char* msg, int type);
 
-            /** \brief
-             *  \param
-             */
-            void update_label_button_port(bool open) override final;
-        private:
             /** \brief Constructs the window app.
                 \param app:
                 \param userData:
@@ -257,7 +264,6 @@ namespace DRV_FRAMW{
             inline static float                 offsets_[4]           {0.0f, 0.0f, 0.0f, 0.0f};
             inline static guint                 drawTimeOutID_        {0};
             inline static std::string           routePort_;
-
         public:
             inline static std::atomic<double>   timeDiv_              {1.0f};
     };
