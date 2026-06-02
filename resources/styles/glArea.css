@@ -4,7 +4,7 @@
     border-color: darkcyan;
     border-style: groove;
     border-radius: 20px;
-    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+    background-image: linear-gradient(to top, rgb(74, 59, 78), rgb(120, 60, 100), rgb(74, 59, 78));
 }
 
 .gl-area2{
@@ -13,5 +13,5 @@
     border-color: darkcyan;
     border-style: groove;
     border-radius: 20px;
-    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+    background-image: linear-gradient(to top, rgb(74, 59, 78), rgb(120, 60, 100), rgb(74, 59, 78));
 }

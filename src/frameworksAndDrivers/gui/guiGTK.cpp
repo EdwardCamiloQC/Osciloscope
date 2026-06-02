@@ -335,24 +335,24 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
 
                 GtkWidget *spinOffset1Pt = gtk_spin_button_new(adjustment1Pt, 0.1, 2);
                 gtk_widget_set_size_request(spinOffset1Pt, WIDTH_WIDGET, WIDTH_LENGHT);
-                gtk_widget_add_css_class(spinOffset1Pt, "changeValues");
+                gtk_widget_add_css_class(spinOffset1Pt, "spinRed");
 
                 GtkWidget *spinOffset2Pt = gtk_spin_button_new(adjustment2Pt, 0.1, 2);
                 gtk_widget_set_size_request(spinOffset2Pt, WIDTH_WIDGET, WIDTH_LENGHT);
-                gtk_widget_add_css_class(spinOffset2Pt, "changeValues");
+                gtk_widget_add_css_class(spinOffset2Pt, "spinOrange");
 
                 GtkWidget *spinOffset3Pt = gtk_spin_button_new(adjustment3Pt, 0.1, 2);
                 gtk_widget_set_size_request(spinOffset3Pt, WIDTH_WIDGET, WIDTH_LENGHT);
-                gtk_widget_add_css_class(spinOffset3Pt, "changeValues");
+                gtk_widget_add_css_class(spinOffset3Pt, "spinGreen");
 
                 GtkWidget *spinOffset4Pt = gtk_spin_button_new(adjustment4Pt, 0.1, 2);
                 gtk_widget_set_size_request(spinOffset4Pt, WIDTH_WIDGET, WIDTH_LENGHT);
-                gtk_widget_add_css_class(spinOffset4Pt, "changeValues");
+                gtk_widget_add_css_class(spinOffset4Pt, "spinBlue");
 
                 GtkAdjustment *adjustmentFreqPt = gtk_adjustment_new(1.0, 0.001, 100.0, 0.001, 1.0, 0.0);
                 GtkWidget *spinFreqPt = gtk_spin_button_new(adjustmentFreqPt, 1.0, 3);
                 gtk_widget_set_size_request(spinFreqPt, WIDTH_WIDGET, WIDTH_LENGHT);
-                gtk_widget_add_css_class(spinFreqPt, "changeValues");
+                gtk_widget_add_css_class(spinFreqPt, "spinTimeVal");
 
                 GtkWidget *labelFreqPt = gtk_label_new("ms/div");
                 gtk_widget_set_size_request(labelFreqPt, WIDTH_WIDGET, WIDTH_LENGHT);

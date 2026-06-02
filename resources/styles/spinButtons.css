@@ -1,20 +1,100 @@
-.changeValues{
+.spinRed{
     color: black;
     font-size: small;
     font-family: monospace;
     padding: 5px;
-    border: 3px;
-    border-color: darkcyan;
+    border: 1px;
+    border-color: cyan;
     border-style: solid;
-    background-image: linear-gradient(to top, rgb(50, 50, 50), white, rgb(50, 50, 50));
+    background-image: linear-gradient(to top, rgb(74, 59, 78), white, darkgrey);
 }
-
-.changeValues > button{
+.spinRed > button{
     color: black;
     padding: 5px;
 }
 
-.changeValues button:hover{
+.spinRed button:hover{
+    border-color: black;
+    background-color: red;
+}
+
+.spinOrange{
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    padding: 5px;
+    border: 1px;
     border-color: cyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(74, 59, 78), white, darkgrey);
+}
+.spinOrange > button{
+    color: black;
+    padding: 5px;
+}
+
+.spinOrange button:hover{
+    border-color: black;
+    background-color: orange;
+}
+
+.spinGreen{
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    padding: 5px;
+    border: 1px;
+    border-color: cyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(74, 59, 78), white, darkgrey);
+}
+.spinGreen > button{
+    color: black;
+    padding: 5px;
+}
+
+.spinGreen button:hover{
+    border-color: black;
+    background-color: green;
+}
+
+.spinBlue{
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    padding: 5px;
+    border: 1px;
+    border-color: cyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(74, 59, 78), white, darkgrey);
+}
+.spinBlue > button{
+    color: black;
+    padding: 5px;
+}
+
+.spinBlue button:hover{
+    border-color: black;
+    background-color: blue;
+}
+
+.spinTimeVal{
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    padding: 5px;
+    border: 1px;
+    border-color: cyan;
+    border-style: solid;
+    background-image: linear-gradient(to top, rgb(74, 59, 78), white, darkgrey);
+}
+
+.spinTimeVal > button{
+    color: black;
+    padding: 5px;
+}
+
+.spinTimeVal button:hover{
+    border-color: black;
     background-color: darkcyan;
 }
