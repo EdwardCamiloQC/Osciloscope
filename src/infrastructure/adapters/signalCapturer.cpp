@@ -47,8 +47,6 @@ void SignalCapturer::start_reading(){
 void SignalCapturer::stop_reading(){
     stateCatcher_.store(false, std::memory_order_release);
 
-    capturer_.close_port();
-
     if(catcher_.joinable())
         catcher_.join();
 }
