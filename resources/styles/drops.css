@@ -1,13 +1,13 @@
 
 /* Base del dropdown */
 dropdown {
-    padding: 15px;
-    border: 1px solid;
+    padding: 5px;
+    border: 0px solid;
     border-radius: 5px;
     border-color: cyan;
     border-style: solid;
     background-color: transparent;
-    background-image: linear-gradient(to top, darkgrey, white, darkgrey);
+    background-image: none;/*linear-gradient(to top, darkgrey, white, darkgrey);*/
 }
 
 /* Botón visible del dropdown */
