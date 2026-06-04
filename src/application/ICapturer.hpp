@@ -10,6 +10,21 @@ namespace APP{
 }
 
 namespace APP{
+    /** \enum MsgReturn_t.
+     *  \class
+     */
+    enum class MsgReturn_t{
+        PORT_OPENED,
+        PORT_CLOSED,
+        DONT_NAME_PORT,
+        ERROR_IN_OPEN,
+        ERROR_IN_CLOSE,
+        ERROR_IN_CATCH,
+        ERROR_IN_SEND,
+        CATCH,
+        SEND
+    };
+
     /** \enum IdCapturer_t
         \class
     */
@@ -24,11 +39,10 @@ namespace APP{
     */
     struct ICapturer{
         virtual ~ICapturer() = default;
-        virtual void associate_screen(APP::IScreen* screenPtr) = 0;
-        virtual int open_port(const char *port) = 0;
-        virtual int close_port() = 0;
-        virtual void catch_data(void* userData) = 0;
-        virtual void set_data(void* userData) = 0;
+        virtual MsgReturn_t open_port(const char *port) = 0;
+        virtual MsgReturn_t close_port() = 0;
+        virtual MsgReturn_t catch_data(void* userData) = 0;
+        virtual MsgReturn_t set_data(void* userData) = 0;
         virtual bool get_flag_serial() = 0;
         virtual IdCapturer_t get_Id() = 0;
     };

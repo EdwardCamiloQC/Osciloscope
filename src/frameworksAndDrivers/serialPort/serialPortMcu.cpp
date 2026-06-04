@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <cstring>
+#include <assert.h>
 #include "frameworksAndDrivers/serialPort/serialPortMcu.hpp"
 #include "infrastructure/adapters/screen.hpp"
 #include "infrastructure/adapters/signalCapturer.hpp"
@@ -17,16 +18,10 @@ SerialPortAnyMcu& SerialPortAnyMcu::get_instance(){
     return instance;
 }
 
-void SerialPortAnyMcu::associate_screen(APP::IScreen* screenPtr){
-    screenPtr_ = screenPtr; 
-}
+APP::MsgReturn_t SerialPortAnyMcu::open_port(const char* port){
+    if(!(port))
+        return APP::MsgReturn_t::DONT_NAME_PORT;
 
-int SerialPortAnyMcu::open_port(const char* port){
-    if(!(port)){
-        if(screenPtr_ != nullptr)
-            screenPtr_->set_message("No hay nombre de puerto serie para abrir.\n", 2);
-        return EXIT_FAILURE;
-    }
     if(!mySerial_.IsOpen()){
         try{
             mySerial_.Open(port);
@@ -36,61 +31,36 @@ int SerialPortAnyMcu::open_port(const char* port){
                 mySerial_.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
                 mySerial_.SetParity(LibSerial::Parity::PARITY_NONE);
                 mySerial_.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
-                if(screenPtr_ != nullptr){
-                    screenPtr_->set_message("Serial Abierto: ", 4);
-                    screenPtr_->set_message(port, 4);
-                    screenPtr_->set_message("\n", 4);
-                    screenPtr_->update_port_state(true);
-                }
-                return EXIT_SUCCESS;
+                return APP::MsgReturn_t::PORT_OPENED;
             }
         }
         catch(std::exception& e){
-            if(screenPtr_ != nullptr){
-                screenPtr_->set_message("Error al abrir serial: ", 2);
-                screenPtr_->set_message(port, 2);
-                screenPtr_->set_message(e.what(), 2);
-                screenPtr_->set_message("\n", 2);
-            }
-            return EXIT_FAILURE;
+            return APP::MsgReturn_t::ERROR_IN_OPEN;
         }
     }
-    return EXIT_SUCCESS;
+    return APP::MsgReturn_t::PORT_OPENED;
 }
 
-int SerialPortAnyMcu::close_port(){
+APP::MsgReturn_t SerialPortAnyMcu::close_port(){
     if(mySerial_.IsOpen()){
         try{
             mySerial_.Close();
             if(!mySerial_.IsOpen()){
-                if(screenPtr_ != nullptr){
-                    screenPtr_->set_message("Serial Cerrado\n", 5);
-                    screenPtr_->update_port_state(false);
-                }
-                return EXIT_SUCCESS;
+                return APP::MsgReturn_t::PORT_CLOSED;
             }
         }catch(std::exception& e){
-            screenPtr_->set_message("Error al cerrar el puerto serie: ", 2);
-            screenPtr_->set_message(e.what(), 2);
-            screenPtr_->set_message("\n", 2);
-            return EXIT_FAILURE;
+            return APP::MsgReturn_t::ERROR_IN_CLOSE;
         }
     }
-    return EXIT_SUCCESS;
+    return APP::MsgReturn_t::PORT_CLOSED;
 }
 
-void SerialPortAnyMcu::catch_data(void* userData){
+APP::MsgReturn_t SerialPortAnyMcu::catch_data(void* userData){
     auto dataPt = reinterpret_cast<INFRA::SignalCapturer*>(userData);
 
-    if(dataPt == nullptr){
-        screenPtr_->set_message("No se asoció un SignalCapturer para tratar los datos.", 2);
-        return;
-    }
+    assert(dataPt != nullptr);
 
-    if(dataPt->get_voltages_ref() == nullptr){
-        screenPtr_->set_message("No hay voltajes ascociados al SignalCapturer.", 2);
-        return;
-    }
+    assert(dataPt->get_voltages_ref() != nullptr);
 
     uint16_t data1, data2, data3, data4;
 
@@ -101,9 +71,7 @@ void SerialPortAnyMcu::catch_data(void* userData){
             std::getline(mySerial_, line);
         }
         catch(std::exception &e){
-            screenPtr_->set_message("No captura data", 2);
-            screenPtr_->set_message(e.what(), 2);
-            screenPtr_->set_message("\n", 2);
+            return APP::MsgReturn_t::ERROR_IN_CATCH;
         }
 
         if(start_with(line, "#")){
@@ -132,18 +100,19 @@ void SerialPortAnyMcu::catch_data(void* userData){
             dataPt->get_voltages_ref()[3].ringBuffer_.push_data(&cero, 1);
         }
     }
+    return APP::MsgReturn_t::CATCH;
 }
 
-void SerialPortAnyMcu::set_data([[maybe_unused]]void* userData){
+APP::MsgReturn_t SerialPortAnyMcu::set_data([[maybe_unused]]void* userData){
     if(userData == nullptr){
-        screenPtr_->set_message("No se asociaron datos para enviar.\n", 2);
-        return;
+        return APP::MsgReturn_t::ERROR_IN_SEND;
     }
     //char sendFreq[50];
     //if(mySerial_.IsOpen()){
         //sprintf(sendFreq, "%u\n", freq);
         //mySerial_.write(sendFreq, 2);
     //}
+    return APP::MsgReturn_t::SEND;
 }
 
 bool SerialPortAnyMcu::get_flag_serial(){

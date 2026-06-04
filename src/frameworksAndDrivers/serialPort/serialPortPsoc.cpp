@@ -19,22 +19,18 @@ SerialPortPsoc& SerialPortPsoc::get_instance(){
     return instance;
 }
 
-void SerialPortPsoc::associate_screen(APP::IScreen* screenPtr){
-    screenPtr_ = screenPtr;
-}
+APP::MsgReturn_t SerialPortPsoc::open_port(const char* portName){
+    if(!(portName))
+        return APP::MsgReturn_t::DONT_NAME_PORT;
 
-int SerialPortPsoc::open_port(const char* portName){
     fd_ = open(portName, O_RDONLY | O_NOCTTY /*| O_NONBLOCK*/);
 
     if(fd_ == -1){
-        assert(screenPtr_ != nullptr);
-        screenPtr_->set_message("Error: No se pudo abrir el puerto.\n", 2);
-        return EXIT_FAILURE;
+        return APP::MsgReturn_t::ERROR_IN_OPEN;
     }
 
     if(tcgetattr(fd_, &tty_) != 0){
-        screenPtr_->set_message("Error: tcgetattr.\n", 2);
-        return EXIT_FAILURE;
+        return APP::MsgReturn_t::ERROR_IN_OPEN;
     }
 
     tcflush(fd_, TCIOFLUSH);
@@ -45,42 +41,31 @@ int SerialPortPsoc::open_port(const char* portName){
     tty_.c_cc[VTIME] = 1; //timeout de 0.1 segundos entre bytes
 
     if(tcsetattr(fd_, TCSANOW, &tty_) != 0){
-        assert(screenPtr_ != nullptr);
-        screenPtr_->set_message("Error: tcsetattr.\n", 2);
-        return EXIT_FAILURE;
+        return APP::MsgReturn_t::ERROR_IN_OPEN;
     }
 
     state_ = true;
-    assert(screenPtr_ != nullptr);
-    screenPtr_->set_message("Puerto serial abierto.\n", 4);
-    screenPtr_->update_port_state(true);
 
-    return EXIT_SUCCESS;
+    return APP::MsgReturn_t::PORT_OPENED;
 }
 
-int SerialPortPsoc::close_port(){
+APP::MsgReturn_t SerialPortPsoc::close_port(){
     tcflush(fd_, TCIOFLUSH);
+    int state;
+    state = close(fd_);
+    if(state != 0){
+        return APP::MsgReturn_t::ERROR_IN_CLOSE;
+    }
     state_ = false;
-    assert(screenPtr_ != nullptr);
-    screenPtr_->set_message("Puerto serial cerrado.\n", 5);
-    screenPtr_->update_port_state(false);
-    return close(fd_);
+    return APP::MsgReturn_t::PORT_CLOSED;
 }
 
-void SerialPortPsoc::catch_data(void* userData){
+APP::MsgReturn_t SerialPortPsoc::catch_data(void* userData){
     auto dataPt = reinterpret_cast<INFRA::SignalCapturer*>(userData);
 
-    if(dataPt == nullptr){
-        assert(screenPtr_ != nullptr);
-        screenPtr_->set_message("No se asoció un SignalCapturer para tratar los datos.\n", 2);
-        return;
-    }
+    assert(dataPt != nullptr);
 
-    if(dataPt->get_voltages_ref() == nullptr){
-        assert(screenPtr_ != nullptr);
-        screenPtr_->set_message("No hay voltajes ascociados al SignalCapturer.\n", 2);
-        return;
-    }
+    assert(dataPt->get_voltages_ref() != nullptr);
 
     uint8_t buffer[8] = {0};
 
@@ -114,16 +99,18 @@ void SerialPortPsoc::catch_data(void* userData){
             }
         }
     }catch(...){
-        assert(screenPtr_ != nullptr);
-        screenPtr_->set_message("Error en lectura de datos.\n", 2);
+        return APP::MsgReturn_t::ERROR_IN_CATCH;
     }
+
+    return APP::MsgReturn_t::CATCH;
 }
 
-void SerialPortPsoc::set_data([[maybe_unused]]void* userData){
+APP::MsgReturn_t SerialPortPsoc::set_data([[maybe_unused]]void* userData){
     if(userData == nullptr){
-        screenPtr_->set_message("No se asociaron datos para enviar.\n", 2);
-        return;
+        return APP::MsgReturn_t::ERROR_IN_SEND;
     }
+
+    return APP::MsgReturn_t::SEND;
 }
 
 bool SerialPortPsoc::get_flag_serial(){

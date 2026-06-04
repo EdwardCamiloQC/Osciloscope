@@ -23,31 +23,26 @@ namespace DRV_FRAMW{
              */
             static SerialPortPsoc& get_instance();
 
-            /** \brief Associates the Screen.
-             *  \param screenPtr: Pointer to the screen.
-             */
-            void associate_screen(APP::IScreen* screenPtr) override final;
-
             /** \brief Open serial port.
              *  \param portName: Port name.
              *  \return State serial port.
              */
-            int open_port(const char* portName) override final;
+            APP::MsgReturn_t open_port(const char* portName) override final;
 
             /** \brief Close serial port.
              *  \return State serial port.
              */
-            int close_port() override final;
+            APP::MsgReturn_t close_port() override final;
 
             /** \brief Reads the data in file TTY.
              *  \param userData: Pointer using to save the data.
              */
-            void catch_data(void* userData) override final;
+            APP::MsgReturn_t catch_data(void* userData) override final;
 
             /** \brief Sends data.
              *  \param userData: Data to send.
              */
-            void set_data(void* userData) override final;
+            APP::MsgReturn_t set_data(void* userData) override final;
 
             /** \brief State of the serial port.
              *  \return State serial port.
@@ -87,7 +82,6 @@ namespace DRV_FRAMW{
         // ATTRIBUTES
         //====================
         private:
-            APP::IScreen*  screenPtr_;
             int            fd_ {-1};
             struct termios tty_;
             bool           state_;

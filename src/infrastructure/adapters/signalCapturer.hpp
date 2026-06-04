@@ -92,21 +92,19 @@ namespace INFRA{
              */
             std::mutex& get_mutex() override final;
 
-            /**
-             * 
+            /** \brief Opens the serial port if it was already closed. Or, closes it if it was already open.
+             *  \param portName: Serial Port name.
              */
             void open_close_port(const char* portName) override final;
 
+            /** \brief Gets the pointer to the voltages.
+             *  \return VoltageSignal pointer.
+             */
             DOMN::VoltageSignal* get_voltages_ref();
         private:
             /** \brief Catch the voltages.
              */
             void catch_loop();
-
-            /**
-             * 
-             */
-            void add_ns(timespec& t, long ns);
         //====================
         // ATTRIBUTES
         //====================
