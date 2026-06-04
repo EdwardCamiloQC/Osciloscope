@@ -85,10 +85,6 @@ void GuiGtk::update_drop_port(const bool add, const char *text){
     }
 }
 
-long GuiGtk::get_period_time_cap_ns(){
-    return static_cast<long>(timeDiv_.load(std::memory_order_acquire) / voltagesPtr_[0].length_) * 8000000L;
-}
-
 void GuiGtk::display_message(const char* msg, int type) const{
     GtkTextIter end;
     gtk_text_buffer_get_end_iter(bufferConsolePtr_, &end);
@@ -152,12 +148,12 @@ void GuiGtk::display_message_static(const char* msg, int type){
 void GuiGtk::update_label_button_port(bool open){
     if(open){
         gtk_button_set_label(GTK_BUTTON(buttonPortPtr_), "Close");
-        //gtk_widget_remove_css_class(buttonPortPtr_, "led-off");
-        //gtk_widget_add_css_class(buttonPortPtr_, "led-on");
+        gtk_widget_remove_css_class(buttonPortPtr_, "port-closed");
+        gtk_widget_add_css_class(buttonPortPtr_, "port-opened");
     }else{
         gtk_button_set_label(GTK_BUTTON(buttonPortPtr_), "Open");
-        //gtk_widget_remove_css_class(buttonPortPtr_, "led-off");
-        //gtk_widget_add_css_class(buttonPortPtr_, "led-on");
+        gtk_widget_remove_css_class(buttonPortPtr_, "port-opened");
+        gtk_widget_add_css_class(buttonPortPtr_, "port-closed");
     }
 }
 //==================================================
@@ -707,7 +703,7 @@ void GuiGtk::offset_signal_callback(GtkSpinButton *spinButton, [[maybe_unused]]g
 }
 
 void GuiGtk::spin_button_freq_callback(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
-    timeDiv_.store(gtk_spin_button_get_value(spinButton), std::memory_order_release);
+    timeDiv_ = gtk_spin_button_get_value(spinButton);
 }
 
 void GuiGtk::button_doc_callback([[maybe_unused]]GtkButton *button, [[maybe_unused]]gpointer userData){
@@ -737,7 +733,7 @@ void GuiGtk::click_callback([[maybe_unused]]GtkGestureClick *gesture, [[maybe_un
     int width = gtk_widget_get_width(glAreaSpectrumPtr_);
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "    Frecuencia: %.1fHz\n", x*voltagesPtr_[0].length_ *1000/(timeDiv_.load(std::memory_order_acquire)*width*8*2*3.141516));
+    snprintf(buffer, sizeof(buffer), "    Frecuencia: %.1fHz\n", x*voltagesPtr_[0].length_ *1000/(timeDiv_*width*8*2*3.141516));
 
     display_message_static(buffer, 1);
 }

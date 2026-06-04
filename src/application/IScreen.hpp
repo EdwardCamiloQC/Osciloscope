@@ -31,7 +31,6 @@ namespace APP{
         virtual void add_device(const char* devName) = 0;
         virtual void remove_device(const char* devName) = 0;
         virtual void update_port_state(bool state) = 0;
-        virtual long get_period_time_ns() = 0;
         virtual void set_message(const char* msg, int type) const = 0;
     };
 }

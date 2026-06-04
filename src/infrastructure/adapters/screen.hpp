@@ -102,11 +102,6 @@ namespace INFRA{
              */
             void update_port_state(bool state) override final;
 
-            /** \brief Obtains the value of the time period to capture data.
-             *  \return Time period.
-             */
-            long get_period_time_ns() override final;
-
             /** \brief Shows in the GUI the message.
              *  \param msg: Message.
              *  \param type: 0->in 1->standard 2->error 3->warning 4->open 5->close

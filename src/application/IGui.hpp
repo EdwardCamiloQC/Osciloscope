@@ -29,7 +29,6 @@ namespace APP{
         virtual void associate_voltages(DOMN::VoltageSignal* voltsPtr) = 0;
         virtual void update_drop_port(bool add, const char *portDevice) = 0;
         virtual void update_label_button_port(bool state) = 0;
-        virtual long get_period_time_cap_ns() = 0;
         virtual void display_message(const char* msg, int type)const = 0;
     };
 }

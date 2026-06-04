@@ -7,7 +7,6 @@
 
 #include <gtk/gtk.h>
 #include <epoxy/gl.h>
-#include <atomic>
 #include <string>
 #include "application/IGui.hpp"
 #include "frameworksAndDrivers/gui/grids/gridVoltage.hpp"
@@ -66,11 +65,6 @@ namespace DRV_FRAMW{
                 \param text: Name of the port.
              */
             void update_drop_port(const bool add, const char *text) override final;
-
-            /** \brief Return the time period to capture data.
-             *  \return Time period.
-             */
-            long get_period_time_cap_ns() override final;
 
             /** \brief Show in GUI the message that arrive.
              *  \param msg: Message.
@@ -265,6 +259,6 @@ namespace DRV_FRAMW{
             inline static guint                 drawTimeOutID_        {0};
             inline static std::string           routePort_;
         public:
-            inline static std::atomic<double>   timeDiv_              {1.0f};
+            inline static double                timeDiv_              {1.0f};
     };
 }

@@ -53,10 +53,6 @@ void Screen::update_port_state(bool state){
     gui_.update_label_button_port(state);
 }
 
-long Screen::get_period_time_ns(){
-    return gui_.get_period_time_cap_ns();
-}
-
 void Screen::set_message(const char* msg, int type) const{
     gui_.display_message(msg, type);
 }
