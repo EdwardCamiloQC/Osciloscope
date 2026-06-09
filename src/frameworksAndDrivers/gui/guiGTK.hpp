@@ -9,13 +9,17 @@
 #include <epoxy/gl.h>
 #include <string>
 #include "application/IGui.hpp"
-#include "frameworksAndDrivers/gui/grids/gridVoltage.hpp"
-#include "frameworksAndDrivers/gui/grids/gridSpectrum.hpp"
+#include "domain/grids/gridVoltage.hpp"
+#include "domain/grids/gridSpectrum.hpp"
 
 namespace APP{
     struct ISignalCapturer;
     struct IDevInspector;
     struct IDocGenerator;
+}
+
+namespace DOMN{
+    class VaoObject;
 }
 
 /** \namespace DRV_FRAMW.
@@ -76,6 +80,12 @@ namespace DRV_FRAMW{
              *  \param open: Flag to represent if the serial port was openned or closed.
              */
             void update_label_button_port(bool open) override final;
+
+            /** \brief Saves the displacement time.
+             *  \param sec: Seconds.
+             *  \param nsec: Nanoseconds.
+             */
+            void set_displacement_time(long sec, long nsec) override final;
         private:
             /** \brief Constructor.
              */
@@ -220,19 +230,53 @@ namespace DRV_FRAMW{
              */
             static void button_port_callback(GtkWidget *widget, gpointer userData);
 
-            /** \brief
-                \param controller:
-                \param x:
-                \param y:
-                \param userData:
+            /** \brief Calculates the voltage correspond to the pixel clicked.
+             *  \param gesture:
+             *  \param nPress: Number of consecutive clicks.
+             *  \param x: X pixel.
+             *  \param y: Y pixel.
+             *  \param userData:
              */
-            static void click_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+            static void click_voltage_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+
+            /** \brief Calculates the spectrum correspond to the pixel clicked.
+             *  \param gesture:
+             *  \param nPress: Number of consecutive clicks.
+             *  \param x: X pixel.
+             *  \param y: Y pixel.
+             *  \param userData:
+             */
+            static void click_spectrum_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
 
             /** \brief Draw the graphics indicates to GTK.
                 \param userData:
                 \return
              */
             static gboolean render(gpointer userData);
+
+            /** \brief Create VAO in GPU.
+             *  \param vaoObject: VaoObject in RAM.
+             *  \param staticDynamic: false:static, true:dynamic
+             */
+            static void create_VAO(DOMN::VaoObject& vaoObject, bool staticDynamic);
+
+            /** \brief Delete VAO in GPU.
+             *  \param vaoObject: VaoObject in RAM.
+             */
+            static void destroy_VAO(DOMN::VaoObject& vaoObject);
+
+            /** \brief Draw VAO
+             *  \param vaoObject: VaoObject.
+             *  \param numPoints: Number of points to draw.
+             *  \param lineWidth: Line width to apply.
+             */
+            static void draw_VAO(DOMN::VaoObject& vaoObject, unsigned long numPoints, unsigned int lineWidth);
+
+            /** \brief Update VAO in GPU.
+             *  \param vaoObject: VaoObject in CPU.
+             *  \param numPoints: Number of points to update.
+             */
+            static void update_VAO(DOMN::VaoObject& vaoObject, unsigned long numPoints);
         //====================
         // ATTRIBUTES
         //====================
@@ -248,8 +292,8 @@ namespace DRV_FRAMW{
             inline static APP::IDevInspector*   devInspectorPtr_      {nullptr};
             inline static APP::IDocGenerator*   docGeneratorPtr_      {nullptr};
             inline static DOMN::VoltageSignal*  voltagesPtr_          {nullptr};
-            inline static GridVoltage           gridVoltage_;
-            inline static GridSpectrum          gridSpectrum_;
+            inline static DOMN::GridVoltage     gridVoltage_;
+            inline static DOMN::GridSpectrum    gridSpectrum_;
             inline static GLuint                idShaderVolt_         {0};
             inline static GLuint                idShaderSpec_         {0};
             inline static bool                  stateStartStop_       {false};
@@ -258,7 +302,9 @@ namespace DRV_FRAMW{
             inline static float                 offsets_[4]           {0.0f, 0.0f, 0.0f, 0.0f};
             inline static guint                 drawTimeOutID_        {0};
             inline static std::string           routePort_;
-        public:
             inline static double                timeDiv_              {1.0f};
+            inline static long                  displacementTimeNs_   {40000L};
+            inline static unsigned long         M_                    {1024L};
+            inline static unsigned int          fs_                   {22220};
     };
 }

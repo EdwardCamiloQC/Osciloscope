@@ -55,8 +55,6 @@ void GuiGtk::update_drop_port(const bool add, const char *text){
     if(model == nullptr){
         if(add){
             gtk_string_list_append(deviceListPortPtr_, text);
-            //gtk_drop_down_set_model(dropPort, G_LIST_MODEL(newList));
-            //g_object_unref(newList);//eee
         }
         return;
     }
@@ -155,6 +153,10 @@ void GuiGtk::update_label_button_port(bool open){
         gtk_widget_remove_css_class(buttonPortPtr_, "port-opened");
         gtk_widget_add_css_class(buttonPortPtr_, "port-closed");
     }
+}
+
+void GuiGtk::set_displacement_time([[maybe_unused]]long sec, long nsec){
+    displacementTimeNs_ = nsec;
 }
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -345,8 +347,8 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
                 gtk_widget_set_size_request(spinOffset4Pt, WIDTH_WIDGET, WIDTH_LENGHT);
                 gtk_widget_add_css_class(spinOffset4Pt, "spinBlue");
 
-                GtkAdjustment *adjustmentFreqPt = gtk_adjustment_new(1.0, 0.001, 100.0, 0.001, 1.0, 0.0);
-                GtkWidget *spinFreqPt = gtk_spin_button_new(adjustmentFreqPt, 1.0, 3);
+                GtkAdjustment *adjustmentFreqPt = gtk_adjustment_new(1.0, 0.01, 100.0, 0.01, 1.0, 0.0);
+                GtkWidget *spinFreqPt = gtk_spin_button_new(adjustmentFreqPt, 1.0, 2);
                 gtk_widget_set_size_request(spinFreqPt, WIDTH_WIDGET, WIDTH_LENGHT);
                 gtk_widget_add_css_class(spinFreqPt, "spinTimeVal");
 
@@ -398,54 +400,58 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
 
     gtk_window_set_child(GTK_WINDOW(windowPt), gridGeneralPt);
 
-    GtkGesture *clickPt = gtk_gesture_click_new();
-    gtk_widget_add_controller(glAreaSpectrumPtr_, GTK_EVENT_CONTROLLER(clickPt));
+    GtkGesture *clickVoltagePt = gtk_gesture_click_new();
+    gtk_widget_add_controller(glAreaVoltagePtr_, GTK_EVENT_CONTROLLER(clickVoltagePt));
 
-    g_signal_connect(glAreaVoltagePtr_,  "realize",          G_CALLBACK(realize_voltage_callback),    userData);
-    g_signal_connect(glAreaVoltagePtr_,  "unrealize",        G_CALLBACK(unrealize_voltage_callback),  userData);
-    g_signal_connect(glAreaVoltagePtr_,  "render",           G_CALLBACK(render_voltage_callback),     userData);
-    g_signal_connect(glAreaVoltagePtr_,  "resize",           G_CALLBACK(resize_voltage_callback),     userData);
-    g_signal_connect(glAreaSpectrumPtr_, "realize",          G_CALLBACK(realize_spectrum_callback),   userData);
-    g_signal_connect(glAreaSpectrumPtr_, "unrealize",        G_CALLBACK(unrealize_spectrum_callback), userData);
-    g_signal_connect(glAreaSpectrumPtr_, "resize",           G_CALLBACK(resize_spectrum_callback),    userData);
-    g_signal_connect(glAreaSpectrumPtr_, "render",           G_CALLBACK(render_spectrum_callback),    userData);
-    g_signal_connect(buttonStartStopPt,  "clicked",          G_CALLBACK(startStop_callback),          userData);
-    g_signal_connect(dropVoltDivPt,      "notify::selected", G_CALLBACK(voltDiv_callback),            userData);
-    g_signal_connect(checkSignal1Pt,     "toggled",          G_CALLBACK(check_signal_callback),       GUINT_TO_POINTER(0));
-    g_signal_connect(checkSignal2Pt,     "toggled",          G_CALLBACK(check_signal_callback),       GUINT_TO_POINTER(1));
-    g_signal_connect(checkSignal3Pt,     "toggled",          G_CALLBACK(check_signal_callback),       GUINT_TO_POINTER(2));
-    g_signal_connect(checkSignal4Pt,     "toggled",          G_CALLBACK(check_signal_callback),       GUINT_TO_POINTER(3));
-    g_signal_connect(spinOffset1Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),      GUINT_TO_POINTER(0));
-    g_signal_connect(spinOffset2Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),      GUINT_TO_POINTER(1));
-    g_signal_connect(spinOffset3Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),      GUINT_TO_POINTER(2));
-    g_signal_connect(spinOffset4Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),      GUINT_TO_POINTER(3));
-    g_signal_connect(spinFreqPt,         "value_changed",    G_CALLBACK(spin_button_freq_callback),   userData);
-    g_signal_connect(buttonDoc,          "clicked",          G_CALLBACK(button_doc_callback),         userData);
-    g_signal_connect(dropPortPtr_,       "notify::selected", G_CALLBACK(drop_port_callback),          userData);
-    g_signal_connect(buttonPortPtr_,     "clicked",          G_CALLBACK(button_port_callback),        userData);
-    g_signal_connect(windowPt,           "destroy",          G_CALLBACK(destroy_window_callback),     userData);
-    g_signal_connect(clickPt,            "pressed",          G_CALLBACK(click_callback),              userData);
+    GtkGesture *clickSpectrumPt = gtk_gesture_click_new();
+    gtk_widget_add_controller(glAreaSpectrumPtr_, GTK_EVENT_CONTROLLER(clickSpectrumPt));
+
+    g_signal_connect(glAreaVoltagePtr_,  "realize",          G_CALLBACK(realize_voltage_callback),     userData);
+    g_signal_connect(glAreaVoltagePtr_,  "unrealize",        G_CALLBACK(unrealize_voltage_callback),   userData);
+    g_signal_connect(glAreaVoltagePtr_,  "render",           G_CALLBACK(render_voltage_callback),      userData);
+    g_signal_connect(glAreaVoltagePtr_,  "resize",           G_CALLBACK(resize_voltage_callback),      userData);
+    g_signal_connect(glAreaSpectrumPtr_, "realize",          G_CALLBACK(realize_spectrum_callback),    userData);
+    g_signal_connect(glAreaSpectrumPtr_, "unrealize",        G_CALLBACK(unrealize_spectrum_callback),  userData);
+    g_signal_connect(glAreaSpectrumPtr_, "resize",           G_CALLBACK(resize_spectrum_callback),     userData);
+    g_signal_connect(glAreaSpectrumPtr_, "render",           G_CALLBACK(render_spectrum_callback),     userData);
+    g_signal_connect(buttonStartStopPt,  "clicked",          G_CALLBACK(startStop_callback),           userData);
+    g_signal_connect(dropVoltDivPt,      "notify::selected", G_CALLBACK(voltDiv_callback),             userData);
+    g_signal_connect(checkSignal1Pt,     "toggled",          G_CALLBACK(check_signal_callback),        GUINT_TO_POINTER(0));
+    g_signal_connect(checkSignal2Pt,     "toggled",          G_CALLBACK(check_signal_callback),        GUINT_TO_POINTER(1));
+    g_signal_connect(checkSignal3Pt,     "toggled",          G_CALLBACK(check_signal_callback),        GUINT_TO_POINTER(2));
+    g_signal_connect(checkSignal4Pt,     "toggled",          G_CALLBACK(check_signal_callback),        GUINT_TO_POINTER(3));
+    g_signal_connect(spinOffset1Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),       GUINT_TO_POINTER(0));
+    g_signal_connect(spinOffset2Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),       GUINT_TO_POINTER(1));
+    g_signal_connect(spinOffset3Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),       GUINT_TO_POINTER(2));
+    g_signal_connect(spinOffset4Pt,      "value_changed",    G_CALLBACK(offset_signal_callback),       GUINT_TO_POINTER(3));
+    g_signal_connect(spinFreqPt,         "value_changed",    G_CALLBACK(spin_button_freq_callback),    userData);
+    g_signal_connect(buttonDoc,          "clicked",          G_CALLBACK(button_doc_callback),          userData);
+    g_signal_connect(dropPortPtr_,       "notify::selected", G_CALLBACK(drop_port_callback),           userData);
+    g_signal_connect(buttonPortPtr_,     "clicked",          G_CALLBACK(button_port_callback),         userData);
+    g_signal_connect(windowPt,           "destroy",          G_CALLBACK(destroy_window_callback),      userData);
+    g_signal_connect(clickVoltagePt,     "pressed",          G_CALLBACK(click_voltage_area_callback),  userData);
+    g_signal_connect(clickSpectrumPt,    "pressed",          G_CALLBACK(click_spectrum_area_callback), userData);
 
     gtk_window_present(GTK_WINDOW(windowPt));
 
     if(signalCapturerPtr_ == nullptr){
-        display_message_static("No hay una asociación con un capturador de señales al momento de iniciar GTK.", 2);
+        std::cerr << "No hay una asociación con un capturador de señales al momento de iniciar GTK.\n";
     }else{
         signalCapturerPtr_->start_reading();
     }
 
     if(devInspectorPtr_ == nullptr){
-        display_message_static("No hay una asociación con un inspector de dispositivos al momento de iniciar GTK.", 2);
+        std::cerr << "No hay una asociación con un inspector de dispositivos al momento de iniciar GTK.\n";
     }else{
         devInspectorPtr_->init();
     }
 
     if(docGeneratorPtr_ == nullptr){
-        display_message_static("No hay una asociación con un generador de documentos al momento de iniciar GTK.", 2);
+        std::cerr << "No hay una asociación con un generador de documentos al momento de iniciar GTK.\n";
     }
 
     if(voltagesPtr_ == nullptr){
-        display_message_static("No hay una asociación con voltages al momento de iniciar GTK.", 2);
+        std::cerr << "No hay una asociación con voltages al momento de iniciar GTK.\n";
     }
 
     drawTimeOutID_ = g_timeout_add(16, render, userData);
@@ -467,7 +473,7 @@ void GuiGtk::destroy_window_callback([[maybe_unused]]GtkWidget *widget, [[maybe_
 void GuiGtk::realize_voltage_callback(GtkGLArea *area, [[maybe_unused]]gpointer userData){
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSignal : realize", 2);
+        std::cerr << "Failed to link contex areaSignal : realize\n";
         return;
     }
 
@@ -479,26 +485,28 @@ void GuiGtk::realize_voltage_callback(GtkGLArea *area, [[maybe_unused]]gpointer 
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
 
-    gridVoltage_.createGrid();
+    create_VAO(gridVoltage_, false);
     if(voltagesPtr_){
-        DOMN::VaoObject::createVAO(voltagesPtr_[0]);
-        DOMN::VaoObject::createVAO(voltagesPtr_[1]);
-        DOMN::VaoObject::createVAO(voltagesPtr_[2]);
-        DOMN::VaoObject::createVAO(voltagesPtr_[3]);
+        create_VAO(voltagesPtr_[0], true);
+        create_VAO(voltagesPtr_[1], true);
+        create_VAO(voltagesPtr_[2], true);
+        create_VAO(voltagesPtr_[3], true);
     }
 }
 
 void GuiGtk::unrealize_voltage_callback(GtkGLArea *area, [[maybe_unused]]gpointer userData){
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSignal : unrealize", 2); 
+        std::cerr << "Failed to link contex areaSignal : unrealize\n"; 
     }
 
-    gridVoltage_.deleteGrid();
-    DOMN::VaoObject::deleteVAO(voltagesPtr_[0]);
-    DOMN::VaoObject::deleteVAO(voltagesPtr_[1]);
-    DOMN::VaoObject::deleteVAO(voltagesPtr_[2]);
-    DOMN::VaoObject::deleteVAO(voltagesPtr_[3]);
+    destroy_VAO(gridVoltage_);
+    if(voltagesPtr_){
+        destroy_VAO(voltagesPtr_[0]);
+        destroy_VAO(voltagesPtr_[1]);
+        destroy_VAO(voltagesPtr_[2]);
+        destroy_VAO(voltagesPtr_[3]);
+    }
 
     glDeleteProgram(idShaderVolt_);
 }
@@ -506,7 +514,7 @@ void GuiGtk::unrealize_voltage_callback(GtkGLArea *area, [[maybe_unused]]gpointe
 gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLContext *context, [[maybe_unused]]gpointer userData){
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSignal : render", 2);
+        std::cerr << "Failed to link contex areaSignal : render\n";
         return FALSE;
     }
 
@@ -516,7 +524,7 @@ gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLC
     if(idShaderVolt_ != 0){
         glUseProgram(idShaderVolt_);
         //aqui dibuja
-        gridVoltage_.draw();
+        draw_VAO(gridVoltage_, gridVoltage_.get_numOfPoints(), 1);
 
         if(voltagesPtr_){
             for(unsigned int i = 0; i < 4; i++){
@@ -524,8 +532,9 @@ gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLC
                     {
                         std::lock_guard<std::mutex> lock(signalCapturerPtr_->get_mutex());
 
-                        voltagesPtr_[i].apply_offset(offsets_[i], voltDiv_, stateStartStop_);
-                        DOMN::VaoObject::drawVAO(voltagesPtr_[i]);
+                        voltagesPtr_[i].apply_changes(offsets_[i], voltDiv_, M_, stateStartStop_);
+                        update_VAO(voltagesPtr_[i], M_);
+                        draw_VAO(voltagesPtr_[i], M_, 2);
                     }
                 }
             }
@@ -535,7 +544,7 @@ gboolean GuiGtk::render_voltage_callback(GtkGLArea *area, [[maybe_unused]]GdkGLC
     // Verificar errores de OpenGL
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
-        display_message_static("OpenGL Error: ", 2);
+        std::cerr << "OpenGL Error: " << error << std::endl;
     }
 
     return TRUE;
@@ -549,12 +558,12 @@ void GuiGtk::realize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpointer
     gtk_gl_area_make_current(area);
 
     if(!gtk_gl_area_get_context(area)){
-        display_message_static("No OpenGL context available\n", 2);
+        std::cerr << "No OpenGL context available\n";
         return;
     }
 
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSpectrum : realize\n", 2);
+        std::cerr << "Failed to link contex areaSpectrum : realize\n";
         return;
     }
 
@@ -566,30 +575,30 @@ void GuiGtk::realize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpointer
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
 
-    gridSpectrum_.createGrid();
+    create_VAO(gridSpectrum_, false);
 
     //Aqui crea los espectros
     if(voltagesPtr_){
-        DOMN::VaoObject::createVAO(voltagesPtr_[0].spectrumSignal_);
-        DOMN::VaoObject::createVAO(voltagesPtr_[1].spectrumSignal_);
-        DOMN::VaoObject::createVAO(voltagesPtr_[2].spectrumSignal_);
-        DOMN::VaoObject::createVAO(voltagesPtr_[3].spectrumSignal_);
+        create_VAO(voltagesPtr_[0].spectrumSignal_, true);
+        create_VAO(voltagesPtr_[1].spectrumSignal_, true);
+        create_VAO(voltagesPtr_[2].spectrumSignal_, true);
+        create_VAO(voltagesPtr_[3].spectrumSignal_, true);
     }
 }
 
 void GuiGtk::unrealize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpointer userData){
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSpectrum : unrealize\n", 2); 
+        std::cerr << "Failed to link contex areaSpectrum : unrealize\n"; 
     }
 
-    gridSpectrum_.deleteGrid();
+    destroy_VAO(gridSpectrum_);
     //Aqui Elimina los spectros
     if(voltagesPtr_){
-        DOMN::VaoObject::deleteVAO(voltagesPtr_[0].spectrumSignal_);
-        DOMN::VaoObject::deleteVAO(voltagesPtr_[1].spectrumSignal_);
-        DOMN::VaoObject::deleteVAO(voltagesPtr_[2].spectrumSignal_);
-        DOMN::VaoObject::deleteVAO(voltagesPtr_[3].spectrumSignal_);
+        destroy_VAO(voltagesPtr_[0].spectrumSignal_);
+        destroy_VAO(voltagesPtr_[1].spectrumSignal_);
+        destroy_VAO(voltagesPtr_[2].spectrumSignal_);
+        destroy_VAO(voltagesPtr_[3].spectrumSignal_);
     }
 
     glDeleteProgram(idShaderSpec_);
@@ -598,7 +607,7 @@ void GuiGtk::unrealize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpoint
 gboolean GuiGtk::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]]GdkGLContext *context, [[maybe_unused]]gpointer userData){
     gtk_gl_area_make_current(area);
     if(gtk_gl_area_get_error(area) != NULL){
-        display_message_static("Failed to link contex areaSpectrum : render\n", 2);
+        std::cerr << "Failed to link contex areaSpectrum : render\n";
         return false;
     }
 
@@ -608,7 +617,7 @@ gboolean GuiGtk::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]]GdkGL
     if(idShaderSpec_ != 0){
         glUseProgram(idShaderSpec_);
 
-        gridSpectrum_.draw();
+        draw_VAO(gridSpectrum_, gridSpectrum_.get_numOfPoints(), 1);
 
         if(voltagesPtr_){
             for(unsigned int i = 0; i < 4; i++){
@@ -616,9 +625,10 @@ gboolean GuiGtk::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]]GdkGL
                     {
                         std::lock_guard<std::mutex> lock(signalCapturerPtr_->get_mutex());
 
-                        voltagesPtr_[i].calculate_spectrum();
-                        voltagesPtr_[i].spectrumSignal_.update_vertex();
-                        DOMN::VaoObject::drawVAO(voltagesPtr_[i].spectrumSignal_);
+                        voltagesPtr_[i].calculate_spectrum(voltagesPtr_[i].get_numOfPoints());
+                        voltagesPtr_[i].spectrumSignal_.update_vertex(voltagesPtr_[0].get_numOfPoints());
+                        update_VAO(voltagesPtr_[i].spectrumSignal_, voltagesPtr_[0].get_numOfPoints());
+                        draw_VAO(voltagesPtr_[i].spectrumSignal_, voltagesPtr_[0].get_numOfPoints(), 2);
                     }
                 }
             }
@@ -628,7 +638,7 @@ gboolean GuiGtk::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]]GdkGL
     // Verificar errores de OpenGL
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
-        display_message_static("OpenGL Error: ", 2);
+        std::cerr << "OpenGL Error: " << error << std::endl;
     }
 
     return true;
@@ -704,6 +714,7 @@ void GuiGtk::offset_signal_callback(GtkSpinButton *spinButton, [[maybe_unused]]g
 
 void GuiGtk::spin_button_freq_callback(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     timeDiv_ = gtk_spin_button_get_value(spinButton);
+    M_ = static_cast<unsigned long>(timeDiv_ * fs_ / 125); //#[] * tdiv * fs
 }
 
 void GuiGtk::button_doc_callback([[maybe_unused]]GtkButton *button, [[maybe_unused]]gpointer userData){
@@ -729,11 +740,20 @@ void GuiGtk::button_port_callback([[maybe_unused]]GtkWidget *widget, [[maybe_unu
         signalCapturerPtr_->open_close_port(routePort_.c_str());
 }
 
-void GuiGtk::click_callback([[maybe_unused]]GtkGestureClick *gesture, [[maybe_unused]]int nPress, double x, [[maybe_unused]]double y, [[maybe_unused]]gpointer userData){
+void GuiGtk::click_voltage_area_callback([[maybe_unused]]GtkGestureClick *gesture, [[maybe_unused]]int nPress, [[maybe_unused]]double x, double y, [[maybe_unused]]gpointer userData){
+    int height = gtk_widget_get_height(glAreaVoltagePtr_);
+
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer), "    %.3fV\n", (height/2-y)*8*voltDiv_/height);
+
+    display_message_static(buffer, 1);
+}
+
+void GuiGtk::click_spectrum_area_callback([[maybe_unused]]GtkGestureClick *gesture, [[maybe_unused]]int nPress, double x, [[maybe_unused]]double y, [[maybe_unused]]gpointer userData){
     int width = gtk_widget_get_width(glAreaSpectrumPtr_);
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "    Frecuencia: %.1fHz\n", x*voltagesPtr_[0].length_ *1000/(timeDiv_*width*8*2*3.141516));
+    snprintf(buffer, sizeof(buffer), "    %.1fHz\n", (x * fs_)/width);
 
     display_message_static(buffer, 1);
 }
@@ -752,4 +772,118 @@ gboolean GuiGtk::render([[maybe_unused]]gpointer userData){
     }
 
     return G_SOURCE_CONTINUE;
+}
+
+void GuiGtk::create_VAO(DOMN::VaoObject& vaoObject, bool staticDynamic){
+    if(vaoObject.get_vao()) //VAO ya existe
+        return;
+    
+    glGenVertexArrays(1, &vaoObject.get_vao());
+
+    if(vaoObject.get_elements_pt() == nullptr){
+        glGenBuffers(2, &vaoObject.get_vertex_ind());
+    }else{
+        glGenBuffers(3, &vaoObject.get_vertex_ind());
+    }
+
+    glBindVertexArray(vaoObject.get_vao());
+
+    glBindBuffer(GL_ARRAY_BUFFER, vaoObject.get_vertex_ind());
+    if(staticDynamic){
+        glBufferData(GL_ARRAY_BUFFER, 2*vaoObject.get_numOfPoints()*sizeof(float), vaoObject.get_vertices_pt(), GL_DYNAMIC_DRAW);
+    }else{
+        glBufferData(GL_ARRAY_BUFFER, 2*vaoObject.get_numOfPoints()*sizeof(float), vaoObject.get_vertices_pt(), GL_STATIC_DRAW);
+    }
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vaoObject.get_color_ind());
+    glBufferData(GL_ARRAY_BUFFER, 3*vaoObject.get_numOfPoints()*sizeof(float), vaoObject.get_color_pt(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+
+    if(vaoObject.get_elements_pt() != nullptr){
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vaoObject.get_elements_ind());
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, vaoObject.get_numOfInd()*sizeof(unsigned int), vaoObject.get_elements_pt(), GL_STATIC_DRAW);
+    }
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    GLenum error = glGetError();
+    if(error != GL_NO_ERROR){
+        std::cerr << "Error al crear VAO: " << error << std::endl;
+    }
+}
+
+void GuiGtk::destroy_VAO(DOMN::VaoObject& vaoObject){
+    if(vaoObject.get_vao()){
+        glDeleteVertexArrays(1, &vaoObject.get_vao());
+        vaoObject.get_vao() = 0;
+    }
+
+    if(vaoObject.get_elements_pt() != nullptr){
+        glDeleteBuffers(3, &vaoObject.get_vertex_ind());
+        vaoObject.get_vertex_ind() = 0;
+        vaoObject.get_color_ind() = 0;
+        vaoObject.get_elements_ind() = 0;
+    }else{
+        glDeleteBuffers(2, &vaoObject.get_vertex_ind());
+        vaoObject.get_vertex_ind() = 0;
+        vaoObject.get_color_ind() = 0;
+    }
+
+    GLenum error = glGetError();
+    if(error != GL_NO_ERROR){
+        std::cerr << "Error al destruir VAO: " << error << std::endl;
+    }
+}
+
+void GuiGtk::draw_VAO(DOMN::VaoObject& vaoObject, unsigned long numPoints, unsigned int lineWidth){
+    if(!vaoObject.get_vao()) //No hay VAO
+        return;
+    
+    if(numPoints > vaoObject.get_numOfPoints())
+        numPoints = vaoObject.get_numOfPoints();
+
+    glLineWidth(lineWidth);
+
+    glBindVertexArray(vaoObject.get_vao());
+
+    if(vaoObject.get_elements_pt() == nullptr){
+        if(lineWidth == 1)
+            glDrawArrays(GL_LINES, 0, numPoints);
+        if(lineWidth == 2)
+            glDrawArrays(GL_LINE_STRIP, 0, numPoints);
+    }else{
+        glDrawElements(GL_LINES, vaoObject.get_numOfInd(), GL_UNSIGNED_INT, 0);
+    }
+
+    glBindVertexArray(0);
+
+    GLenum error = glGetError();
+    if(error != GL_NO_ERROR){
+        std::cerr << "Error al dibujar VAO: " << error << std::endl;
+    }
+}
+
+void GuiGtk::update_VAO(DOMN::VaoObject& vaoObject, unsigned long numPoints){
+    if(!vaoObject.get_vao()) //No hay VAO
+        return;
+    
+    if(numPoints > vaoObject.get_numOfPoints())
+        numPoints = vaoObject.get_numOfPoints(); 
+
+    glBindVertexArray(vaoObject.get_vao());
+
+    glBindBuffer(GL_ARRAY_BUFFER, vaoObject.get_vertex_ind());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, 2*numPoints*sizeof(float), vaoObject.get_vertices_pt());
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    GLenum error = glGetError();
+    if(error != GL_NO_ERROR){
+        std::cerr << "Error al actualizar VAO: " << error << std::endl;
+    }
 }
