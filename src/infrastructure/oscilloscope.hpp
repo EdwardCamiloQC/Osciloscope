@@ -70,12 +70,11 @@ namespace INFRA{
             std::unique_ptr<APP::IDocGenerator>        docGeneratorPtr_;
             std::unique_ptr<APP::IScreen>              screenPtr_;
             static constexpr unsigned long             LENGTH_VOLT_SIGNAL {1024};
-            static constexpr unsigned int              M_VALUES_TO_SHIFT  {1};
             inline static DOMN::VoltageSignal          voltages_[4] {
-                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::SIGNAL_COLOR::RED),
-                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::SIGNAL_COLOR::ORANGE),
-                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::SIGNAL_COLOR::GREEN),
-                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::SIGNAL_COLOR::BLUE),
+                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::VAO_COLOR_t::RED),
+                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::VAO_COLOR_t::ORANGE),
+                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::VAO_COLOR_t::GREEN),
+                DOMN::VoltageSignal(LENGTH_VOLT_SIGNAL, DOMN::VAO_COLOR_t::BLUE),
             };
      };
 }
