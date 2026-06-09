@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "domain/signals/voltageSignal.hpp"
 
 using namespace DOMN;
@@ -7,27 +8,35 @@ using namespace DOMN;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-VoltageSignal::VoltageSignal(unsigned int len, SIGNAL_COLOR color)
+VoltageSignal::VoltageSignal(unsigned int len, VAO_COLOR_t color)
     : SignalObject(len, color),
     ringBuffer_(2*len),
     spectrumSignal_(len, color),
-    bufferVoltagePt_(nullptr)
+    bufferVoltagePtr_(nullptr)
 {
-    bufferVoltagePt_ = new float[length_];
+    bufferVoltagePtr_ = new float[length_];
 }
 
 VoltageSignal::~VoltageSignal(){
-    if(bufferVoltagePt_)
-        delete[] bufferVoltagePt_;
+    if(bufferVoltagePtr_)
+        delete[] bufferVoltagePtr_;
 }
 
-void VoltageSignal::apply_offset(const float &offset, const float &voldiv, bool update){
-    if(update)
-        ringBuffer_.get_n_data(bufferVoltagePt_, length_);
+void VoltageSignal::apply_changes(const float &offset, const float &voldiv, unsigned int M, bool update){
+    assert(M >= 2);
 
-    update_vertex(bufferVoltagePt_, offset, voldiv);
+    if(M > get_numOfPoints())
+        M = get_numOfPoints();
+
+    unsigned int n = get_numOfPoints();
+
+    if(update){
+        ringBuffer_.get_n_data(bufferVoltagePtr_, n);
+    }
+
+    update_vertices(bufferVoltagePtr_, offset, voldiv, M);
 }
 
-void VoltageSignal::calculate_spectrum(){
-    spectrumSignal_.calculate_spectrum(bufferVoltagePt_);
+void VoltageSignal::calculate_spectrum(unsigned int N){
+    spectrumSignal_.calculate_spectrum(bufferVoltagePtr_, N);
 }

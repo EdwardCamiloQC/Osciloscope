@@ -8,22 +8,29 @@ using namespace DOMN;
 // PUBLIC METHODS
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
-SpectrumSignal::SpectrumSignal(unsigned int len, SIGNAL_COLOR color)
-    :SignalObject(len, color), moduleSpectrum_pt_(nullptr), spectrum_pt_(nullptr){
-        moduleSpectrum_pt_ = new float[length_];
-        spectrum_pt_ = new std::complex<float>[length_];
+SpectrumSignal::SpectrumSignal(unsigned int len, VAO_COLOR_t color)
+    :SignalObject(len, color), moduleSpectrumPtr_(nullptr), spectrumPtr_(nullptr)
+{
+        moduleSpectrumPtr_ = new float[length_];
+        spectrumPtr_       = new std::complex<float>[length_];
 }
 
 SpectrumSignal::~SpectrumSignal(){
-    delete[] moduleSpectrum_pt_;
-    delete[] spectrum_pt_;
+    if(moduleSpectrumPtr_)
+        delete[] moduleSpectrumPtr_;
+
+    if(spectrumPtr_)
+        delete[] spectrumPtr_;
 }
 
-void SpectrumSignal::calculate_spectrum(const float *signal){
-    SIGNALS::FFT::fft(signal, length_, spectrum_pt_);
-    SIGNALS::FFT::calculateModule(spectrum_pt_, length_, moduleSpectrum_pt_);
+void SpectrumSignal::calculate_spectrum(const float *signal, unsigned int N){
+    SIGNALS::FFT::fft(signal, N, spectrumPtr_);
+    SIGNALS::FFT::calculateModule(spectrumPtr_, N, moduleSpectrumPtr_);
 }
 
-void SpectrumSignal::update_vertex(){
-    SignalObject::update_vertex(moduleSpectrum_pt_, -1.0f, 0.25f);
+void SpectrumSignal::update_vertex(unsigned int N){
+    if(N > get_numOfPoints())
+        N = get_numOfPoints();
+
+    SignalObject::update_vertices(moduleSpectrumPtr_, -1.0f, 0.25f, N);
 }

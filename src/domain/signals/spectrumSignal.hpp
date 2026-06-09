@@ -1,7 +1,7 @@
 /** \file spectrumSignal.hpp
-    \author Edward Camilo
-    \version v1.0
-    \date May 2026
+ *  \author Edward Camilo
+ *  \version v2.0
+ *  \date June 2026
  */
 #pragma once
 
@@ -15,38 +15,49 @@ namespace DOMN{
         \class
      */
     class SpectrumSignal: public SignalObject{
-        // Methods
+        //====================
+        // METHODS
+        //====================
         public:
+            /** \note Principal-Constructor disabled.
+             */
+            SpectrumSignal() = delete;
+
             /** \brief Constructor.
                 \param len: Length of the spectrum signal.
                 \param color: Signal color.
              */
-            SpectrumSignal(unsigned int len, SIGNAL_COLOR color);
+            [[nodiscard]] explicit SpectrumSignal(unsigned int len, VAO_COLOR_t color);
 
-            /** \note Copy constructor disabled.
+            /** \note Copy-Constructor disabled.
              */
-            SpectrumSignal(const SpectrumSignal&)=delete;
+            SpectrumSignal(const SpectrumSignal& other) = delete;
+
+            /** \note Move-Constructor disabled.
+             */
+            SpectrumSignal(SpectrumSignal&& other) = delete;
 
             /** \brief Destructor.
              */
             ~SpectrumSignal();
 
-            /** \note Operator assignment disabled.
+            /** \note Assignment operator disabled.
              */
-            SpectrumSignal& operator=(SpectrumSignal&)=delete;
+            SpectrumSignal& operator=(const SpectrumSignal& other) = delete;
+            SpectrumSignal& operator=(SpectrumSignal&& other) = delete;
 
             /** \brief Calcules the spectrum of a function.
                 \param signal: Function to analyze.
              */
-            void calculate_spectrum(const float *signal);
+            void calculate_spectrum(const float *signal, unsigned int N);
 
             /** \brief Updates the vertives.
              */
-            void update_vertex(void);
+            void update_vertex(unsigned int N);
 
         // Attributes
         private:
-            float *moduleSpectrum_pt_; ///< Module of a spectrum.
-            std::complex<float> *spectrum_pt_; ///< Spectrum.
+            float*                moduleSpectrumPtr_; ///< Module of a spectrum.
+            std::complex<float>*  spectrumPtr_; ///< Spectrum.
     };
 }

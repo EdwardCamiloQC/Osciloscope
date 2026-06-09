@@ -15,24 +15,27 @@ namespace DOMN{
         \class
     */
     class VoltageSignal: public SignalObject{
+        //====================
+        // METHODS
+        //====================
         public:
             /** \note The basic constructor is disabled.
              */
-            [[nodiscard]] VoltageSignal() = delete;
+            VoltageSignal() = delete;
 
             /** \brief Constructor.
                 \param len: Length of the voltage signal data.
                 \param color: Color of the voltage signal data.
             */
-            [[nodiscard]] VoltageSignal(unsigned int len, SIGNAL_COLOR color);
+            [[nodiscard]] explicit VoltageSignal(unsigned int len, VAO_COLOR_t color);
 
             /** \note Copy-constructor disabled.
              */
-            [[nodiscard]] VoltageSignal(const VoltageSignal &other) = delete;
+            VoltageSignal(const VoltageSignal &other) = delete;
             
             /** \note Move-constructor disabled.
              */
-            [[nodiscard]] VoltageSignal(VoltageSignal &&other) = delete;
+            VoltageSignal(VoltageSignal &&other) = delete;
 
             /** \brief Destructor.
              */
@@ -46,19 +49,21 @@ namespace DOMN{
             /** \brief Applies the offset to the voltage.
                 \param offset: Offset value.
                 \param voldiv: volt/div.
+                \param M: Number of points that represents the signal in screen.
                 \param update: This parameter indicates if use data updated or no.
             */
-            void apply_offset(const float &offset, const float &voldiv, bool update);
+            void apply_changes(const float &offset, const float &voldiv, unsigned int M, bool update);
 
             /** \brief Calculates the spectrum corresponding.
              */
-            void calculate_spectrum();
-
+            void calculate_spectrum(unsigned int N);
+        //====================
+        // ATTRIBUTES
+        //====================
         public:
             ED::RingBuffer ringBuffer_;  ///< Ring buffer of voltage.
             SpectrumSignal spectrumSignal_; ///< Spectrum associated.
-
         private:
-            float          *bufferVoltagePt_ {nullptr};
+            float*         bufferVoltagePtr_ {nullptr};
     };
 }

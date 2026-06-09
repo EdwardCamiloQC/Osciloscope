@@ -33,12 +33,12 @@ MY_APP = ./myApp/bin
 VPATH =	$(SRC_DIR):\
 		$(SRC_DIR)/domain/signals/:\
 		$(SRC_DIR)/domain/VAOs/:\
+		$(SRC_DIR)/domain/grids/:\
 		$(SRC_DIR)/application/:\
 		$(SRC_DIR)/infrastructure/:\
 		$(SRC_DIR)/infrastructure/adapters/:\
 		$(SRC_DIR)/frameworksAndDrivers/deviceInspector/:\
 		$(SRC_DIR)/frameworksAndDrivers/gui/:\
-		$(SRC_DIR)/frameworksAndDrivers/gui/grids/:\
 		$(SRC_DIR)/frameworksAndDrivers/persistence/BBDD:\
 		$(SRC_DIR)/frameworksAndDrivers/persistence/systemFile:\
 		$(SRC_DIR)/frameworksAndDrivers/serialPort/:\
