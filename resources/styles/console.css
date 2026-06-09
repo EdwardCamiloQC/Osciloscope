@@ -1,7 +1,11 @@
-.consoleTerminal > *{
+.consoleTerminal{
+    background-image: linear-gradient(to top, red, black, red);
+}
+
+.consoleTerminal textview{
     font-size: medium;
     font-style: italic;
-    padding: 10px;
+    padding: 5px;
     border: 5px;
     border-color: darkcyan;
     border-style: groove;
@@ -31,18 +35,36 @@
         100% 24px;
 }
 
-.consoleTerminal trough{
-    background-image: none;
-    background-color: transparent;
+.consoleTerminal scrollbar.vertical{
+    min-width: 15px;
+    background-color: darkgrey;
 }
 
-.consoleTerminal slider{
-    background-image: none;
-    background-color: chocolate;
+.consoleTerminal scrollbar.vertical slider{
+    background-color: yellow;
+}
+
+.consoleTerminal scrollbar.vertical trough{
+    min-width: 5px;
+    background-color: black;
+}
+
+.consoleTerminal scrollbar.horizontal{
+    min-width: 15px;
+    background-color: darkgrey;
+}
+
+.consoleTerminal scrollbar.horizontal slider{
+    background-color: yellow;
+}
+
+.consoleTerminal scrollbar.horizontal trough{
+    min-width: 5px;
+    background-color: black;
 }
 
 overshoot{
     background-image: none;
-    background: transparent;
+    background: red;
     border: 2px;
 }
