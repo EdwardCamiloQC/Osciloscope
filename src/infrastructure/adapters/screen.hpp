@@ -107,6 +107,12 @@ namespace INFRA{
              *  \param type: 0->in 1->standard 2->error 3->warning 4->open 5->close
              */
             void set_message(const char* msg, int type) const override final;
+
+            /** \brief Send the displacement time.
+             *  \param sec: Seconds
+             *  \param nsec: Nanoseconds.
+             */
+            void set_displacement_time(long sec, long nsec) override final;
         //====================
         // ATRIBUTES
         //====================

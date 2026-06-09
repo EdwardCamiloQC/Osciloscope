@@ -56,3 +56,7 @@ void Screen::update_port_state(bool state){
 void Screen::set_message(const char* msg, int type) const{
     gui_.display_message(msg, type);
 }
+
+void Screen::set_displacement_time(long sec, long nsec){
+    gui_.set_displacement_time(sec, nsec);
+}
