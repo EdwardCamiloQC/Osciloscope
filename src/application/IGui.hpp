@@ -30,5 +30,6 @@ namespace APP{
         virtual void update_drop_port(bool add, const char *portDevice) = 0;
         virtual void update_label_button_port(bool state) = 0;
         virtual void display_message(const char* msg, int type)const = 0;
+        virtual void set_sample_time(long sec, long nsec) = 0;
     };
 }
