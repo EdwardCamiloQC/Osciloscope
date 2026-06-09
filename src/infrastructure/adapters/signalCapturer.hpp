@@ -105,6 +105,13 @@ namespace INFRA{
             /** \brief Catch the voltages.
              */
             void catch_loop();
+
+            /** \brief Calculates the time difference.
+             *  \note Applies the difference in t1.
+             *  \param t1: First time.
+             *  \param t2: Second time.
+             */
+            void time_difference(timespec& t1, timespec& t2);
         //====================
         // ATTRIBUTES
         //====================

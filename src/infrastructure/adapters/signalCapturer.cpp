@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <time.h>
 #include "infrastructure/adapters/signalCapturer.hpp"
 #include "application/ICapturer.hpp"
 #include "application/IScreen.hpp"
@@ -113,7 +114,12 @@ DOMN::VoltageSignal* SignalCapturer::get_voltages_ref(){
 //==================================================
 void SignalCapturer::catch_loop(){
     APP::MsgReturn_t statusCapture;
+
+    timespec t1{};
+    timespec t2{};
+
     while(stateCatcher_.load(std::memory_order_acquire)){
+        clock_gettime(CLOCK_MONOTONIC, &t1);
         statusCapture = capturer_.catch_data(this);
         switch(statusCapture){
             case APP::MsgReturn_t::ERROR_IN_CATCH:
@@ -122,5 +128,15 @@ void SignalCapturer::catch_loop(){
             default:
                 break;
         }
+
+        clock_gettime(CLOCK_MONOTONIC, &t2);
+        time_difference(t1, t2);
+        if(screenPtr_)
+            screenPtr_->set_displacement_time(t1.tv_sec, t1.tv_nsec);
     }
+}
+
+void SignalCapturer::time_difference(timespec& t1, timespec& t2){
+    t1.tv_sec = t2.tv_sec - t1.tv_sec;
+    t1.tv_nsec = t2.tv_nsec - t1.tv_nsec;
 }
