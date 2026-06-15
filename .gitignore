@@ -96,6 +96,7 @@ dkms.conf
 build/*
 lsan.supp
 logs/*
+voltajes.*
 
 ### CMake ###
 CMakeLists.txt.user
