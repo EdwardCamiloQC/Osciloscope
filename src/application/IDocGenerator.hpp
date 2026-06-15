@@ -9,6 +9,11 @@ namespace DOMN{
     class VoltageSignal;
 }
 
+namespace APP{
+    struct IScreen;
+    struct ISignalCapturer;
+}
+
 /** \namespace APP.
  */
 namespace APP{
@@ -28,6 +33,8 @@ namespace APP{
     struct IDocGenerator{
         virtual ~IDocGenerator() = default;
         virtual void associate_voltages(DOMN::VoltageSignal* voltsPtr) = 0;
+        virtual void associate_screen(APP::IScreen* screenPtr) = 0;
+        virtual void associate_signal_capturer(APP::ISignalCapturer* sigCapPtr) = 0;
         virtual void generate_doc(const char *directory, TYPE_DOC type, float timeDiv) const = 0;
     };
 }
