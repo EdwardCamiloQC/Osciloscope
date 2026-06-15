@@ -305,6 +305,6 @@ namespace DRV_FRAMW{
             inline static double                timeDiv_              {1.0f};
             inline static long                  displacementTimeNs_   {40000L};
             inline static unsigned long         M_                    {1024L};
-            inline static unsigned int          fs_                   {22220};
+            inline static unsigned int          fs_                   {428571};
     };
 }

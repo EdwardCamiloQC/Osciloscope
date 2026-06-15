@@ -164,6 +164,7 @@ void GuiGtk::set_displacement_time([[maybe_unused]]long sec, long nsec){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 GuiGtk::GuiGtk(){
+    M_ = timeDiv_ * fs_ / 125.0f;
     appGtkPtr_ = gtk_application_new("com.ed.oscilloscope", G_APPLICATION_DEFAULT_FLAGS);
 }
 
