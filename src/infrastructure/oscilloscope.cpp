@@ -32,6 +32,8 @@ Oscilloscope::Oscilloscope():
     devInspectorPtr_->associate_screen(screenPtr_.get());
 
     docGeneratorPtr_->associate_voltages(voltages_);
+    docGeneratorPtr_->associate_screen(screenPtr_.get());
+    docGeneratorPtr_->associate_signal_capturer(signalCapturerPtr_.get());
 
     screenPtr_->associate_signal_capturer(signalCapturerPtr_.get());
     screenPtr_->associate_dev_inspector(devInspectorPtr_.get());
