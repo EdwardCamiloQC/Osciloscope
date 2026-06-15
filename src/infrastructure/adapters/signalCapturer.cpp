@@ -41,12 +41,13 @@ void SignalCapturer::select_capturer(Capturer_t capturer){
 
 void SignalCapturer::start_reading(){
     if(!catcher_.joinable()){
-        catcher_ = std::thread(&SignalCapturer::catch_loop, this);
         stateCatcher_.store(true, std::memory_order_release);
+        catcher_ = std::thread(&SignalCapturer::catch_loop, this);
     }
 }
 
 void SignalCapturer::stop_reading(){
+    capturer_.close_port();
     stateCatcher_.store(false, std::memory_order_release);
 
     if(catcher_.joinable())
@@ -113,21 +114,12 @@ DOMN::VoltageSignal* SignalCapturer::get_voltages_ref(){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 void SignalCapturer::catch_loop(){
-    APP::MsgReturn_t statusCapture;
-
     timespec t1{};
     timespec t2{};
 
     while(stateCatcher_.load(std::memory_order_acquire)){
         clock_gettime(CLOCK_MONOTONIC, &t1);
-        statusCapture = capturer_.catch_data(this);
-        switch(statusCapture){
-            case APP::MsgReturn_t::ERROR_IN_CATCH:
-                screenPtr_->set_message("Error al capturar datos.\n", 2);
-                break;
-            default:
-                break;
-        }
+        capturer_.catch_data(this);
 
         clock_gettime(CLOCK_MONOTONIC, &t2);
         time_difference(t1, t2);
