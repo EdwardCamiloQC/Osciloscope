@@ -1,7 +1,7 @@
 /** \file ringBuffer.hpp
  *  \author Edward Camilo.
- *  \version v1.0
- *  \date April 2026
+ *  \version v2.0
+ *  \date June 2026
  */
 #pragma once
 
@@ -56,16 +56,23 @@ namespace ED{
          */
         void push_data(const float *data, size_t w);
 
+        /** \brief Pass the data to the ring buffer.
+         *  \param data: Pointer data to pass.
+         *  \param w: Total data to pass.
+         *  \param numBits: Number of bits by indice.
+         */
+        void push_data(const uint8_t* data, size_t w, uint8_t numBits, float voltRef);
+
         /** \brief Gets the array with the last n elements.
          *  \param bufStore: buffer where the data will be copy and stored.
          *  \param n: Number of elements to update in buffer to be delivered.
+         *  \param jump: Number of data jumped for sample.
          */
-        void get_n_data(float *bufStore, size_t n);
+        void get_n_data(float *bufStore, size_t n, unsigned int jump);
 
         /** \brief Shows the all the ring buffer.
          */
         void show_data() const;
-
         //==========
         //~~~~~~~~~~
         // ATTRIBUTES
@@ -73,8 +80,7 @@ namespace ED{
         //==========
         private:
             float  *ringBufferPt_ {nullptr};
-            float  *endPt_        {nullptr};
-            float  *indicatorPt_   {nullptr};
+            size_t indicator_     {0};
             size_t length_        {0};
     };
 }

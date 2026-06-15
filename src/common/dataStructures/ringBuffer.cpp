@@ -1,6 +1,8 @@
 #include <iostream>
-
-#include <common/dataStructures/ringBuffer.hpp>
+#include <stdint.h>
+#include <math.h>
+#include <assert.h>
+#include "common/dataStructures/ringBuffer.hpp"
 
 using namespace ED;
 
@@ -11,13 +13,10 @@ using namespace ED;
 //==================================================
 RingBuffer::RingBuffer(size_t len):
     ringBufferPt_(nullptr),
-    endPt_(nullptr),
-    indicatorPt_(nullptr),
+    indicator_(0),
     length_(len)
 {
     ringBufferPt_ = new float[length_];
-    endPt_ = &ringBufferPt_[length_ - 1];
-    indicatorPt_ = ringBufferPt_;
 
     reset();
 }
@@ -37,61 +36,119 @@ void RingBuffer::push_data(const float *data, size_t w){
     if(w > length_)
         w = length_;
 
-    if(indicatorPt_ > endPt_){
-        indicatorPt_ = ringBufferPt_;
+    if(indicator_ >= length_){
+        indicator_ = 0; //regresa a la primera posición.
     }
 
-    size_t firstPart = endPt_ - indicatorPt_;
+    size_t firstPart = length_ - indicator_;
     if(w > firstPart){
         size_t i;
-        for(i = 0; i <= firstPart; i++){
-            *indicatorPt_ = data[i];
-            indicatorPt_++;
+        for(i = 0; i < firstPart; i++){
+            ringBufferPt_[indicator_] = data[i];
+            indicator_++;
         }
-        indicatorPt_ = ringBufferPt_;
+        indicator_ = 0; //retoma en el inico del buffer.
         for(; i < w; i++){
-            *indicatorPt_=  data[i];
-            indicatorPt_++;
+            ringBufferPt_[indicator_]=  data[i];
+            indicator_++;
         }
     }else{
         for(size_t i = 0; i < w; i++){
-            *indicatorPt_= data[i];
-            indicatorPt_++;
+            ringBufferPt_[indicator_]= data[i];
+            indicator_++;
         }
     }
 }
 
-void RingBuffer::get_n_data(float *bufStore, size_t n){
-    if(n > length_)
-        n = length_;
+void RingBuffer::push_data(const uint8_t* data, size_t w, uint8_t numBits, float voltRef){
+    assert(this != nullptr);
+    assert(ringBufferPt_ != nullptr);
+    
+    float resolution = voltRef/(pow(2, numBits-1) - 1);
+    float averageVolt = pow(2, numBits)/2.0f;
 
-    if(indicatorPt_ > endPt_)
-        indicatorPt_ = ringBufferPt_;
+    int inc;
+    switch(numBits){
+        case 8:
+            inc = 1;
+            break;
+        case 10:
+            inc = 2;
+            break;
+        case 12:
+            inc = 2;
+            break;
+        case 16:
+            inc = 2;
+            break;
+        default:
+            inc = 1;
+            break;
+    }
 
-    float *iteratorPt = indicatorPt_ - 1;
+    if(w > length_){//esta es la linea 84
+        w = length_;
+    }
 
-    if(iteratorPt < ringBufferPt_)
-        iteratorPt = endPt_;
+    if(indicator_ >= length_){
+        indicator_ = 0;
+    }
 
-    size_t secondPart = (iteratorPt - ringBufferPt_) + 1;
-
-    long i = n - 1;
-
-    if(n > secondPart){
-        for(; iteratorPt >= ringBufferPt_; i--){
-            bufStore[i] = *iteratorPt;
-            iteratorPt--;
-        }
-        iteratorPt = endPt_;
-        for(; i >= 0; i--){
-            bufStore[i] = *iteratorPt;
-            iteratorPt--;
+    size_t sample;
+    size_t firstPart = length_ - indicator_;
+    if(w > firstPart){
+        size_t secondPart = w - firstPart;
+        if(inc == 1){
+            for(sample = 0; indicator_ < length_; sample+=inc){
+                ringBufferPt_[indicator_] = (static_cast<float>(static_cast<uint8_t>(data[sample]))-averageVolt) * resolution;
+                indicator_++;
+            }
+            indicator_ = 0;
+            for(; indicator_ < secondPart; sample+=inc){
+                ringBufferPt_[indicator_] =  static_cast<float>(static_cast<uint8_t>(data[sample])-averageVolt) * resolution;
+                indicator_++;
+            }
+        }else{
+            for(sample = 0; indicator_ < length_; sample+=inc){
+                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                indicator_++;
+            }
+            indicator_ = 0;
+            for(; indicator_ < secondPart; sample+=inc){
+                ringBufferPt_[indicator_] =  static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                indicator_++;
+            }
         }
     }else{
-        for(; i >= 0; i--){
-            bufStore[i] = *iteratorPt;
-            iteratorPt--;
+        firstPart = indicator_ + w;
+        if(inc == 1){
+            for(sample = 0; indicator_ < firstPart; sample+=inc){
+                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint8_t>(data[sample])-averageVolt) * resolution;
+                indicator_++;
+            }
+        }else{
+            for(sample = 0; indicator_ < firstPart; sample+=inc){
+                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                indicator_++;
+            }
         }
+    }
+}
+
+void RingBuffer::get_n_data(float *bufStore, size_t n, unsigned int jump){
+    if((n * jump) > length_)
+        n = length_;
+
+    if(indicator_ >= length_)
+        indicator_ = 0;
+
+    long iter = indicator_ - 1;
+    long i = n - 1;
+    for(; i >= 0; i--){
+        if(iter < 0)
+            iter = length_ - 1;
+        bufStore[i] = ringBufferPt_[iter];
+        iter-=jump;
     }
 }
 
