@@ -10,7 +10,7 @@ using namespace DOMN;
 //==================================================
 VoltageSignal::VoltageSignal(unsigned int len, VAO_COLOR_t color)
     : SignalObject(len, color),
-    ringBuffer_(2*len),
+    ringBuffer_(385*len),
     spectrumSignal_(len, color),
     bufferVoltagePtr_(nullptr)
 {
@@ -23,15 +23,16 @@ VoltageSignal::~VoltageSignal(){
 }
 
 void VoltageSignal::apply_changes(const float &offset, const float &voldiv, unsigned int M, bool update){
-    assert(M >= 2);
-
-    if(M > get_numOfPoints())
-        M = get_numOfPoints();
-
     unsigned int n = get_numOfPoints();
+    unsigned int jump = 1;
+
+    if(M > n){
+        jump = M / n;
+        M = n;
+    }
 
     if(update){
-        ringBuffer_.get_n_data(bufferVoltagePtr_, n);
+        ringBuffer_.get_n_data(bufferVoltagePtr_, n, jump);
     }
 
     update_vertices(bufferVoltagePtr_, offset, voldiv, M);
