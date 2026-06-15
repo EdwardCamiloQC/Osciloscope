@@ -159,3 +159,15 @@ void RingBuffer::show_data() const{
     }
     std::cout << std::endl;
 }
+
+size_t RingBuffer::get_lenght(){
+    return length_;
+}
+
+float* RingBuffer::get_ring_buffer_ref(unsigned int i) const{
+    if(i >= length_){
+        i = length_ - 1;
+    }
+
+    return ringBufferPt_ + i;
+}

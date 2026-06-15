@@ -73,6 +73,17 @@ namespace ED{
         /** \brief Shows the all the ring buffer.
          */
         void show_data() const;
+
+        /** \brief Return the length.
+         *  \return Ring buffer length.
+         */
+        size_t get_lenght();
+
+        /** \brief Gets the pointer to some element at the buffer.
+         *  \param i: Number of one element.
+         *  \return Reference to the ring buffer.
+         */
+        float* get_ring_buffer_ref(unsigned int i) const;
         //==========
         //~~~~~~~~~~
         // ATTRIBUTES
