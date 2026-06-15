@@ -84,6 +84,5 @@ namespace DRV_FRAMW{
         private:
             int            fd_ {-1};
             struct termios tty_;
-            bool           state_;
     };
 }
