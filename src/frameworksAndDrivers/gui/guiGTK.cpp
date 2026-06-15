@@ -720,7 +720,7 @@ void GuiGtk::spin_button_freq_callback(GtkSpinButton *spinButton, [[maybe_unused
 
 void GuiGtk::button_doc_callback([[maybe_unused]]GtkButton *button, [[maybe_unused]]gpointer userData){
     if(docGeneratorPtr_)
-        docGeneratorPtr_->generate_doc("~/Escritorio", APP::TYPE_DOC::CSV, timeDiv_);
+        docGeneratorPtr_->generate_doc("./", APP::TYPE_DOC::CSV, fs_);
 }
 
 void GuiGtk::drop_port_callback(GtkDropDown *widget, [[maybe_unused]]gpointer userData){
