@@ -89,11 +89,13 @@ APP::MsgReturn_t SerialPortPsoc::catch_data(void* userData){
         }else if(m > 0){
             dReceived += m;
             if(dReceived == sizeof(buffer)){
-                if((buffer[0] < 5) && (buffer[0] > 0)){
-                    int i = buffer[0]-1;
+                if(((buffer[1]>>5)==1)  && ((buffer[1]&0x11)==0x11)   && (buffer[0]=='E') &&
+                   ((buffer[17]>>5)==2) && ((buffer[17]&0x11)==0x11) && (buffer[16]=='D'))
+                {
                     {
                         std::lock_guard<std::mutex> lock(dataPt->get_mutex());
-                        dataPt->get_voltages_ref()[i].ringBuffer_.push_data(&buffer[1], dReceived-1, 8, 5.0f);
+                        dataPt->get_voltages_ref()[0].ringBuffer_.push_data(&buffer[1],  15, 12, 5.0f);
+                        dataPt->get_voltages_ref()[1].ringBuffer_.push_data(&buffer[17], 15, 12, 5.0f);
                     }
                 }
                 dReceived = 0;
