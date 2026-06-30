@@ -7,6 +7,7 @@
 
 #include <libudev.h>
 #include <glib-unix.h>
+#include <string>
 #include "application/IDevInspector.hpp"
 
 namespace APP{
@@ -14,6 +15,15 @@ namespace APP{
 }
 
 namespace DRV_FRAMW{
+    struct UsbDeviceInfo{
+        std::string devNode;
+        std::string manufacturer;
+        std::string product;
+        std::string serial;
+        std::string vendorId;
+        std::string productId;
+    };
+
     /** \class Inspector.
      */
     class DevInspector: public APP::IDevInspector{
@@ -56,6 +66,10 @@ namespace DRV_FRAMW{
             void init() override final;
 
             void stop() override final;
+
+            /** \brief Scan devices connected.
+             */
+            void scan_connected_devices();
         private:
             /** \brief Creates the contex to Udev.
                 \return Status.
@@ -74,6 +88,12 @@ namespace DRV_FRAMW{
                 \return
              */
             static gboolean udev_monitor_inspection(gint fd, GIOCondition condition, gpointer userData);
+
+            /** \brief Get the device info.
+             *  \param ttyDev: Device.
+             *  \return Device info.
+             */
+            static UsbDeviceInfo get_usb_device_info(struct udev_device* ttyDev);
         //====================
         // ATTRIBUTES
         //====================

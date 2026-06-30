@@ -21,6 +21,8 @@ void DevInspector::associate_screen(APP::IScreen* screenPtr){
 }
 
 void DevInspector::init(){
+    scan_connected_devices();
+
     int udevFd = udev_monitor_get_fd(monitorPt_);
     if(udevFd >= 0){
         idInspector_ = g_unix_fd_add(udevFd, G_IO_IN, DevInspector::udev_monitor_inspection, this);
@@ -34,6 +36,40 @@ void DevInspector::stop(){
     }
 }
 
+void DevInspector::scan_connected_devices(){
+    if(!udevPt_ || !screenPtr_)
+        return;
+
+    struct udev_enumerate* enumeratePtr = udev_enumerate_new(udevPt_);
+    if(!enumeratePtr)
+        return;
+
+    udev_enumerate_add_match_subsystem(enumeratePtr, "tty");
+    udev_enumerate_scan_devices(enumeratePtr);
+
+    struct udev_list_entry* devicesPtr = udev_enumerate_get_list_entry(enumeratePtr);
+
+    struct udev_list_entry* entryPtr;
+
+    udev_list_entry_foreach(entryPtr, devicesPtr){
+        const char* path = udev_list_entry_get_name(entryPtr);
+
+        struct udev_device* devPtr = udev_device_new_from_syspath(udevPt_, path);
+        if(!devPtr)
+            continue;
+
+        UsbDeviceInfo info = get_usb_device_info(devPtr);
+
+        if(info.product == "OsciloscopioExternalDevice")
+        {
+            screenPtr_->add_device(info.devNode.c_str());
+        }
+
+        udev_device_unref(devPtr);
+    }
+
+    udev_enumerate_unref(enumeratePtr);
+}
 //==================================================
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // PRIVATE METHODS
@@ -96,23 +132,48 @@ gboolean DevInspector::udev_monitor_inspection([[maybe_unused]]gint fd, [[maybe_
     }
 
     const char *action = udev_device_get_action(dev);
-    const char *devnode = udev_device_get_devnode(dev);
+    UsbDeviceInfo info = get_usb_device_info(dev);
 
-    if(action && devnode){
+    if(action){
         if(strcmp(action, "add") == 0){
-            gchar *copy = g_strdup(devnode);
-            if(screenPtr_)
-                screenPtr_->add_device(copy);
-            g_free(copy);
+            if(info.product == "OsciloscopioExternalDevice"){
+                if(screenPtr_)
+                    screenPtr_->add_device(info.devNode.c_str());
+            }
         }else if(strcmp(action, "remove") == 0){
-            gchar *copy = g_strdup(devnode);
             if(screenPtr_)
-                screenPtr_->remove_device(copy);
-            g_free(copy);
+                screenPtr_->remove_device(info.devNode.c_str());
         }
     }
 
     udev_device_unref(dev);
 
     return TRUE;
+}
+
+UsbDeviceInfo DevInspector::get_usb_device_info(struct udev_device* ttyDev){
+    UsbDeviceInfo info;
+
+    if(!ttyDev)
+        return info;
+
+    const char* node = udev_device_get_devnode(ttyDev);
+    if(node)
+        info.devNode = node;
+
+    struct udev_device* usb = udev_device_get_parent_with_subsystem_devtype(ttyDev, "usb", "usb_device");
+    if(!usb)
+        return info;
+
+    auto readProperty = [&](const char* name)->std::string{
+        const char* value = udev_device_get_sysattr_value(usb, name);
+        return value ? value : "";
+    };
+
+    info.manufacturer = readProperty("manufacturer");
+    info.product      = readProperty("product");
+    info.serial       = readProperty("serial");
+    info.vendorId     = readProperty("idVendor");
+    info.productId    = readProperty("idProduct");
+    return info;
 }
