@@ -39,6 +39,19 @@ APP::MsgReturn_t SerialPortPsoc::open_port(const char* portName){
 
     cfmakeraw(&tty_);
 
+    tty_.c_cflag &= ~CSIZE;
+    tty_.c_cflag |= CS8;//tamaño de palabra de uart 8bits
+    tty_.c_cflag &= ~PARENB;//paridad
+    tty_.c_cflag &= ~CSTOPB;//bits de parada->2bits
+    tty_.c_cflag &= ~CRTSCTS;
+    tty_.c_cflag |= CREAD | CLOCAL;//CREAD hibilita receptor. CLOCAL ignora lineas de modem(DCD,DSR,CTS)
+
+    tty_.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);//ICANON modo canonico. ECHO redirige a terminal. ISIG señales especiales
+
+    tty_.c_iflag &= ~(IXON | IXOFF | IXANY);//IXON:habilita o deshabilita control de flujo por software.
+
+    tty_.c_oflag &= ~OPOST;//Procesamiento de salida.
+
     tty_.c_cc[VMIN] = 0; //bloquea hasta recibir n bytes o el tiempo se acabe
     tty_.c_cc[VTIME] = 1; //timeout de 0.1 segundos a partir del primer byte.
 
@@ -89,13 +102,11 @@ APP::MsgReturn_t SerialPortPsoc::catch_data(void* userData){
         }else if(m > 0){
             dReceived += m;
             if(dReceived == sizeof(buffer)){
-                if(((buffer[1]>>5)==1)  && ((buffer[1]&0x11)==0x11)   && (buffer[0]=='E') &&
-                   ((buffer[17]>>5)==2) && ((buffer[17]&0x11)==0x11) && (buffer[16]=='D'))
-                {
+                uint8_t numSignal = (buffer[1]>>5)-1;
+                if((numSignal<4) && ((buffer[1]&0x11)==0x11)){
                     {
                         std::lock_guard<std::mutex> lock(dataPt->get_mutex());
-                        dataPt->get_voltages_ref()[0].ringBuffer_.push_data(&buffer[1],  15, 12, 5.0f);
-                        dataPt->get_voltages_ref()[1].ringBuffer_.push_data(&buffer[17], 15, 12, 5.0f);
+                        dataPt->get_voltages_ref()[numSignal].ringBuffer_.push_data(&buffer[2], 31, 12, 5.0f);
                     }
                 }
                 dReceived = 0;
