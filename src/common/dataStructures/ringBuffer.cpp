@@ -63,30 +63,23 @@ void RingBuffer::push_data(const float *data, size_t w){
 void RingBuffer::push_data(const uint8_t* data, size_t w, uint8_t numBits, float voltRef){
     assert(this != nullptr);
     assert(ringBufferPt_ != nullptr);
-    
-    float resolution = voltRef/(pow(2, numBits-1) - 1);
-    float averageVolt = pow(2, numBits)/2.0f;
+    assert(numBits==8 || numBits==10 || numBits==12 || numBits==16);
+
+    uint16_t maskBits = static_cast<uint16_t>((1<<(numBits))-1);
+    float averageVolt = static_cast<float>((1<<(numBits-1))-1);
+    float resolution = voltRef/maskBits;
 
     int inc;
     switch(numBits){
         case 8:
             inc = 1;
             break;
-        case 10:
-            inc = 2;
-            break;
-        case 12:
-            inc = 2;
-            break;
-        case 16:
-            inc = 2;
-            break;
         default:
-            inc = 1;
+            inc = 2;
             break;
     }
 
-    if(w > length_){//esta es la linea 84
+    if(w > length_){
         w = length_;
     }
 
@@ -99,23 +92,29 @@ void RingBuffer::push_data(const uint8_t* data, size_t w, uint8_t numBits, float
     if(w > firstPart){
         size_t secondPart = w - firstPart;
         if(inc == 1){
+            uint8_t value;
             for(sample = 0; indicator_ < length_; sample+=inc){
-                ringBufferPt_[indicator_] = (static_cast<float>(static_cast<uint8_t>(data[sample]))-averageVolt) * resolution;
+                value = static_cast<uint8_t>(data[sample]);
+                ringBufferPt_[indicator_] = (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
             indicator_ = 0;
             for(; indicator_ < secondPart; sample+=inc){
-                ringBufferPt_[indicator_] =  static_cast<float>(static_cast<uint8_t>(data[sample])-averageVolt) * resolution;
+                value = static_cast<uint8_t>(data[sample]);
+                ringBufferPt_[indicator_] =  (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
         }else{
+            uint16_t value;
             for(sample = 0; indicator_ < length_; sample+=inc){
-                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                value = static_cast<uint16_t>(data[sample+1]<<8 | data[sample]) & maskBits;
+                ringBufferPt_[indicator_] = (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
             indicator_ = 0;
             for(; indicator_ < secondPart; sample+=inc){
-                ringBufferPt_[indicator_] =  static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                value = static_cast<uint16_t>(data[sample+1]<<8 | data[sample]) & maskBits;
+                ringBufferPt_[indicator_] =  (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
         }
@@ -123,12 +122,14 @@ void RingBuffer::push_data(const uint8_t* data, size_t w, uint8_t numBits, float
         firstPart = indicator_ + w;
         if(inc == 1){
             for(sample = 0; indicator_ < firstPart; sample+=inc){
-                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint8_t>(data[sample])-averageVolt) * resolution;
+                uint8_t value = static_cast<uint8_t>(data[sample]);
+                ringBufferPt_[indicator_] = (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
         }else{
             for(sample = 0; indicator_ < firstPart; sample+=inc){
-                ringBufferPt_[indicator_] = static_cast<float>(static_cast<uint16_t>(data[sample+1]<<8 | data[sample])-averageVolt) * resolution;
+                uint16_t value = static_cast<uint16_t>(data[sample+1]<<8 | data[sample]) & maskBits;
+                ringBufferPt_[indicator_] = (static_cast<float>(value)-averageVolt) * resolution;
                 indicator_++;
             }
         }
