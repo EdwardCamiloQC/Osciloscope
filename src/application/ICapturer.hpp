@@ -9,6 +9,10 @@ namespace APP{
     struct IScreen;
 }
 
+namespace INFRA{
+    class SignalCapturer;
+}
+
 namespace APP{
     /** \enum MsgReturn_t.
      *  \class
@@ -30,6 +34,7 @@ namespace APP{
     */
     enum class IdCapturer_t{
         SERIAL_PORT_PSOC_ID,
+        USB_PSOC_ID,
         SERIAL_PORT_ANY_ID,
         GENERATE_SIGNAL_ID
     };
@@ -39,8 +44,8 @@ namespace APP{
     */
     struct ICapturer{
         virtual ~ICapturer() = default;
-        virtual MsgReturn_t open_port(const char *port) = 0;
-        virtual MsgReturn_t close_port() = 0;
+        virtual MsgReturn_t start(INFRA::SignalCapturer* sigCapPt, const char *port) = 0;
+        virtual MsgReturn_t stop() = 0;
         virtual MsgReturn_t catch_data(void* userData) = 0;
         virtual MsgReturn_t set_data(void* userData) = 0;
         virtual bool get_flag_serial() = 0;
