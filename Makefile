@@ -114,7 +114,8 @@ INCLUDES =	-I$(SRC_DIR) \
 LIBRARIES =	-lepoxy \
 			-lserial \
 			-ludev \
-			-lX11
+			-lX11 \
+			-lusb-1.0
 
 ifeq ($(BUILD), debug)
 	CFLAGS+= -Wall \
