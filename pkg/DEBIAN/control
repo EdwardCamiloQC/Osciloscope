@@ -1,0 +1,8 @@
+Package: Oscilloscope
+Version: 3.0.0
+Section: electronics
+Priority: optional
+Architecture: amd64
+Depends: libepoxy0, libserial1, libudev1, libusb-1.0-0, libgtk-4-1
+Maintainer: Edward Camilo
+Description: Personal Oscilloscope.
