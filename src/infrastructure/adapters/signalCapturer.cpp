@@ -5,6 +5,7 @@
 #include "application/IScreen.hpp"
 #include "frameworksAndDrivers/serialPort/serialPortPsoc.hpp"
 #include "frameworksAndDrivers/serialPort/serialPortMcu.hpp"
+#include "frameworksAndDrivers/serialPort/oscPsoc.hpp"
 
 using namespace INFRA;
 
@@ -15,7 +16,7 @@ using namespace INFRA;
 //==================================================
 SignalCapturer::SignalCapturer() 
     : voltages_(nullptr),
-    capturer_(DRV_FRAMW::SerialPortPsoc::get_instance())
+    capturer_(DRV_FRAMW::OscPsoc::get_instance())
 {
     stateCatcher_.store(false, std::memory_order_release);
 }
@@ -28,12 +29,12 @@ void SignalCapturer::select_capturer(Capturer_t capturer){
     switch(capturer){
         case Capturer_t::PSOC:
             if(capturer_.get_Id() == APP::IdCapturer_t::SERIAL_PORT_ANY_ID)
-                capturer_.close_port();
+                capturer_.stop();
             capturer_ = DRV_FRAMW::SerialPortPsoc::get_instance();
             break;
         case Capturer_t::ANY_MCU:
             if(capturer_.get_Id() == APP::IdCapturer_t::SERIAL_PORT_PSOC_ID)
-                capturer_.close_port();
+                capturer_.stop();
             capturer_ = DRV_FRAMW::SerialPortAnyMcu::get_instance();
             break;
     }
@@ -47,11 +48,13 @@ void SignalCapturer::start_reading(){
 }
 
 void SignalCapturer::stop_reading(){
-    capturer_.close_port();
+    //capturer_.close_port();
     stateCatcher_.store(false, std::memory_order_release);
 
     if(catcher_.joinable())
         catcher_.join();
+    
+    capturer_.stop();
 }
 
 void SignalCapturer::associate_screen(APP::IScreen* screenPtr){
@@ -73,9 +76,9 @@ std::mutex& SignalCapturer::get_mutex(){
 void SignalCapturer::open_close_port(const char* portName){
     APP::MsgReturn_t statePort;
     if(capturer_.get_flag_serial()){
-        statePort = capturer_.close_port();
+        statePort = capturer_.stop();
     }else{
-        statePort = capturer_.open_port(portName);
+        statePort = capturer_.start(this, portName);
     }
 
     switch(statePort){
