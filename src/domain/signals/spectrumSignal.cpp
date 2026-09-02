@@ -32,5 +32,5 @@ void SpectrumSignal::update_vertex(unsigned int N){
     if(N > get_numOfPoints())
         N = get_numOfPoints();
 
-    SignalObject::update_vertices(moduleSpectrumPtr_, -1.0f, 0.25f, N);
+    SignalObject::update_vertices(moduleSpectrumPtr_, -1.0f, 0.2f, N);
 }
