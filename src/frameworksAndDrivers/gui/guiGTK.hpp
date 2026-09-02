@@ -10,7 +10,6 @@
 #include <string>
 #include "application/IGui.hpp"
 #include "domain/grids/gridVoltage.hpp"
-#include "domain/grids/gridSpectrum.hpp"
 
 namespace APP{
     struct ISignalCapturer;
@@ -293,7 +292,6 @@ namespace DRV_FRAMW{
             inline static APP::IDocGenerator*   docGeneratorPtr_      {nullptr};
             inline static DOMN::VoltageSignal*  voltagesPtr_          {nullptr};
             inline static DOMN::GridVoltage     gridVoltage_;
-            inline static DOMN::GridSpectrum    gridSpectrum_;
             inline static GLuint                idShaderVolt_         {0};
             inline static GLuint                idShaderSpec_         {0};
             inline static bool                  stateStartStop_       {false};
@@ -305,6 +303,7 @@ namespace DRV_FRAMW{
             inline static double                timeDiv_              {1.0f};
             inline static long                  displacementTimeNs_   {40000L};
             inline static unsigned long         M_                    {1024L};
-            inline static unsigned int          fs_                   {444444};
+            inline static unsigned int          fs_                   {428571};
+            inline static unsigned int          jump_                 {1};
     };
 }

@@ -295,9 +295,13 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
                 "0.4v/div",
                 "0.5v/div",
                 "1v/div",
+                "1.5v/div",
                 "2v/div",
+                "2.5v/div",
                 "3v/div",
+                "3.5v/div",
                 "4v/div",
+                "4.5v/div",
                 "5v/div",
                 nullptr
             };
@@ -576,8 +580,6 @@ void GuiGtk::realize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpointer
     glCullFace(GL_BACK);
     glEnable(GL_DEPTH_TEST);
 
-    create_VAO(gridSpectrum_, false);
-
     //Aqui crea los espectros
     if(voltagesPtr_){
         create_VAO(voltagesPtr_[0].spectrumSignal_, true);
@@ -593,7 +595,6 @@ void GuiGtk::unrealize_spectrum_callback(GtkGLArea *area, [[maybe_unused]]gpoint
         std::cerr << "Failed to link contex areaSpectrum : unrealize\n"; 
     }
 
-    destroy_VAO(gridSpectrum_);
     //Aqui Elimina los spectros
     if(voltagesPtr_){
         destroy_VAO(voltagesPtr_[0].spectrumSignal_);
@@ -617,8 +618,6 @@ gboolean GuiGtk::render_spectrum_callback(GtkGLArea *area, [[maybe_unused]]GdkGL
 
     if(idShaderSpec_ != 0){
         glUseProgram(idShaderSpec_);
-
-        draw_VAO(gridSpectrum_, gridSpectrum_.get_numOfPoints(), 1);
 
         if(voltagesPtr_){
             for(unsigned int i = 0; i < 4; i++){
@@ -683,15 +682,27 @@ void GuiGtk::voltDiv_callback(GtkDropDown *widget, [[maybe_unused]]gpointer user
             voltDiv_ = 1.0f;
             break;
         case 6:
-            voltDiv_ = 2.0f;
+            voltDiv_ = 1.5f;
             break;
         case 7:
-            voltDiv_ = 3.0f;
+            voltDiv_ = 2.0f;
             break;
         case 8:
-            voltDiv_ = 4.0f;
+            voltDiv_ = 2.5f;
             break;
         case 9:
+            voltDiv_ = 3.0f;
+            break;
+        case 10:
+            voltDiv_ = 3.5f;
+            break;
+        case 11:
+            voltDiv_ = 4.0f;
+            break;
+        case 12:
+            voltDiv_ = 4.5f;
+            break;
+        case 13:
             voltDiv_ = 5.0f;
             break;
         default:
@@ -716,6 +727,9 @@ void GuiGtk::offset_signal_callback(GtkSpinButton *spinButton, [[maybe_unused]]g
 void GuiGtk::spin_button_freq_callback(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     timeDiv_ = gtk_spin_button_get_value(spinButton);
     M_ = static_cast<unsigned long>(timeDiv_ * fs_ / 125); //#[] * tdiv * fs
+
+    if(M_ > voltagesPtr_[0].get_numOfPoints())
+        jump_ = M_ / voltagesPtr_[0].get_numOfPoints();
 }
 
 void GuiGtk::button_doc_callback([[maybe_unused]]GtkButton *button, [[maybe_unused]]gpointer userData){
@@ -743,9 +757,10 @@ void GuiGtk::button_port_callback([[maybe_unused]]GtkWidget *widget, [[maybe_unu
 
 void GuiGtk::click_voltage_area_callback([[maybe_unused]]GtkGestureClick *gesture, [[maybe_unused]]int nPress, [[maybe_unused]]double x, double y, [[maybe_unused]]gpointer userData){
     int height = gtk_widget_get_height(glAreaVoltagePtr_);
+    float volt = (height/2-y)*10*voltDiv_/height;
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "    %.3fV\n", (height/2-y)*8*voltDiv_/height);
+    snprintf(buffer, sizeof(buffer), "    \xf0\x9f\x94\xb4%.3fV \xf0\x9f\x9f\xa0%.3fV \xf0\x9f\x9f\xa2%.3fV \xf0\x9f\x94\xb5%.3fV\n", volt-offsets_[0], volt-offsets_[1], volt-offsets_[2], volt-offsets_[3]);
 
     display_message_static(buffer, 1);
 }
@@ -754,7 +769,7 @@ void GuiGtk::click_spectrum_area_callback([[maybe_unused]]GtkGestureClick *gestu
     int width = gtk_widget_get_width(glAreaSpectrumPtr_);
 
     char buffer[64];
-    snprintf(buffer, sizeof(buffer), "    %.1fHz\n", (x * fs_)/width);
+    snprintf(buffer, sizeof(buffer), "    %.1fHz\n", (x * fs_)/(width * jump_));
 
     display_message_static(buffer, 1);
 }
