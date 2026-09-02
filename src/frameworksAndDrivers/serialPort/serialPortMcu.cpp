@@ -18,7 +18,7 @@ SerialPortAnyMcu& SerialPortAnyMcu::get_instance(){
     return instance;
 }
 
-APP::MsgReturn_t SerialPortAnyMcu::open_port(const char* port){
+APP::MsgReturn_t SerialPortAnyMcu::start([[maybe_unused]]INFRA::SignalCapturer* sigCapPt, const char* port){
     if(!(port))
         return APP::MsgReturn_t::DONT_NAME_PORT;
 
@@ -41,7 +41,7 @@ APP::MsgReturn_t SerialPortAnyMcu::open_port(const char* port){
     return APP::MsgReturn_t::PORT_OPENED;
 }
 
-APP::MsgReturn_t SerialPortAnyMcu::close_port(){
+APP::MsgReturn_t SerialPortAnyMcu::stop(){
     if(mySerial_.IsOpen()){
         try{
             mySerial_.Close();
@@ -132,7 +132,7 @@ SerialPortAnyMcu::SerialPortAnyMcu(){
 }
 
 SerialPortAnyMcu::~SerialPortAnyMcu(){
-    close_port();
+    stop();
 }
 
 bool SerialPortAnyMcu::start_with(std::string line, const char* text){

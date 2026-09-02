@@ -20,7 +20,7 @@ SerialPortPsoc& SerialPortPsoc::get_instance(){
     return instance;
 }
 
-APP::MsgReturn_t SerialPortPsoc::open_port(const char* portName){
+APP::MsgReturn_t SerialPortPsoc::start([[maybe_unused]]INFRA::SignalCapturer* sigCapPt, const char* portName){
     if(!(portName))
         return APP::MsgReturn_t::DONT_NAME_PORT;
 
@@ -69,7 +69,7 @@ APP::MsgReturn_t SerialPortPsoc::open_port(const char* portName){
     return APP::MsgReturn_t::ERROR_IN_OPEN;
 }
 
-APP::MsgReturn_t SerialPortPsoc::close_port(){
+APP::MsgReturn_t SerialPortPsoc::stop(){
     tcflush(fd_, TCIOFLUSH);
 
     int val = close(fd_);
@@ -102,7 +102,7 @@ APP::MsgReturn_t SerialPortPsoc::catch_data(void* userData){
         }else if(m > 0){
             dReceived += m;
             if(dReceived == sizeof(buffer)){
-                uint8_t numSignal = (buffer[1]>>5)-1;
+                static unsigned int numSignal = static_cast<uint8_t>((buffer[1]>>5))-1;
                 if((numSignal<4) && ((buffer[1]&0x11)==0x11)){
                     {
                         std::lock_guard<std::mutex> lock(dataPt->get_mutex());
@@ -155,6 +155,6 @@ SerialPortPsoc::SerialPortPsoc(){
 
 SerialPortPsoc::~SerialPortPsoc(){
     if(fd_ > 0){
-        close_port();
+        stop();
     }
 }

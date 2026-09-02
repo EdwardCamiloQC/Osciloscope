@@ -23,16 +23,17 @@ namespace DRV_FRAMW{
              */
             static SerialPortPsoc& get_instance();
 
-            /** \brief Open serial port.
+            /** \brief Open and config serial port.
+             *  \param sigCapPt: SignalCapturer reference.
              *  \param portName: Port name.
              *  \return State serial port.
              */
-            APP::MsgReturn_t open_port(const char* portName) override final;
+            APP::MsgReturn_t start(INFRA::SignalCapturer* sigCapPt, const char* portName) override final;
 
             /** \brief Close serial port.
              *  \return State serial port.
              */
-            APP::MsgReturn_t close_port() override final;
+            APP::MsgReturn_t stop() override final;
 
             /** \brief Reads the data in file TTY.
              *  \param userData: Pointer using to save the data.
