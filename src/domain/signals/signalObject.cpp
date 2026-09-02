@@ -31,7 +31,7 @@ void SignalObject::update_vertices(const float* signal, float offset, float volt
     }else{
         int ajust = 1;
         for(unsigned int i = 1; i < (M*2); i+=2){
-            verticesPtr_[i] = 0.25f*(signal[i-ajust]+offset)/voltDiv;
+            verticesPtr_[i] = 0.2f*(signal[i-ajust]+offset)/voltDiv;
             ajust++;
         }
     }
