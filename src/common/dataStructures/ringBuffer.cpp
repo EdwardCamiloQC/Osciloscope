@@ -67,7 +67,7 @@ void RingBuffer::push_data(const uint8_t* data, size_t w, uint8_t numBits, float
 
     uint16_t maskBits = static_cast<uint16_t>((1<<(numBits))-1);
     float averageVolt = static_cast<float>((1<<(numBits-1))-1);
-    float resolution = voltRef/maskBits;
+    float resolution = voltRef/averageVolt;
 
     int inc;
     switch(numBits){
