@@ -164,7 +164,7 @@ void GuiGtk::set_displacement_time([[maybe_unused]]long sec, long nsec){
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //==================================================
 GuiGtk::GuiGtk(){
-    M_ = timeDiv_ * fs_ / 125.0f;
+    M_ = 8 * (timeDiv_ * fs_ / 1000.0f- 1);
     appGtkPtr_ = gtk_application_new("com.ed.oscilloscope", G_APPLICATION_DEFAULT_FLAGS);
 }
 
@@ -726,7 +726,7 @@ void GuiGtk::offset_signal_callback(GtkSpinButton *spinButton, [[maybe_unused]]g
 
 void GuiGtk::spin_button_freq_callback(GtkSpinButton *spinButton, [[maybe_unused]]gpointer userData){
     timeDiv_ = gtk_spin_button_get_value(spinButton);
-    M_ = static_cast<unsigned long>(timeDiv_ * fs_ / 125); //#[] * tdiv * fs
+    M_ = static_cast<unsigned long>(8 * (timeDiv_ * fs_ / 1000 - 1)); //#[] * (tdiv * fs - 1)
 
     if(M_ > voltagesPtr_[0].get_numOfPoints())
         jump_ = M_ / voltagesPtr_[0].get_numOfPoints();
