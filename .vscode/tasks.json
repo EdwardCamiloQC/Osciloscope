@@ -4,26 +4,65 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Compile",
+            "label": "Construct ADM64",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=release"
+                "BUILD=release",
+                "ARCH=amd64"
             ],
             "group": {"kind":"build", "isDefault": true}
+        },
+        {
+            "label": "Construct i386",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "BUILD=release",
+                "ARCH=i386"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Construct ARM64",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "BUILD=release",
+                "ARCH=arm64"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Construct ARMHF",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "BUILD=release",
+                "ARCH=armhf"
+            ],
+            "group": {"kind":"build"}
         },
         {
             "label": "Compile (ASAN)",
             "type": "shell",
             "command": "make",
-            "args": ["INSPECTOR=asan"],
+            "args": [
+                "BUILD=debug",
+                "INSPECTOR=asan",
+                "ARCH=amd64"
+            ],
             "problemMatcher": []
         },
         {
             "label": "Compile (VALGRIND)",
             "type": "shell",
             "command": "make",
-            "args": ["INSPECTOR=valgrind"],
+            "args": [
+                "BUILD=debug",
+                "INSPECTOR=valgrind",
+                "ARCH=amd64"
+            ],
             "problemMatcher": []
         },
         {
@@ -38,7 +77,7 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "runTest",
+                "runProject",
                 "INSPECTOR=asan"
             ],
             "problemMatcher": []
@@ -48,7 +87,7 @@
             "type": "shell",
             "command": "make",
             "args": [
-                "runTest",
+                "runProject",
                 "INSPECTOR=valgrind"
             ],
             "problemMatcher": []
@@ -59,8 +98,22 @@
             "dependsOrder": "sequence",
             "dependsOn": ["Compile"],
             "command": "make",
-            "args": ["runDeployment"],
+            "args": [
+                "runDeployment",
+                "INSPECTOR=none"
+            ],
             "problemMatcher": []
         },
+        {
+            "label": "Debug Project",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Compile (ASAN)"],
+            "command": "make",
+            "args": [
+                "debugProject"
+            ],
+            "problemMatcher": []
+        }
     ]
 }

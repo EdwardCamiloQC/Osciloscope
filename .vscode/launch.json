@@ -8,16 +8,13 @@
             "name": "Depurar con mi make",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${workspaceFolderBasename}",
+            "program": "${workspaceFolder}/build/amd64/${workspaceFolderBasename}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [
-                {
-                    "name": "DEBUGINFOD_URLS",
-                    "value": ""
-                }
-            ],
+            "environment": {
+                "DEBUGINFOD_URLS": ""
+            },
             "externalConsole": false,
             "MIMode": "gdb",
             "preLaunchTask": "Compile (ASAN)",

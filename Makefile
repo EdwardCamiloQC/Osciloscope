@@ -3,23 +3,23 @@
 # COLORS
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
-NORMAL = '\e[0m'
-BLACK = '\e[0,30m'
-RED = '\e[0;31m'
-GREEN = '\e[0;32m'
-ORANGE = '\e[0;33m'
-BLUE = '\e[0;34m'
-PURPLE = '\e[0;35m'
-CYAN = '\e[0;36m'
-LIGHT_GRAY = '\e[0;37m'
-DARK_GRAY = '\e[1;30m'
-LIGHT_RED = '\e[1;31m'
-LIGHT_GREEN = '\e[1;32m'
-YELLOW = '\e[1;33m'
-LIGHT_BLUE = '\e[1;34m'
-LIGHT_PURPLE = '\e[1;35m'
-LIGHT_CYAN = '\e[1;36m'
-WHITE = '\e[1;37m'
+NORMAL = \033[0m
+BLACK = \033[0,30m
+RED = \033[0;31m
+GREEN = \033[0;32m
+ORANGE = \033[0;33m
+BLUE = \033[0;34m
+PURPLE = \033[0;35m
+CYAN = \033[0;36m
+LIGHT_GRAY = \033[0;37m
+DARK_GRAY = \033[1;30m
+LIGHT_RED = \033[1;31m
+LIGHT_GREEN = \033[1;32m
+YELLOW = \033[1;33m
+LIGHT_BLUE = \033[1;34m
+LIGHT_PURPLE = \033[1;35m
+LIGHT_CYAN = \033[1;36m
+WHITE = \033[1;37m
 
 #==================================================
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,7 +28,6 @@ WHITE = '\e[1;37m'
 #==================================================
 BUILD_DIR = build
 SRC_DIR = ./src
-MY_APP = ./myApp/bin
 
 VPATH =	$(SRC_DIR):\
 		$(SRC_DIR)/domain/signals/:\
@@ -53,21 +52,45 @@ VPATH =	$(SRC_DIR):\
 #==================================================
 PROJECT = $(notdir $(shell pwd))
 
-RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
-
+#==================================================
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ARCHITECTURE,COMPILER AND DEBUGER
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#==================================================
+ARCH ?= amd64
+HOST_ARCH := $(shell dpkg --print-architecture)
 COMPILER ?= g++
 DEBUGER ?= gdb
-BUILD ?= debug
-INSPECTOR ?= asan
 
-GTK ?= gtk4
+ifeq ($(ARCH), amd64)
+	COMPILER = g++
+	DEBUGER = gdb
+	BUILD_DIR := $(BUILD_DIR)/$(ARCH)
+else ifeq ($(ARCH), i386)
+	COMPILER = i686-linux-gnu-g++
+	DEBUGER = gdb -m32
+	BUILD_DIR := $(BUILD_DIR)/$(ARCH)
+else ifeq ($(ARCH), armhf)
+	COMPILER = arm-linux-gnueabihf-g++
+	DEBUGER = gdb-multiarch
+	BUILD_DIR := $(BUILD_DIR)/$(ARCH)
+else ifeq ($(ARCH), arm64)
+	COMPILER = aarch64-linux-gnu-g++
+	DEBUGER = gdb-multiarch
+	BUILD_DIR := $(BUILD_DIR)/$(ARCH)
+endif
 
 #==================================================
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # INSPECTOR
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
-ifeq ($(INSPECTOR), asan)
+INSPECTOR ?= none
+RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT)
+
+ifeq ($(INSPECTOR), none)
+	RUN_EXECUTABLE = ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
+else ifeq ($(INSPECTOR), asan)
 	RUN_EXECUTABLE = LSAN_OPTIONS=suppressions=lsan.supp ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
 else ifeq ($(INSPECTOR), valgrind)
 	RUN_EXECUTABLE = valgrind --leak-check=full ./$(BUILD_DIR)/$(PROJECT) 1> ./logs/out.log 2> ./logs/error.log
@@ -99,6 +122,9 @@ OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
 # CFLAGS, LDFLAGS AND INCLUDES
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
+CONSTRUCTION ?= debug
+GTK ?= gtk4
+
 CFLAGS = 	-c \
 			-fstack-protector-strong \
 			-D_FORTIFY_SOURCE=2 \
@@ -108,16 +134,11 @@ CFLAGS = 	-c \
 
 FLAGS_LD =
 
-INCLUDES =	-I$(SRC_DIR) \
-			-I/usr/include/libserial
+INCLUDES =	-I$(SRC_DIR)
 
-LIBRARIES =	-lepoxy \
-			-lserial \
-			-ludev \
-			-lX11 \
-			-lusb-1.0
+LIBRARIES =
 
-ifeq ($(BUILD), debug)
+ifeq ($(CONSTRUCTION), debug)
 	CFLAGS+= -Wall \
 		-Wextra \
 		-Wpedantic \
@@ -129,7 +150,7 @@ ifeq ($(BUILD), debug)
 			CFLAGS += -fsanitize=address,undefined
 			FLAGS_LD +=	-fsanitize=address,undefined
 		endif
-else ifeq ($(BUILD), release)
+else ifeq ($(CONSTRUCTION), release)
 	CFLAGS += -O2 \
 		-pipe \
 		-fPIC \
@@ -144,12 +165,21 @@ else ifeq ($(BUILD), release)
 		-Wl,-rpath,'$$ORIGIN/../lib'
 endif
 
-ifeq ($(GTK), gtk3)
-	INCLUDES += $(shell pkg-config --cflags gtk+-3.0)
-	LIBRARIES += $(shell pkg-config --libs gtk+-3.0)
-else ifeq ($(GTK), gtk4)
-	INCLUDES += $(shell pkg-config --cflags gtk4)
-	LIBRARIES += $(shell pkg-config --libs gtk4)
+ifeq ($(ARCH), amd64)
+	INCLUDES += $(shell pkg-config --cflags glib-2.0)
+	ifeq ($(GTK), gtk3)
+		INCLUDES += $(shell pkg-config --cflags gtk+-3.0)
+		LIBRARIES += $(shell pkg-config --libs gtk+-3.0)
+	else ifeq ($(GTK), gtk4)
+		INCLUDES += $(shell pkg-config --cflags gtk4)
+		LIBRARIES += $(shell pkg-config --libs gtk4)
+	endif
+	INCLUDES += -I/usr/include/libserial/
+	INCLUDES += $(shell pkg-config --cflags libusb-1.0)
+	LIBRARIES += -lepoxy \
+		-ludev \
+		-lusb-1.0 \
+		-lserial
 endif
 
 #==================================================
@@ -158,14 +188,14 @@ endif
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 $(BUILD_DIR)/$(PROJECT): $(OBJECTS)
-	@echo -e "$(LIGHT_CYAN)---------- START LINKING-----------\$(NORMAL)"
+	@echo -e "$(LIGHT_CYAN)---------- START LINKING FOR $(ARCH) -----------\$(NORMAL)"
 	$(COMPILER) -o $@ $^ $(FLAGS_LD) $(LIBRARIES)
 	@echo -e "$(GREEN)"
 	@cat ./resources/logos/logo.txt
 	@echo -e "CONSTRUCTION SUCCESS $(NORMAL)"
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
-	@echo -e "$(LIGHT_CYAN)COMPILATION($(BUILD)) -----> $(notdir $<)$(NORMAL)"
+	@echo -e "$(LIGHT_CYAN)COMPILATION($(ARCH))($(CONSTRUCTION)) -----> $(notdir $<)$(NORMAL)"
 	$(COMPILER) $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(BUILD_DIR):
@@ -189,21 +219,37 @@ clean:
 	rm -rf $(BUILD_DIR)
 	clear
 
-.PHONY:runTest
-runTest:
+ifeq ($(ARCH), $(HOST_ARCH))
+
+.PHONY: runProject
+runProject:
 	clear
 	$(RUN_EXECUTABLE)
-
-.PHONY: runDeployment
-runDeployment:
-	clear
-	./$(MY_APP)/bin/$(PROJECT)
 
 .PHONY: debugProject
 debugProject:
 	clear
-	gdb ./$(BUILD_DIR)/$(PROJECT)
+	$(DEBUGER) $(RUN_EXECUTABLE)
 
-.PHONY: docs
-docs:
+endif
+
+.PHONY: genDocs
+genDocs:
 	doxygen Doxyfile
+
+.PHONY: package
+package:
+	@echo -e "$(LIGHT_CYAN)---------- PACKAGING FOR $(ARCH) -----------\$(NORMAL)"
+	@mkdir -p ./pkg/$(ARCH)/DEBIAN
+	@mkdir -p ./pkg/$(ARCH)/etc/$(PROJECT)
+	@mkdir -p ./pkg/$(ARCH)/usr/bin
+	@mkdir -p ./pkg/$(ARCH)/usr/lib/$(PROJECT)
+	@mkdir -p ./pkg/$(ARCH)/usr/share/applications
+	@mkdir -p ./pkg/$(ARCH)/usr/share/icons/hicolor/256x256/apps
+	@mkdir -p ./pkg/$(ARCH)/usr/share/$(PROJECT)/resources
+	@cp -r ./resources/shaders ./pkg/$(ARCH)/usr/share/$(PROJECT)/resources/
+	@cp -r ./resources/styles ./pkg/$(ARCH)/usr/share/$(PROJECT)/resources/
+	@cp ./resources/logos/$(PROJECT).png ./pkg/$(ARCH)/usr/share/icons/hicolor/256x256/apps/
+	@rm ./pkg/$(ARCH)/usr/bin/*
+	@cp ./$(BUILD_DIR)/$(PROJECT) ./pkg/$(ARCH)/usr/bin
+	dpkg-deb --build ./pkg/$(ARCH)
