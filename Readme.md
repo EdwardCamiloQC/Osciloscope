@@ -30,35 +30,35 @@ Install the most recent candidate according to its architecture.
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download --> oscilloscope-gtk4-armhf.deb  
-Install --> ```sudo apt install oscilloscope-gtk4-armhf.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk4-armhf.deb```
 
 
 Download --> oscilloscope-gtk3-armhf.deb  
-Install --> ```sudo apt install oscilloscope-gtk3-armhf.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk3-armhf.deb```
 
 
 Download --> oscilloscope-gtk4-arm64.deb  
-Install --> ```sudo apt install oscilloscope-gtk4-arm64.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk4-arm64.deb```
 
 
 Download --> oscilloscope-gtk3-arm64.deb  
-Install --> ```sudo apt install oscilloscope-gtk3-arm64.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk3-arm64.deb```
 
 
 Download --> oscilloscope-gtk4-amd64.deb  
-Install --> ```sudo apt install oscilloscope-gtk4-amd64.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk4-amd64.deb```
 
 
 Download --> oscilloscope-gtk3-amd64.deb  
-Install --> ```sudo apt install oscilloscope-gtk3-amd64.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk3-amd64.deb```
 
 
 Download --> oscilloscope-gtk4-i386.deb  
-Install --> ```sudo apt install oscilloscope-gtk4-i386.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk4-i386.deb```
 
 
 Download --> oscilloscope-gtk3-i386.deb  
-Install --> ```sudo apt install oscilloscope-gtk3-i386.deb```
+Install --> ```sudo apt install ./oscilloscope-gtk3-i386.deb```
 
 
 <p align="center">
