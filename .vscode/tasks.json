@@ -4,64 +4,138 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Construct ADM64",
+            "label": "Construct AMD64-GTK4",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=release",
-                "ARCH=amd64"
+                "CONSTRUCTION=release",
+                "ARCH=amd64",
+                "GTK=gtk4"
             ],
             "group": {"kind":"build", "isDefault": true}
         },
         {
-            "label": "Construct i386",
+            "label": "Construct AMD64-GTK3",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=release",
-                "ARCH=i386"
+                "CONSTRUCTION=release",
+                "ARCH=amd64",
+                "GTK=gtk3"
             ],
             "group": {"kind":"build"}
         },
         {
-            "label": "Construct ARM64",
+            "label": "Construct i386-GTK4",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=release",
-                "ARCH=arm64"
+                "CONSTRUCTION=release",
+                "ARCH=i386",
+                "GTK=gtk4"
             ],
             "group": {"kind":"build"}
         },
         {
-            "label": "Construct ARMHF",
+            "label": "Construct i386-GTK3",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=release",
-                "ARCH=armhf"
+                "CONSTRUCTION=release",
+                "ARCH=i386",
+                "GTK=gtk3"
             ],
             "group": {"kind":"build"}
         },
         {
-            "label": "Compile (ASAN)",
+            "label": "Construct ARM64-GTK4",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=debug",
+                "CONSTRUCTION=release",
+                "ARCH=arm64",
+                "GTK=gtk4"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Construct ARM64-GTK3",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=release",
+                "ARCH=arm64",
+                "GTK=gtk3"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Construct ARMHF-GTK4",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=release",
+                "ARCH=armhf",
+                "GTK=gtk4"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Construct ARMHF-GTK3",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=release",
+                "ARCH=armhf",
+                "GTK=gtk3"
+            ],
+            "group": {"kind":"build"}
+        },
+        {
+            "label": "Compile GTK4 (ASAN)",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=debug",
                 "INSPECTOR=asan",
-                "ARCH=amd64"
+                "ARCH=amd64",
+                "GTK=gtk4"
             ],
             "problemMatcher": []
         },
         {
-            "label": "Compile (VALGRIND)",
+            "label": "Compile GTK3 (ASAN)",
             "type": "shell",
             "command": "make",
             "args": [
-                "BUILD=debug",
+                "CONSTRUCTION=debug",
+                "INSPECTOR=asan",
+                "ARCH=amd64",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile GTK4 (VALGRIND)",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=debug",
                 "INSPECTOR=valgrind",
-                "ARCH=amd64"
+                "ARCH=amd64",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Compile GTK3 (VALGRIND)",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "CONSTRUCTION=debug",
+                "INSPECTOR=valgrind",
+                "ARCH=amd64",
+                "GTK=gtk3"
             ],
             "problemMatcher": []
         },
@@ -73,47 +147,188 @@
             "problemMatcher": []
         },
         {
-            "label": "Run (ASAN)",
+            "label": "Run GTK4 (ASAN)",
             "type": "shell",
             "command": "make",
             "args": [
                 "runProject",
-                "INSPECTOR=asan"
+                "INSPECTOR=asan",
+                "GTK=gtk4"
             ],
             "problemMatcher": []
         },
         {
-            "label": "Run (VALGRIND)",
+            "label": "Run GTK3 (ASAN)",
             "type": "shell",
             "command": "make",
             "args": [
                 "runProject",
-                "INSPECTOR=valgrind"
+                "INSPECTOR=asan",
+                "GTK=gtk3"
             ],
             "problemMatcher": []
         },
         {
-            "label": "Run Deployment",
+            "label": "Run GTK4 (VALGRIND)",
             "type": "shell",
-            "dependsOrder": "sequence",
-            "dependsOn": ["Compile"],
             "command": "make",
             "args": [
-                "runDeployment",
-                "INSPECTOR=none"
+                "runProject",
+                "INSPECTOR=valgrind",
+                "GTK=gtk4"
             ],
             "problemMatcher": []
         },
         {
-            "label": "Debug Project",
+            "label": "Run GTK3 (VALGRIND)",
             "type": "shell",
-            "dependsOrder": "sequence",
-            "dependsOn": ["Compile (ASAN)"],
             "command": "make",
             "args": [
-                "debugProject"
+                "runProject",
+                "INSPECTOR=valgrind",
+                "GTK=gtk3"
             ],
             "problemMatcher": []
-        }
+        },
+        {
+            "label": "Run Deployment GTK4",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Construct AMD64-GTK4"],
+            "command": "make",
+            "args": [
+                "runProject",
+                "INSPECTOR=none",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Deployment GTK3",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Construct AMD64-GTK3"],
+            "command": "make",
+            "args": [
+                "runProject",
+                "INSPECTOR=none",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Debug Project GTK4 (ASAN)",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Compile GTK4 (ASAN)"],
+            "command": "make",
+            "args": [
+                "debugProject",
+                "INSPECTOR=asan",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Debug Project GTK3 (ASAN)",
+            "type": "shell",
+            "dependsOrder": "sequence",
+            "dependsOn": ["Compile GTK3 (ASAN)"],
+            "command": "make",
+            "args": [
+                "debugProject",
+                "INSPECTOR=asan",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK4 AMD64",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=amd64",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK3 AMD64",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=amd64",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK4 i386",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=i386",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK3 i386",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=i386",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK4 ARM64",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=arm64",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK3 ARM64",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=arm64",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK4 ARMHF",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=armhf",
+                "GTK=gtk4"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Package GTK3 ARMHF",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "package",
+                "ARCH=armhf",
+                "GTK=gtk3"
+            ],
+            "problemMatcher": []
+        },
     ]
 }
