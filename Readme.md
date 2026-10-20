@@ -17,13 +17,13 @@ If you want to use it, follow the steps below...
 
 ## INSTALATION
 Verify the architecture:  
-```bash dpkg --print-architecture```
+```dpkg --print-architecture```
 
 Update the repositories:  
-```bash sudo apt update```
+```sudo apt update```
 
 Check for the availability of GTK3 and GTK4:  
-```bash apt-cache policy libgtk-3-0 libgtk-4-1```
+```apt-cache policy libgtk-3-0 libgtk-4-1```
 
 
 Install the most recent candidate according to its architecture.  
