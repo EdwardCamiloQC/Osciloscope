@@ -16,40 +16,53 @@ It currently works with four signals, depending on the external device.
 If you want to use it, follow the steps below...
 
 ## INSTALATION
-Verify the architecture:
-<> dpkg --print-architecture <>
+Verify the architecture:  
+```bash dpkg --print-architecture```
 
-Update the repositories:
-<font color="cyan"> sudo apt update </font>
+Update the repositories:  
+```bash sudo apt update```
 
-Check for the availability of GTK3 and GTK4:
-<font color="cyan"> apt-cache policy libgtk-3-0 libgtk-4-1 </font>
+Check for the availability of GTK3 and GTK4:  
+```bash apt-cache policy libgtk-3-0 libgtk-4-1```
+
 
 Install the most recent candidate according to its architecture.
 
-Download --> oscilloscope-gtk4-armhf.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-armhf.deb </font>
 
-Download --> oscilloscope-gtk3-armhf.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-armhf.deb </font>
+Download --> oscilloscope-gtk4-armhf.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk4-armhf.deb```
+
+
+Download --> oscilloscope-gtk3-armhf.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk3-armhf.deb```
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Download --> oscilloscope-gtk4-arm64.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-arm64.deb </font>
 
-Download --> oscilloscope-gtk3-arm64.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-arm64.deb </font>
+Download --> oscilloscope-gtk4-arm64.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk4-arm64.deb```
+
+
+Download --> oscilloscope-gtk3-arm64.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk3-arm64.deb```
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Download --> oscilloscope-gtk4-amd64.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-amd64.deb </font>
 
-Download --> oscilloscope-gtk3-amd64.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-amd64.deb </font>
+Download --> oscilloscope-gtk4-amd64.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk4-amd64.deb```
+
+
+Download --> oscilloscope-gtk3-amd64.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk3-amd64.deb```
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Download --> oscilloscope-gtk4-i386.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-i386.deb </font>
 
-Download --> oscilloscope-gtk3-i386.deb
-Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-i386.deb </font>
+Download --> oscilloscope-gtk4-i386.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk4-i386.deb```
+
+
+Download --> oscilloscope-gtk3-i386.deb  
+Install --> ```bash sudo apt install oscilloscope-gtk3-i386.deb```
+
 
 <p align="center">
     <img src="./resources/logos/logo.png">
