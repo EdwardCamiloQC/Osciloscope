@@ -26,42 +26,39 @@ Check for the availability of GTK3 and GTK4:
 ```bash apt-cache policy libgtk-3-0 libgtk-4-1```
 
 
-Install the most recent candidate according to its architecture.
-
+Install the most recent candidate according to its architecture.  
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download --> oscilloscope-gtk4-armhf.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk4-armhf.deb```
+Install --> ```sudo apt install oscilloscope-gtk4-armhf.deb```
 
 
 Download --> oscilloscope-gtk3-armhf.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk3-armhf.deb```
+Install --> ```sudo apt install oscilloscope-gtk3-armhf.deb```
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download --> oscilloscope-gtk4-arm64.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk4-arm64.deb```
+Install --> ```sudo apt install oscilloscope-gtk4-arm64.deb```
 
 
 Download --> oscilloscope-gtk3-arm64.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk3-arm64.deb```
+Install --> ```sudo apt install oscilloscope-gtk3-arm64.deb```
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download --> oscilloscope-gtk4-amd64.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk4-amd64.deb```
+Install --> ```sudo apt install oscilloscope-gtk4-amd64.deb```
 
 
 Download --> oscilloscope-gtk3-amd64.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk3-amd64.deb```
+Install --> ```sudo apt install oscilloscope-gtk3-amd64.deb```
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download --> oscilloscope-gtk4-i386.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk4-i386.deb```
+Install --> ```sudo apt install oscilloscope-gtk4-i386.deb```
 
 
 Download --> oscilloscope-gtk3-i386.deb  
-Install --> ```bash sudo apt install oscilloscope-gtk3-i386.deb```
+Install --> ```sudo apt install oscilloscope-gtk3-i386.deb```
 
 
 <p align="center">
