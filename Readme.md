@@ -9,12 +9,47 @@
 https://www.youtube.com/playlist?list=PLEoHO-IssPPAtG2c3IKp_-9pR1gyZFhW2
 
 ## DESCRIPTION
-This project born from the need to observe the voltage signals and analyze their spectrums in real time, with the advantage that is economic and easy to use on OS linux.
+This project borns from the need for an affordable, versatile and easy-to-opearte oscilloscope, also it is open-source, for  to observe the voltage signals and analyze their spectrums in real time, thereby providing an option for anyone who lacks an expensive instrument for their electronics laboratory.
 
-It currently works with four signals and anyone can use it.
-Simply send packets with 32 bytes alternate 2 bytes for each signal value... this via the serial-port.
+It currently works with four signals, depending on the external device.
 
-If you want to use it, download it from the link below.
+If you want to use it, follow the steps below...
+
+## INSTALATION
+Verify the architecture:
+<> dpkg --print-architecture <>
+
+Update the repositories:
+<font color="cyan"> sudo apt update </font>
+
+Check for the availability of GTK3 and GTK4:
+<font color="cyan"> apt-cache policy libgtk-3-0 libgtk-4-1 </font>
+
+Install the most recent candidate according to its architecture.
+
+Download --> oscilloscope-gtk4-armhf.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-armhf.deb </font>
+
+Download --> oscilloscope-gtk3-armhf.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-armhf.deb </font>
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download --> oscilloscope-gtk4-arm64.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-arm64.deb </font>
+
+Download --> oscilloscope-gtk3-arm64.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-arm64.deb </font>
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download --> oscilloscope-gtk4-amd64.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-amd64.deb </font>
+
+Download --> oscilloscope-gtk3-amd64.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-amd64.deb </font>
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download --> oscilloscope-gtk4-i386.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk4-i386.deb </font>
+
+Download --> oscilloscope-gtk3-i386.deb
+Install --> <font color="cyan"> sudo apt install oscilloscope-gtk3-i386.deb </font>
 
 <p align="center">
     <img src="./resources/logos/logo.png">
