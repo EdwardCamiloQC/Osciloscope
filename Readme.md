@@ -9,7 +9,7 @@
 https://www.youtube.com/playlist?list=PLEoHO-IssPPAtG2c3IKp_-9pR1gyZFhW2
 
 ## DESCRIPTION
-This project borns from the need for an affordable, versatile and easy-to-opearte oscilloscope, also it is open-source, for  to observe the voltage signals and analyze their spectrums in real time, thereby providing an option for anyone who lacks an expensive instrument for their electronics laboratory.
+This project borns from the need for an affordable, versatile and easy-to-opearte oscilloscope, also it is open-source, for  to observe the voltage signals and analyze their spectrums in real time. Thereby providing an option for anyone who lacks an expensive instrument for their electronics laboratory.
 
 It currently works with four signals, depending on the external device.
 
