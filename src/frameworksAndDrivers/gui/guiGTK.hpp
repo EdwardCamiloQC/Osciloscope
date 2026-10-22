@@ -1,6 +1,6 @@
 /** \file guiGTK.hpp
  *  \author Edward Camilo
- *  \version v1.0
+ *  \version v2.0
  *  \date April 2026
  */
 #pragma once
@@ -191,7 +191,7 @@ namespace DRV_FRAMW{
                 \param widget:
                 \param userData:
              */
-            static void voltDiv_callback(GtkDropDown *widget, gpointer userData);
+            static void voltDiv_callback(GtkWidget *widget, gpointer userData);
 
             /** \brief Updates the flag that indicates if the signal1 is enable or disabled to display.
                 \param widget:
@@ -221,7 +221,7 @@ namespace DRV_FRAMW{
                 \param widget: The drop down.
                 \param userData: Pointer to use.
              */
-            static void drop_port_callback(GtkDropDown *widget, gpointer userData);
+            static void drop_port_callback(GtkWidget *widget, gpointer userData);
 
             /** \brief Opens or closes the port serial.
                 \param widget:
@@ -236,7 +236,11 @@ namespace DRV_FRAMW{
              *  \param y: Y pixel.
              *  \param userData:
              */
-            static void click_voltage_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+            #if defined(_GTK4_DEF_)
+                static void click_voltage_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+            #elif defined(_GTK3_DEF_)
+                static void click_voltage_area_callback(GtkGestureMultiPress *gesture, int nPress, double x, double y, gpointer userData);
+            #endif
 
             /** \brief Calculates the spectrum correspond to the pixel clicked.
              *  \param gesture:
@@ -245,7 +249,11 @@ namespace DRV_FRAMW{
              *  \param y: Y pixel.
              *  \param userData:
              */
-            static void click_spectrum_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+            #if defined(_GTK4_DEF_)
+                static void click_spectrum_area_callback(GtkGestureClick *gesture, int nPress, double x, double y, gpointer userData);
+            #elif defined(_GTK3_DEF_)
+                static void click_spectrum_area_callback(GtkGestureMultiPress *gesture, int nPress, double x, double y, gpointer userData);
+            #endif
 
             /** \brief Draw the graphics indicates to GTK.
                 \param userData:
@@ -276,17 +284,40 @@ namespace DRV_FRAMW{
              *  \param numPoints: Number of points to update.
              */
             static void update_VAO(DOMN::VaoObject& vaoObject, unsigned long numPoints);
+
+            /** \brief Apply CSS styles.
+             */
+            static void apply_css_styles();
         //====================
         // ATTRIBUTES
         //====================
         private:
             inline static GtkApplication*       appGtkPtr_            {nullptr};
+            inline static GtkWidget*            windowPtr_            {nullptr};
             inline static GtkWidget*            glAreaVoltagePtr_     {nullptr};
             inline static GtkWidget*            glAreaSpectrumPtr_    {nullptr};
+            inline static GtkWidget*            buttonStartStopPtr_   {nullptr};
+            inline static GtkWidget*            dropVoltDivPtr_       {nullptr};
+            inline static GtkWidget*            checkSignal1Ptr_      {nullptr};
+            inline static GtkWidget*            checkSignal2Ptr_      {nullptr};
+            inline static GtkWidget*            checkSignal3Ptr_      {nullptr};
+            inline static GtkWidget*            checkSignal4Ptr_      {nullptr};
+            inline static GtkWidget*            spinOffset1Ptr_       {nullptr};
+            inline static GtkWidget*            spinOffset2Ptr_       {nullptr};
+            inline static GtkWidget*            spinOffset3Ptr_       {nullptr};
+            inline static GtkWidget*            spinOffset4Ptr_       {nullptr};
+            inline static GtkWidget*            windowScroolPtr_      {nullptr};
+            inline static GtkWidget*            spinFreqPtr_          {nullptr};
+            inline static GtkWidget*            labelFreqPtr_         {nullptr};
+            inline static GtkWidget*            buttonDocPtr_         {nullptr};
+            inline static GtkWidget*            labelPortPtr_         {nullptr};
             inline static GtkWidget*            dropPortPtr_          {nullptr};
             inline static GtkWidget*            buttonPortPtr_        {nullptr};
             inline static GtkTextBuffer*        bufferConsolePtr_     {nullptr};
-            inline static GtkStringList*        deviceListPortPtr_    {nullptr};
+            inline static GtkWidget*            voltDivPtr_           {nullptr};
+            #if defined(_GTK4_DEF_)
+                inline static GtkStringList*    deviceListPortPtr_    {nullptr};
+            #endif
             inline static APP::ISignalCapturer* signalCapturerPtr_    {nullptr};
             inline static APP::IDevInspector*   devInspectorPtr_      {nullptr};
             inline static APP::IDocGenerator*   docGeneratorPtr_      {nullptr};
