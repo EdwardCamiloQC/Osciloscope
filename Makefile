@@ -247,67 +247,24 @@ else ifeq ($(CONSTRUCTION), release)
 		-Wl,-rpath,'$$ORIGIN/../lib'
 endif
 
-ifeq ($(ARCH), amd64)
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
-	INCLUDES += -I/usr/include/libserial
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags libusb-1.0)
-	ifeq ($(GTK), gtk3)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
-	else ifeq ($(GTK), gtk4)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
-	endif
-	LIBRARIES += -lepoxy \
-		-ludev \
-		-lusb-1.0 \
-		-lserial
-else ifeq ($(ARCH), i386)
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
-	INCLUDES += -I/usr/include/libserial
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags libusb-1.0)
-	ifeq ($(GTK), gtk3)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
-	else ifeq ($(GTK), gtk4)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
-	endif
-	LIBRARIES += -lepoxy \
-		-ludev \
-		-lusb-1.0 \
-		-lserial
-else ifeq ($(ARCH), arm64)
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
-	INCLUDES += -I/usr/include/libserial
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags libusb-1.0)
-	ifeq ($(GTK), gtk3)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
-	else ifeq ($(GTK), gtk4)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
-	endif
-	LIBRARIES += -lepoxy \
-		-ludev \
-		-lusb-1.0 \
-		-lserial
-else ifeq ($(ARCH), armhf)
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
-	INCLUDES += -I/usr/include/libserial
-	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags libusb-1.0)
-	ifeq ($(GTK), gtk3)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
-	else ifeq ($(GTK), gtk4)
-		INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
-		LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
-	endif
-	LIBRARIES += -lepoxy \
-		-ludev \
-		-lusb-1.0 \
-		-lserial
+ifeq ($(GTK), gtk3)
+	CFLAGS += -D_GTK3_DEF_
+	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
+	LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
+else ifeq ($(GTK), gtk4)
+	CFLAGS += -D_GTK4_DEF_
+	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
+	LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
 endif
+
+INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
+INCLUDES += -I/usr/include/libserial
+INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags libusb-1.0)
+
+LIBRARIES += -lepoxy \
+	-ludev \
+	-lusb-1.0 \
+	-lserial
 
 #==================================================
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
