@@ -267,9 +267,9 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
     spinOffset3Ptr_ = gtk_spin_button_new(adjustment3Pt, 0.1, 2);
     spinOffset4Ptr_ = gtk_spin_button_new(adjustment4Pt, 0.1, 2);
     #if defined(_GTK4_DEF_)
-        windowScroolPtr_ = gtk_scrolled_window_new();
+        windowScrollPtr_ = gtk_scrolled_window_new();
     #elif defined(_GTK3_DEF_)
-        windowScroolPtr_ = gtk_scrolled_window_new(nullptr, nullptr);
+        windowScrollPtr_ = gtk_scrolled_window_new(nullptr, nullptr);
     #endif
     GtkAdjustment *adjustmentFreqPt = gtk_adjustment_new(1.0, 0.01, 100.0, 0.01, 1.0, 0.0);
     spinFreqPtr_ = gtk_spin_button_new(adjustmentFreqPt, 1.0, 2);
@@ -324,7 +324,7 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
     gtk_grid_attach(GTK_GRID(gridGeneralPt), buttonStartStopPtr_, 1, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(gridGeneralPt), dropVoltDivPtr_,     1, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(gridGeneralPt), gridSignalsPt,       1, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(gridGeneralPt), windowScroolPtr_,    1, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(gridGeneralPt), windowScrollPtr_,    1, 3, 1, 1);
     gtk_grid_attach(GTK_GRID(gridGeneralPt), buttonDocPtr_,       1, 4, 1, 1);
     gtk_grid_attach(GTK_GRID(gridGeneralPt), labelPortPtr_,       1, 5, 1, 1);
     gtk_grid_attach(GTK_GRID(gridGeneralPt), boxPortPt,           1, 6, 1, 1);
@@ -401,11 +401,11 @@ void GuiGtk::construct_window_callback(GtkApplication* appPt, gpointer userData)
     gtk_text_view_set_editable(GTK_TEXT_VIEW(appConsolePt), false);
     gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(appConsolePt), false);
     gtk_text_view_set_monospace(GTK_TEXT_VIEW(appConsolePt), true);
-    gtk_widget_set_size_request(windowScroolPtr_, widthCol1, static_cast<int>(height/6));
+    gtk_widget_set_size_request(windowScrollPtr_, widthCol1, static_cast<int>(height/6));
     #if defined(_GTK4_DEF_)
-        gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(windowScroolPtr_), appConsolePt);
+        gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(windowScrollPtr_), appConsolePt);
     #elif defined(_GTK3_DEF_)
-        gtk_container_add(GTK_CONTAINER(windowScroolPtr_), appConsolePt);
+        gtk_container_add(GTK_CONTAINER(windowScrollPtr_), appConsolePt);
     #endif
     g_object_set(tagNormalPt, "foreground", "black", NULL);
     gtk_text_tag_table_add(tagTableConsolePt, tagNormalPt);
@@ -1056,7 +1056,7 @@ void GuiGtk::apply_css_styles(){
         gtk_widget_add_css_class(spinOffset3Ptr_, "spinGreen");
         gtk_widget_add_css_class(spinOffset4Ptr_, "spinBlue");
         gtk_widget_add_css_class(spinFreqPtr_, "spinTimeVal");
-        gtk_widget_add_css_class(windowScroolPtr_, "consoleTerminal");
+        gtk_widget_add_css_class(windowScrollPtr_, "consoleTerminal");
         gtk_widget_add_css_class(labelFreqPtr_, "indicators");
         gtk_widget_add_css_class(buttonDocPtr_, "doc");
         gtk_widget_add_css_class(labelPortPtr_, "titles");
@@ -1110,7 +1110,7 @@ void GuiGtk::apply_css_styles(){
         gtk_style_context_add_class(context, "gl-area1");
         context = gtk_widget_get_style_context(glAreaSpectrumPtr_);
         gtk_style_context_add_class(context, "gl-area2");
-        context = gtk_widget_get_style_context(windowScroolPtr_);
+        context = gtk_widget_get_style_context(windowScrollPtr_);
         gtk_style_context_add_class(context, "consoleTerminal");
         context = gtk_widget_get_style_context(buttonStartStopPtr_);
         gtk_style_context_add_class(context, "led-off");

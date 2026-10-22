@@ -306,7 +306,7 @@ namespace DRV_FRAMW{
             inline static GtkWidget*            spinOffset2Ptr_       {nullptr};
             inline static GtkWidget*            spinOffset3Ptr_       {nullptr};
             inline static GtkWidget*            spinOffset4Ptr_       {nullptr};
-            inline static GtkWidget*            windowScroolPtr_      {nullptr};
+            inline static GtkWidget*            windowScrollPtr_      {nullptr};
             inline static GtkWidget*            spinFreqPtr_          {nullptr};
             inline static GtkWidget*            labelFreqPtr_         {nullptr};
             inline static GtkWidget*            buttonDocPtr_         {nullptr};
