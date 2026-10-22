@@ -53,3 +53,55 @@ scrollbar slider {
     border-radius: 3px;
     background-color: indigo;
 }
+
+/* =========================================================================
+   ADAPTACIÓN PARA GTK 3 (ComboBox y Menús Desplegables)
+   =======================================================================*/
+
+/* Base del dropdown (GTK 4: dropdown -> GTK 3: combobox) */
+combobox.drops, combobox.dropdown {
+    padding: 5px;
+    border: 0px solid;
+    border-radius: 5px;
+    border-color: cyan;
+    border-style: solid;
+    background-color: transparent;
+    background-image: none;
+}
+
+/* Botón visible del dropdown (GTK 4: dropdown > button -> GTK 3: combobox button) */
+combobox.drops button, combobox.dropdown button {
+    color: black;
+    font-size: small;
+    font-family: monospace;
+    border-radius: 20px;
+    background-color: transparent;
+    background-image: linear-gradient(to top, rgb(74, 59, 78), darkgrey, rgb(74, 59, 78));
+    box-shadow: none; /* Elimina sombras nativas de GTK 3 si interfieren con el borde */
+}
+
+/* Hover sobre el botón */
+combobox.drops button:hover, combobox.dropdown button:hover {
+    background-image: radial-gradient(ellipse at center, darkgrey, darkcyan);
+}
+
+/* Lista desplegada (GTK 4: popover -> GTK 3: menu) */
+combobox.drops menu, combobox.dropdown menu {
+    border: 2px solid cyan;
+    background-image: radial-gradient(ellipse at center, red, cyan);
+    padding: 2px;
+}
+
+/* Items dentro de la lista (GTK 4: listview row -> GTK 3: menuitem) */
+combobox.drops menu menuitem, combobox.dropdown menu menuitem {
+    color: black;
+    padding: 5px;
+    background-image: radial-gradient(ellipse at center, rgb(74, 59, 78), darkgrey);
+}
+
+/* Hover / Selección en items (GTK 4: listview row:hover / :selected -> GTK 3: menuitem:hover) */
+combobox.drops menu menuitem:hover, combobox.dropdown menu menuitem:hover {
+    background-color: cyan;
+    background-image: none; /* Rompe el gradiente base para que se note el fondo cyan puro */
+    color: white; /* Ajuste opcional para mejorar legibilidad sobre el fondo cyan */
+}
