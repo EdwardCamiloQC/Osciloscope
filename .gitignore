@@ -98,6 +98,7 @@ lsan.supp
 logs/*
 voltajes.*
 pkg/*
+packaging/*
 
 ### CMake ###
 CMakeLists.txt.user

@@ -51,6 +51,8 @@ VPATH =	$(SRC_DIR):\
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #==================================================
 PROJECT = $(notdir $(shell pwd))
+VERSION = 3.0.0
+
 HOST_ARCH := $(shell dpkg --print-architecture)
 SYSROOT = /
 RUN_EXECUTABLE := $(BUILD_DIR)/$(PROJECT)
@@ -251,10 +253,14 @@ ifeq ($(GTK), gtk3)
 	CFLAGS += -D_GTK3_DEF_
 	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk+-3.0)
 	LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk+-3.0)
+	GTK_DEPENDENCY = libgtk-3-0
 else ifeq ($(GTK), gtk4)
 	CFLAGS += -D_GTK4_DEF_
 	INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags gtk4)
 	LIBRARIES += $(shell $(PKG_CONFIG_ENV) pkg-config --libs gtk4)
+	GTK_DEPENDENCY = libgtk-4-1
+else
+	$(error "Unsupported GTK version: $(GTK)")
 endif
 
 INCLUDES += $(shell $(PKG_CONFIG_ENV) pkg-config --cflags glib-2.0)
@@ -324,6 +330,11 @@ endif
 .PHONY: package
 package:
 	@echo -e "$(LIGHT_CYAN)---------- PACKAGING FOR $(ARCH) -----------\$(NORMAL)"
+
+	# Clean previous package
+	rm -rf ./pkg/$(GTK)/$(ARCH)
+
+	# Create directory structure
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/DEBIAN
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/etc/$(PROJECT)
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/usr/bin
@@ -331,8 +342,27 @@ package:
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/usr/share/applications
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/usr/share/icons/hicolor/256x256/apps
 	@mkdir -p ./pkg/$(GTK)/$(ARCH)/usr/share/$(PROJECT)/resources
+
+	# Generate control
+	sed \
+		-e 's|@VERSION@|$(VERSION)|g' \
+		-e 's|@ARCH@|$(ARCH)|g' \
+		-e 's|@GTK_DEPENDENCY@|$(GTK_DEPENDENCY)|g' \
+		packaging/control.in > ./pkg/$(GTK)/$(ARCH)/DEBIAN/control
+
+	# Copy configuration
+	install -m 644 packaging/config.conf.in ./pkg/$(GTK)/$(ARCH)/etc/$(PROJECT)/$(PROJECT).conf
+
+	# Copy desktop entry
+	install -m 644	packaging/application.desktop.in ./pkg/$(GTK)/$(ARCH)/usr/share/applications/com.ed.oscilloscope.desktop
+
+	# Copy executable
+	install -m 755 ./build/$(GTK)/$(ARCH)/none/$(PROJECT) ./pkg/$(GTK)/$(ARCH)/usr/bin
+
+	# Copy resources
+	@cp ./resources/logos/$(PROJECT).png ./pkg/$(GTK)/$(ARCH)/usr/share/icons/hicolor/256x256/apps/
 	@cp -r ./resources/shaders ./pkg/$(GTK)/$(ARCH)/usr/share/$(PROJECT)/resources/
 	@cp -r ./resources/styles ./pkg/$(GTK)/$(ARCH)/usr/share/$(PROJECT)/resources/
-	@cp ./resources/logos/$(PROJECT).png ./pkg/$(GTK)/$(ARCH)/usr/share/icons/hicolor/256x256/apps/
-	@cp ./build/$(GTK)/$(ARCH)/none/$(PROJECT) ./pkg/$(GTK)/$(ARCH)/usr/bin
+
+	# Build Debian package
 	dpkg-deb --root-owner-group -Zgzip --build ./pkg/$(GTK)/$(ARCH) ./build/$(PROJECT)-$(GTK)-$(ARCH).deb
