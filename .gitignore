@@ -99,6 +99,7 @@ logs/*
 voltajes.*
 pkg/*
 packaging/*
+releases/*
 
 ### CMake ###
 CMakeLists.txt.user
