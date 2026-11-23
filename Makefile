@@ -28,6 +28,7 @@ WHITE = \033[1;37m
 #==================================================
 BUILD_DIR := build
 SRC_DIR = ./src
+RELEASES_DIR = ./releases
 
 VPATH =	$(SRC_DIR):\
 		$(SRC_DIR)/domain/signals/:\
@@ -365,4 +366,4 @@ package:
 	@cp -r ./resources/styles ./pkg/$(GTK)/$(ARCH)/usr/share/$(PROJECT)/resources/
 
 	# Build Debian package
-	dpkg-deb --root-owner-group -Zgzip --build ./pkg/$(GTK)/$(ARCH) ./build/$(PROJECT)-$(GTK)-$(ARCH).deb
+	dpkg-deb --root-owner-group -Zgzip --build ./pkg/$(GTK)/$(ARCH) $(RELEASES_DIR)/$(PROJECT)-$(VERSION)-$(GTK)-$(ARCH).deb

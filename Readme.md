@@ -33,28 +33,28 @@ Install the most recent candidate according to its architecture.
 
 Download one package:  
 
-Osciloscope-gtk4-amd64.deb  
-Osciloscope-gtk4-arm64.deb  
-Osciloscope-gtk4-armhf.deb  
-Osciloscope-gtk4-i386.deb  
-Osciloscope-gtk3-amd64.deb  
-Osciloscope-gtk3-arm64.deb  
-Osciloscope-gtk3-armhf.deb  
-Osciloscope-gtk3-i386.deb  
+Osciloscope-3.0.0-gtk4-amd64.deb  
+Osciloscope-3.0.0-gtk4-arm64.deb  
+Osciloscope-3.0.0-gtk4-armhf.deb  
+Osciloscope-3.0.0-gtk4-i386.deb  
+Osciloscope-3.0.0-gtk3-amd64.deb  
+Osciloscope-3.0.0-gtk3-arm64.deb  
+Osciloscope-3.0.0-gtk3-armhf.deb  
+Osciloscope-3.0.0-gtk3-i386.deb  
 
 Verification:  
 ```gpg --verify SHA256SUMS.asc SHA256SUMS```  
 ```sha256sum --check SHA256SUMS```
 
 Install the correspond package:  
-```sudo apt install ./Osciloscope-gtk4-amd64.deb```  
-```sudo apt install ./Osciloscope-gtk4-arm64.deb```  
-```sudo apt install ./Osciloscope-gtk4-armhf.deb```  
-```sudo apt install ./Osciloscope-gtk4-i386.deb```  
-```sudo apt install ./Osciloscope-gtk3-amd64.deb```  
-```sudo apt install ./Osciloscope-gtk3-arm64.deb```  
-```sudo apt install ./Osciloscope-gtk3-armhf.deb```  
-```sudo apt install ./Osciloscope-gtk3-i386.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk4-arm64.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk4-amd64.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk4-armhf.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk4-i386.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk3-amd64.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk3-arm64.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk3-armhf.deb```  
+```sudo apt install ./Osciloscope-3.0.0-gtk3-i386.deb```  
 
 
 <p align="center">
