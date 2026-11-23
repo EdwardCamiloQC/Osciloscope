@@ -43,8 +43,8 @@ Osciloscope-3.0.0-gtk3-armhf.deb
 Osciloscope-3.0.0-gtk3-i386.deb  
 
 Verification:  
-```gpg --verify SHA256SUMS.asc SHA256SUMS```  
-```sha256sum --check SHA256SUMS```
+```gpg --verify SHA256SUMS_osc_v3.asc SHA256SUMS_osc_v3```  
+```sha256sum --check SHA256SUMS_osc_v3```
 
 Install the correspond package:  
 ```sudo apt install ./Osciloscope-3.0.0-gtk4-arm64.deb```  
