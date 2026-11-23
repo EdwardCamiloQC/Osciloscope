@@ -25,40 +25,36 @@ Update the repositories:
 Check for the availability of GTK3 and GTK4:  
 ```apt-cache policy libgtk-3-0 libgtk-4-1```
 
+Import public key:  
+```gpg --import clave-publica-osc.asc```
 
 Install the most recent candidate according to its architecture.  
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Download --> oscilloscope-gtk4-armhf.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk4-armhf.deb```
+Download one package:  
 
+Osciloscope-gtk4-amd64.deb  
+Osciloscope-gtk4-arm64.deb  
+Osciloscope-gtk4-armhf.deb  
+Osciloscope-gtk4-i386.deb  
+Osciloscope-gtk3-amd64.deb  
+Osciloscope-gtk3-arm64.deb  
+Osciloscope-gtk3-armhf.deb  
+Osciloscope-gtk3-i386.deb  
 
-Download --> oscilloscope-gtk3-armhf.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk3-armhf.deb```
+Verification:  
+```gpg --verify SHA256SUMS.asc SHA256SUMS```  
+```sha256sum --check SHA256SUMS```
 
-
-Download --> oscilloscope-gtk4-arm64.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk4-arm64.deb```
-
-
-Download --> oscilloscope-gtk3-arm64.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk3-arm64.deb```
-
-
-Download --> oscilloscope-gtk4-amd64.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk4-amd64.deb```
-
-
-Download --> oscilloscope-gtk3-amd64.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk3-amd64.deb```
-
-
-Download --> oscilloscope-gtk4-i386.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk4-i386.deb```
-
-
-Download --> oscilloscope-gtk3-i386.deb  
-Install --> ```sudo apt install ./oscilloscope-gtk3-i386.deb```
+Install the correspond package:  
+```sudo apt install ./Osciloscope-gtk4-amd64.deb```  
+```sudo apt install ./Osciloscope-gtk4-arm64.deb```  
+```sudo apt install ./Osciloscope-gtk4-armhf.deb```  
+```sudo apt install ./Osciloscope-gtk4-i386.deb```  
+```sudo apt install ./Osciloscope-gtk3-amd64.deb```  
+```sudo apt install ./Osciloscope-gtk3-arm64.deb```  
+```sudo apt install ./Osciloscope-gtk3-armhf.deb```  
+```sudo apt install ./Osciloscope-gtk3-i386.deb```  
 
 
 <p align="center">
